@@ -8,7 +8,9 @@ public class Profile{
 	private boolean isParent;
 	private String name;
 	private String password;
+	private int numberOfTasksCompleted;
 	private ArrayList<Task> assignedTasks;
+	private String dbId;
 
 	public Task createTask(String name, Date startDate, Boolean recur, int recurRate, Date endDate, Profile owner){
 		
@@ -25,8 +27,15 @@ public class Profile{
 		this.isParent = isParent;
 		this.name = name;
 		this.password = password;
+		this.numberOfTasksCompleted = 0;
+		this.assignedTasks = new ArrayList<Task>();
 	}
 
+	public void addTask(Task toAdd){
+		assignedTasks.add(toAdd);
+	}
+
+	//This might be outdated/useless now...
 	public void takeTask(Task toTake){
 		if(!toTake.getDone()){
 			Profile oldOwner = toTake.getOwner();
@@ -65,12 +74,23 @@ public class Profile{
 		return assignedTasks.size();
 	}
 
+
+	public int getNumberOfTasksCompleted(){
+		return numberOfTasksCompleted;
+	}
 	public void setPassword(String password){
 		this.password = password;
 	}
 
-	public String getPassword(){
-		return password;
+	public void setId(String id){
+		this.dbId = id;
 	}
 
+	public String getId(){
+		return dbId;
+	}
+
+	public Boolean validatePassword(String passEnt){
+		return(password == passEnt);
+	}
 }
