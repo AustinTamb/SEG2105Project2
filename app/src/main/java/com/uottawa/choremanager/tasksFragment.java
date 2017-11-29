@@ -33,6 +33,12 @@ public class tasksFragment extends Fragment {
             startActivity(newTaskIntent);
         }
     }
+    public class AddSubTaskOnClickListener implements View.OnClickListener{
+        public void onClick(View v){
+            Intent newAddSubTaskIntent = new Intent(getActivity().getApplicationContext(), newTaskActivity.class);
+            startActivity(newAddSubTaskIntent);
+        }
+    }
 
     @Nullable
     @Override
