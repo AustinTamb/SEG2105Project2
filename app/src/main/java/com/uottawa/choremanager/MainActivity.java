@@ -37,18 +37,29 @@ public class MainActivity extends AppCompatActivity {
     private SectionPageAdapter mSectionPageAdapter;
     private ViewPager mViewPager;
     DataBase dB;
+    Map<String, Profile> profiles;
+    Map<String, Task> tasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        profiles = new HashMap<String, Profile>();
+        tasks = new HashMap<String, Task>();
+        ArrayList<SubTask> z = new ArrayList<SubTask>();
         dB = new DataBase();
         Profile x = dB.addProfile("Austin", true,"Test123");
-        ArrayList<SubTask> z = new ArrayList<SubTask>();
+
         z.add(new SubTask("Cloth", false));
         z.add(new SubTask("Bucket", false));
         z.add(new SubTask("Water", false));
+
         Task y = dB.addTask("Wash Car", 10, "wash it..", 20, x, z);
+
+
+        profiles.put(x.getId(), x);
+        tasks.put(y.getId(), y);
 
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());

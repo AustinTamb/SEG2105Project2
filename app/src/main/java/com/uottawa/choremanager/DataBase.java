@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by Austin Tambakopoulos on 11/29/2017.
+ * Based off Lab 5(Firebase) code
  */
 
 
@@ -60,7 +61,11 @@ public class DataBase {
     }
 
     public void assignTask(Profile profile, Task task){
+        task.setOwner(profile);
+        profile.addTask(task);
         dbProfiles.child(profile.getId()).child("tasks").push().setValue(task.getId());
         dbTasks.child(task.getId()).child("owner").setValue(profile.getId());
     }
+
+
 }

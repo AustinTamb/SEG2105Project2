@@ -28,8 +28,14 @@ public class Profile{
 		this.name = name;
 		this.password = password;
 		this.numberOfTasksCompleted = 0;
+		this.assignedTasks = new ArrayList<Task>();
 	}
 
+	public void addTask(Task toAdd){
+		assignedTasks.add(toAdd);
+	}
+
+	//This might be outdated/useless now...
 	public void takeTask(Task toTake){
 		if(!toTake.getDone()){
 			Profile oldOwner = toTake.getOwner();
