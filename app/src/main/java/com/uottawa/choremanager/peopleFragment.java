@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 /**
  * Created by Raymo on 2017-11-24.
@@ -35,6 +36,12 @@ public class peopleFragment extends Fragment {
         View view = inflater.inflate(R.layout.people, container, false);
         btnNewProfile = (ImageButton) view.findViewById(R.id.imgNewPerson);
         btnNewProfile.setOnClickListener(new NewProfileOnClickListener());
+
+        String[] taskList = {"Hayley", "Raymond"};
+        ListView tasksListView = (ListView) view.findViewById(R.id.listViewPeople);
+        TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), taskList);
+        tasksListView.setAdapter(tasksAdapter);
+        System.out.println("Successfully Created People view");
         return view;
     }
     //End of citation

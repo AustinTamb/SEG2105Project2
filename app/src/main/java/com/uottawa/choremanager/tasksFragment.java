@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import static java.sql.DriverManager.println;
 
@@ -39,6 +40,12 @@ public class tasksFragment extends Fragment {
         View view = inflater.inflate(R.layout.tasks, container, false);
         btnNewTask = (ImageButton) view.findViewById(R.id.imgNewTask);
         btnNewTask.setOnClickListener(new NewTaskOnClickListener());
+
+        String[] taskList = {"Hayley", "Raymond"};
+        ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
+        TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), taskList);
+        tasksListView.setAdapter(tasksAdapter);
+        System.out.println("Successfully Created People view");
 
 
         return view;

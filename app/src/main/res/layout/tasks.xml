@@ -52,7 +52,7 @@
         </LinearLayout>
 
         <ListView
-            android:id="@+id/listViewPeople"
+            android:id="@+id/listViewTasks"
             android:layout_width="fill_parent"
             android:layout_height="500dp"
             android:layout_weight="1">
