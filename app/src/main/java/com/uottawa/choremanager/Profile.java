@@ -7,6 +7,7 @@ import java.util.Calendar;
 public class Profile{
 	private boolean isParent;
 	private String name;
+	private String password;
 	private ArrayList<Task> assignedTasks;
 
 	public Task createTask(String name, Date startDate, Boolean recur, int recurRate, Date endDate, Profile owner){
@@ -20,9 +21,10 @@ public class Profile{
 		return null;
 	}
 
-	public Profile(String name, boolean isParent/*Add image*/){
+	public Profile(String name, boolean isParent, String password/*Add image*/){
 		this.isParent = isParent;
 		this.name = name;
+		this.password = password;
 	}
 
 	public void takeTask(Task toTake){
@@ -61,6 +63,14 @@ public class Profile{
 
 	public int getNumberOfCurrentTasks(){
 		return assignedTasks.size();
+	}
+
+	public void setPassword(String password){
+		this.password = password;
+	}
+
+	public String getPassword(){
+		return password;
 	}
 
 }
