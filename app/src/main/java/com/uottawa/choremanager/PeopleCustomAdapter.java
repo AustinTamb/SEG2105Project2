@@ -17,17 +17,17 @@ public class PeopleCustomAdapter extends ArrayAdapter {
     private final String[] people;
 
     public PeopleCustomAdapter(Context context, String[] peopleList){
-        super(context, R.layout.people2, peopleList);
+        super(context, R.layout.people_template, peopleList);
         this.context = context;
         this.people = peopleList;
     }
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.people2, parent, false);
+        View rowView = inflater.inflate(R.layout.people_template, parent, false);
 
         TextView personNameTextField = (TextView) rowView.findViewById(R.id.txtName);
         TextView numTasksTextField = (TextView) rowView.findViewById(R.id.txtNumTasks);
-        TextView nextTaskTextField = (TextView) rowView.findViewById(R.id.txtNewTask);
+        TextView nextTaskTextField = (TextView) rowView.findViewById(R.id.txtNextTask);
         ImageView personImage = (ImageView) rowView.findViewById(R.id.imgPerson);
 
         personNameTextField.setText(people[position]);

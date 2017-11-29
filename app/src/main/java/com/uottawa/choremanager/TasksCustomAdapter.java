@@ -24,9 +24,9 @@ public class TasksCustomAdapter extends ArrayAdapter {
     }
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.tasks, parent, false);
+        View rowView = inflater.inflate(R.layout.task_template, parent, false);
 
-        TextView taskNameTextField = (TextView) rowView.findViewById(R.id.txtName);
+        TextView taskNameTextField = (TextView) rowView.findViewById(R.id.txtTaskName);
         ImageView personImage = (ImageView) rowView.findViewById(R.id.imgPerson);
         CheckBox cbx = (CheckBox) rowView.findViewById(R.id.cbx);
 

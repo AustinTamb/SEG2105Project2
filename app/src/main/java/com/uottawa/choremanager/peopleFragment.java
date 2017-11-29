@@ -39,6 +39,12 @@ public class peopleFragment extends Fragment {
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.people, container, false);
 
+        String[] peopleList = {"Hayley", "Raymond"};
+        ListView peopleListView = (ListView) view.findViewById(R.id.listViewPeople);
+        PeopleCustomAdapter peopleAdapter = new PeopleCustomAdapter(getActivity().getApplicationContext(), peopleList);
+        peopleListView.setAdapter(peopleAdapter);
+        System.out.println("Successfully Created People view");
+
 
         return view;
     }

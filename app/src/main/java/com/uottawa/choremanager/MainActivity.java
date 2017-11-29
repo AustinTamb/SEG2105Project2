@@ -37,15 +37,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        //String[] taskList = {"Hayley", "Raymond"};
-        //ListView listView = (ListView) findViewById(R.id.taskList);
-        //TasksCustomAdapter adapter = new TasksCustomAdapter(this, taskList);
-        //listView.setAdapter(adapter);
-
-        //String[] peopleList = {"Hayley", "Raymond"};
-        //ListView peoplelistView = (ListView) findViewById(R.id.peopleList);
-        //PeopleCustomAdapter peopleadapter = new PeopleCustomAdapter(this, peopleList);
-        //listView.setAdapter(adapter);
     }
     private void setupViewPager(ViewPager viewPager){
         SectionPageAdapter adapter = new SectionPageAdapter(getSupportFragmentManager());
