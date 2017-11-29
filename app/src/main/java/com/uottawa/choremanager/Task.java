@@ -50,9 +50,7 @@ public class Task {
 
 
     //Removes the specified SubTask
-    public void removeSubTask(String subTaskName, boolean done){
-        SubTask newSubTask = new SubTask(subTaskName, false);
-        subTaskList.remove(newSubTask);
+    public void removeSubTask(String name){
 
         SubTask toBeRemoved;
         //True if the SubTask is found

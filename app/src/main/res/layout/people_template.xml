@@ -16,7 +16,6 @@
             android:layout_width="fill_parent"
             android:layout_height="60dp"
             android:layout_weight="4"
-            android:visibility="visible"
             app:srcCompat="@android:drawable/ic_menu_camera" />
 
         <LinearLayout
@@ -29,22 +28,19 @@
                 android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name"
-                android:visibility="visible" />
+                android:text="Name" />
 
             <TextView
                 android:id="@+id/txtNumTasks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Allocated Tasks"
-                android:visibility="visible" />
+                android:text="Allocated Tasks" />
 
             <TextView
                 android:id="@+id/txtNextTask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Next Task"
-                android:visibility="visible" />
+                android:text="Next Task" />
         </LinearLayout>
 
     </LinearLayout>

@@ -24,10 +24,11 @@ public class peopleFragment extends Fragment {
     //This nested class is used to control what happens when btnNewTask is clicked
     public class NewProfileOnClickListener implements View.OnClickListener{
         public void onClick(View v) {
-            Intent newProfileIntent = new Intent(getActivity().getApplicationContext(), newProfileActivity.class);
-            startActivity(newProfileIntent);
+            Intent newTaskIntent = new Intent(getActivity().getApplicationContext(), newTaskActivity.class);
+            startActivity(newTaskIntent);
         }
     }
+
 
     @Nullable
     @Override
@@ -37,9 +38,9 @@ public class peopleFragment extends Fragment {
         btnNewProfile.setOnClickListener(new NewProfileOnClickListener());
 
         String[] taskList = {"Hayley", "Raymond"};
-        ListView peopleListView = (ListView) view.findViewById(R.id.listViewPeople);
-        PeopleCustomAdapter peopleAdapter = new PeopleCustomAdapter(getActivity().getApplicationContext(), taskList);
-        peopleListView.setAdapter(peopleAdapter);
+        ListView tasksListView = (ListView) view.findViewById(R.id.listViewPeople);
+        TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), taskList);
+        tasksListView.setAdapter(tasksAdapter);
         System.out.println("Successfully Created People view");
         return view;
     }
