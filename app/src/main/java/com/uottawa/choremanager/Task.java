@@ -132,10 +132,7 @@ public class Task {
         return endDate;
     }
 
-    public String getDescription()
-    {
-        return description;
-    }
+    public String getDescription() { return description; }
 
     public int getStartDate()
     {
@@ -153,15 +150,16 @@ public class Task {
 
     public String toString()
     {
-        return getName();
-        /*Fix to string please
-        return super.toString() + "["+
+        return ("["+
                 "name" + ":" + getName()+ "," +
-                "description" + ":" + getDescription()+ "," +
-                "reoccurRate" + ":" + getReoccurRate()+ "]" + System.getProperties().getProperty("line.separator") +
-                "  " + "deadline" + "=" + (getDeadline() != null ? !getDeadline().equals(this)  ? getDeadline().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-                "  " + "reoccurEnd" + "=" + (getReoccurEnd() != null ? !getReoccurEnd().equals(this)  ? getReoccurEnd().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-                "  " + "owner" + "=" + (getOwner() != null ? !getOwner().equals(this)  ? getOwner().toString().replaceAll("  ","    ") : "this" : "null");*/
+                "id" + ":" + getId()+ "," +
+                "description" + ":" + getDescription() +
+                "]" +
+                System.getProperties().getProperty("line.separator") +
+                "startDate" + ":" + getStartDate()+ "," +
+                "endDate" + ":" + getEndDate()+ "," +
+                System.getProperties().getProperty("line.separator") +
+                " " + "owner" + "=" + (getOwner() != null ? !getOwner().equals(this)  ? getOwner().toString().replaceAll("  ","    ") : "this" : "null"));
     }
 
     //End Citation
