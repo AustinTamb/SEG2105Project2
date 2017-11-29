@@ -6,163 +6,142 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="510dp"
+        android:layout_height="fill_parent"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/imgProfilePic"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="125dp"
+                android:layout_height="75dp"
                 android:layout_gravity="start"
-                android:layout_weight="0.3"
+                android:layout_weight=".1"
                 app:srcCompat="@android:drawable/ic_menu_camera" />
-
-            <TextView
-                android:id="@+id/txtName"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_gravity="start"
-                android:layout_weight="0.2"
-                android:gravity="center|start"
-                android:text="Name"
-                android:textSize="24sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/txtStartDate"
+                <TextView
+                    android:id="@+id/txtName"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:layout_weight="1"
-                    android:text="Start Date" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight=".5"
+                    android:gravity="center|start"
+                    android:text="Assigned to:"
+                    android:textSize="24sp" />
 
-                <EditText
-                    android:id="@+id/txtEndDate"
+                <Spinner
+                    android:id="@+id/spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:layout_weight="1"
-                    android:text="End Date" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2" />
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="100dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1" />
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/txtTaskName"
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Task Name" />
+                android:layout_weight=".1"
+                android:gravity="center_vertical|center_horizontal"
+                android:hint="Task Name" />
 
-            <Space
-                android:layout_width="100dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/txtNotes"
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textMultiLine"
-            android:text="Notes"
-            android:textColor="@android:color/darker_gray" />
-
-        <TableLayout
-            android:id="@+id/materials"
-            android:layout_width="fill_parent"
-            android:layout_height="5dp"
-            android:layout_weight="0.5">
-
-            <TableRow
+            <EditText
+                android:id="@+id/txtNotes"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
+                android:ems="10"
+                android:hint="Notes/Descripiton"
+                android:inputType="textMultiLine"
+                android:textColor="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
+                android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/txtAddNewItem1"
+                    android:id="@+id/txtStartDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Add New Item" />
+                    android:ems="10"
+                    android:hint="Start Date"
+                    android:inputType="date" />
 
                 <EditText
-                    android:id="@+id/txtAddNewItem2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:text="Add New Item" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1">
-
-                <EditText
-                    android:id="@+id/txtAddNewItem3"
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:text="Add New Item" />
-
-                <EditText
-                    android:id="@+id/txtAddNewItem4"
+                    android:id="@+id/txtEndDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Add New Item" />
-            </TableRow>
+                    android:ems="10"
+                    android:hint="End Date"
+                    android:inputType="date" />
+            </LinearLayout>
 
-        </TableLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/lblSubTasks"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight=".1"
+                android:text="SubTasks:"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/btnConfirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Confirm" />
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="5" />
 
-            <Space
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="0.1"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/txtSTName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Add/Remove Sub Task"
+                    android:inputType="textPersonName" />
+
+                <Button
+                    android:id="@+id/btnAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Add" />
+
+                <Button
+                    android:id="@+id/btnRemove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Remove" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
