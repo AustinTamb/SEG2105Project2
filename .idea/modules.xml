@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ChoreManager.iml" filepath="$PROJECT_DIR$/ChoreManager.iml" />
-      <module fileurl="file://C:\Users\Raymo\Documents\Fall_2017\SEG2105\Project\ChoreManager\SEG2105Project2.iml" filepath="C:\Users\Raymo\Documents\Fall_2017\SEG2105\Project\ChoreManager\SEG2105Project2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SEG2105Project2.iml" filepath="$PROJECT_DIR$/SEG2105Project2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
