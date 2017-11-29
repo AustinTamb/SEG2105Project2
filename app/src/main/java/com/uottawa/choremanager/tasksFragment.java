@@ -37,7 +37,7 @@ public class tasksFragment extends Fragment {
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tasks, container, false);
-        btnNewTask = (ImageButton) view.findViewById(R.id.btnNewTask);
+        btnNewTask = (ImageButton) view.findViewById(R.id.imgNewTask);
         btnNewTask.setOnClickListener(new NewTaskOnClickListener());
 
 
