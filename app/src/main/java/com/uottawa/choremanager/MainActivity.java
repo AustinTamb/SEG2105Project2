@@ -1,3 +1,9 @@
+/* CITATIONS
+* Got Firebase related code from : https://www.firebase.com/docs/android/quickstart.html
+*
+*
+* */
+
 package com.uottawa.choremanager;
 
 import android.support.design.widget.TabLayout;
@@ -17,17 +23,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 //taken from tutorial https://www.youtube.com/watch?v=bNpWGI_hGGg
 public class MainActivity extends AppCompatActivity {
     private SectionPageAdapter mSectionPageAdapter;
     private ViewPager mViewPager;
+    DataBase dB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dB = new DataBase();
+        Profile x = dB.addProfile("Austin", true,"Test123");
+        ArrayList<SubTask> z = new ArrayList<SubTask>();
+        z.add(new SubTask("Cloth", false));
+        z.add(new SubTask("Bucket", false));
+        z.add(new SubTask("Water", false));
+        Task y = dB.addTask("Wash Car", 10, "wash it..", 20, x, z);
+
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager)findViewById(R.id.container);
