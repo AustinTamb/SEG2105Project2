@@ -31,6 +31,12 @@ public class newTaskActivity extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
             }
         });
+        final Button addButton = findViewById(R.id.btnAdd);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+            }
+        });
     }
 
 
