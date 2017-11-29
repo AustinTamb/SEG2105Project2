@@ -16,7 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 
 //taken from tutorial https://www.youtube.com/watch?v=bNpWGI_hGGg

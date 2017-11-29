@@ -26,7 +26,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/txtMaterials"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -87,7 +87,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/txtShopping"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -156,7 +156,7 @@
                     android:orientation="horizontal">
 
                     <ImageButton
-                        android:id="@+id/imageButton"
+                        android:id="@+id/imgNewItem"
                         android:layout_width="100dp"
                         android:layout_height="50dp"
                         android:layout_gravity="left"
@@ -164,7 +164,7 @@
                         app:srcCompat="@android:drawable/ic_input_add" />
 
                     <EditText
-                        android:id="@+id/editText2"
+                        android:id="@+id/txtNewItem"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
