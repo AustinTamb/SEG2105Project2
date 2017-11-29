@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager){
         SectionPageAdapter adapter = new SectionPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new shoppingFragment(), "Shopping");
+        adapter.addFragment(new calendarFragment(), "Calendar");
         adapter.addFragment(new tasksFragment(), "Tasks");
         adapter.addFragment(new peopleFragment(), "People");
         viewPager.setAdapter(adapter);

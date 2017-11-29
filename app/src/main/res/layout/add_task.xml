@@ -103,11 +103,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
-                android:text="SubTasks:"
+                android:text="Materials:"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="18sp" />
 
             <ListView
+                android:id="@+id/listViewMaterials"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="5" />
@@ -124,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Add/Remove Sub Task"
+                    android:hint="Add/Remove Material"
                     android:inputType="textPersonName" />
 
                 <Button
@@ -132,6 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="addButton"
                     android:text="Add" />
 
                 <Button
