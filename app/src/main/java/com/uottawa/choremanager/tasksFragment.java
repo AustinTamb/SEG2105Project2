@@ -12,9 +12,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 
-import static java.sql.DriverManager.println;
+import java.util.ArrayList;
 
 /**
  * Created by Raymo on 2017-11-24.
@@ -58,7 +57,6 @@ public class tasksFragment extends Fragment {
                 mats.add(sT);
             }
         }
-
         ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
         TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), taskList);
         tasksListView.setAdapter(tasksAdapter);
