@@ -38,6 +38,7 @@ public class DataBase extends Application{
         profileId = new ArrayList<String>();
         taskId = new ArrayList<String>();
 
+        //Loads Tasks from Firebase on initializations
         dbTasks.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -53,12 +54,14 @@ public class DataBase extends Application{
                 }
             }
 
+            //Catch errors related to failures in loading
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
 
+        //Pulls data for Profiles from firebase
         dbProfiles.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -73,6 +76,7 @@ public class DataBase extends Application{
                 }
             }
 
+            //Catches error for failure to load data
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
@@ -80,10 +84,10 @@ public class DataBase extends Application{
         });
     }
 
-
+    //Method to add profile, does all links between classes for us
+    //And returns the profile it create
     public Profile addProfile(String name, Boolean isParent, String password){
         Profile toAdd = new Profile(name, isParent, password);
-        System.out.println(password);
         String id = dbProfiles.push().getKey();
         toAdd.setId(id);
         dbProfiles.child(id).setValue(toAdd);
@@ -92,6 +96,7 @@ public class DataBase extends Application{
         return toAdd;
     }
 
+    //Same purpose as above, except for tasks
     public Task addTask(String name, int startDate, String description, int endDate, String ownerId, ArrayList<SubTask> materials, String status){
         Task toAdd = new Task(name, startDate, description, endDate, ownerId, status);
 
@@ -106,9 +111,11 @@ public class DataBase extends Application{
 
         dbTasks.child(id).setValue(toAdd);
         dbProfiles.child(ownerId).child("Task").push().setValue(toAdd);
+        assignTask(ownerId, id);
         return toAdd;
     }
 
+    //Method to assign task to a user
     public void assignTask(String profileId, String taskId){
         Task x = tasks.get(taskId);
         String oldOwnerId = x.getOwnerId();
@@ -124,6 +131,7 @@ public class DataBase extends Application{
         dbTasks.child(taskId).child("owner").setValue(profileId);
     }
 
+    //Method to remove profile, to be implemented...
     public void removeProfile(String profileId){
         Profile x = profiles.get(profileId);
         List<String> y = x.getAssignedTasks();//Gets all tasks assigned to said user
@@ -139,6 +147,7 @@ public class DataBase extends Application{
         profiles.remove(profileId);
     }
 
+    //Following removes tasks
     public void removeTask(String taskId){
         String ownerId = tasks.get(taskId).getOwnerId();
         profiles.get(ownerId).removeTask(taskId);
@@ -146,10 +155,12 @@ public class DataBase extends Application{
         tasks.remove(taskId);
     }
 
+    //Getter using id from firebase
     public Task getTask(String id){
         return tasks.get(id);
     }
 
+    //Getter using id from firebase
     public Profile getProfile(String id){
         return profiles.get(id);
     }
@@ -161,6 +172,7 @@ public class DataBase extends Application{
         return taskId;
     }
 
+    //Getter for Profiles held in an ArrayList, mostly used for ListViews..
     public ArrayList<Profile> getProfiles(){
         ArrayList<Profile> tmp = new ArrayList<Profile>();
         for (Map.Entry<String, Profile> entry : profiles.entrySet())
@@ -170,6 +182,7 @@ public class DataBase extends Application{
         return tmp;
     }
 
+    //Same as above, but for tasks.
     public ArrayList<Task> getTasks(){
         ArrayList<Task> tmp = new ArrayList<Task>();
         for (Map.Entry<String, Task> entry : tasks.entrySet())
@@ -179,14 +192,15 @@ public class DataBase extends Application{
         return tmp;
     }
 
+    //Getter for current user
     public Profile getCurrentUser(){
         return currentUser;
     }
 
+
+    //setter for current user
     public void setCurrentUser(Profile user){
         this.currentUser = user;
     }
-
-
 
 }
