@@ -1,11 +1,13 @@
 package com.uottawa.choremanager;
 
+import android.app.Application;
 import android.provider.ContactsContract;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -22,14 +24,14 @@ import java.util.Map;
 
 
 
-public class DataBase {
+public class DataBase extends Application{
     DatabaseReference dbProfiles, dbTasks;
     Map<String, Profile> profiles;
     Map<String, Task> tasks;
 
     public DataBase(){
-        dbProfiles = FirebaseDatabase.getInstance().getReference("profiles");
-        dbTasks = FirebaseDatabase.getInstance().getReference("tasks");
+        dbProfiles = FirebaseDatabase.getInstance().getReference("Profile");
+        dbTasks = FirebaseDatabase.getInstance().getReference("Task");
         profiles = new HashMap<String, Profile>();
         tasks = new HashMap<String, Task>();
 
@@ -37,8 +39,31 @@ public class DataBase {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try{
+                    System.out.println("Reading data from database...");
+                    tasks = (HashMap<String, Task>) dataSnapshot.getValue();
 
-                    System.out.println(dataSnapshot);
+                    System.out.println(tasks);
+                    System.out.println("IT WORKED! IT ACTUALLY WORKED! FUCK YEAH!");
+                } catch (Exception e){
+                    System.err.println(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+        dbProfiles.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try{
+                    System.out.println("Reading data from database...");
+                    profiles = (HashMap<String, Profile>) dataSnapshot.getValue();
+
+                    System.out.println(profiles);
+                    System.out.println("IT WORKED! IT ACTUALLY WORKED! FUCK YEAH!");
                 } catch (Exception e){
                     System.err.println(e.getMessage());
                 }
@@ -72,7 +97,7 @@ public class DataBase {
         }
         dbTasks.child(id).setValue(toAdd);
         profiles.get(ownerId).addTask(id);
-        dbProfiles.child(ownerId).child("tasks").push().setValue(toAdd);
+        dbProfiles.child(ownerId).child("Task").push().setValue(toAdd);
         tasks.put(id, toAdd);
         return toAdd;
     }
@@ -83,13 +108,13 @@ public class DataBase {
 
         if(!oldOwnerId.equals("")) {
             profiles.get(x.getOwnerId()).removeTask(taskId);
-            dbProfiles.child(oldOwnerId).child("tasks").child(taskId).removeValue();
+            dbProfiles.child(oldOwnerId).child("Task").child(taskId).removeValue();
         }
 
         profiles.get(profileId).addTask(taskId);
         tasks.get(taskId).setOwner(profileId);
 
-        dbProfiles.child(profileId).child("tasks").push().setValue(taskId);
+        dbProfiles.child(profileId).child("Task").push().setValue(taskId);
         dbTasks.child(taskId).child("owner").setValue(profileId);
     }
 
