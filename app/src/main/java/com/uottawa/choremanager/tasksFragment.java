@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+
+import java.util.ArrayList;
+
 import static java.sql.DriverManager.println;
 
 /**
@@ -47,7 +50,15 @@ public class tasksFragment extends Fragment {
         btnNewTask = (ImageButton) view.findViewById(R.id.imgNewTask);
         btnNewTask.setOnClickListener(new NewTaskOnClickListener());
 
-        String[] taskList = {"Hayley", "Raymond"};
+
+        ArrayList<Task> taskList = new ArrayList<Task>();
+        //SAMPLE DATA
+        Task aTask1 = new Task("Close door", 112233, "close the door", 9293, "1123");
+        taskList.add(aTask1);
+        Task aTask2 = new Task("open door", 112233, "open the door", 9293, "1123");
+        taskList.add(aTask2);
+
+
         ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
         TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), taskList);
         tasksListView.setAdapter(tasksAdapter);
