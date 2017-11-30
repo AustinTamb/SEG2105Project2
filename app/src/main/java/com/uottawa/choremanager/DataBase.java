@@ -26,11 +26,11 @@ import java.util.Map;
 
 
 public class DataBase extends Application{
-    DatabaseReference dbProfiles, dbTasks;
-    Map<String, Profile> profiles;
-    Map<String, Task> tasks;
-    ArrayList<String> profileId;
-    ArrayList<String> taskId;
+    private DatabaseReference dbProfiles, dbTasks;
+    private Map<String, Profile> profiles;
+    private Map<String, Task> tasks;
+    private ArrayList<String> profileId;
+    private ArrayList<String> taskId;
 
 
 
@@ -195,6 +195,13 @@ public class DataBase extends Application{
 
     public Profile getProfile(String id){
         return profiles.get(id);
+    }
+
+    public ArrayList<String> getProfileIds(){
+        return profileId;
+    }
+    public ArrayList<String> getTaskIds(){
+        return taskId;
     }
 
 
