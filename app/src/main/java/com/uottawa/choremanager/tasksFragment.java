@@ -53,10 +53,12 @@ public class tasksFragment extends Fragment {
                 mats.add(sT);
             }
         }
+        //Fills the tasks List View
         ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
         TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), x);
         tasksListView.setAdapter(tasksAdapter);
 
+        //Fills the materials List View
         ListView subTasksListView = (ListView) view.findViewById(R.id.listViewMaterials);
         MaterialsCustomAdapter subTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), x);
         subTasksListView.setAdapter(subTasksAdapter);
