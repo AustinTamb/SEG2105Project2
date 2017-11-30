@@ -1,8 +1,6 @@
 package com.uottawa.choremanager;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Calendar;
 import java.util.List;
 
 public class Profile{
