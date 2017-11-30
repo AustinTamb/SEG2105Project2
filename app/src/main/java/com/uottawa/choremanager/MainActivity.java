@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //Following is uses to populate database and test stuff...
         ArrayList<SubTask> z = new ArrayList<SubTask>();
         dB = new DataBase();
         Profile x = dB.addProfile("Austin", true,"Test123");
@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
         dB.assignTask(x.getId(), y.getId());
         dB.assignTask(x.getId(), b.getId());
         dB.setCurrentUser(x);
-       // dB.removeProfile(x);
-        //profiles.remove(x);
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager)findViewById(R.id.container);
