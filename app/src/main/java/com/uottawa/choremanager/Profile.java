@@ -3,13 +3,14 @@ package com.uottawa.choremanager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.List;
 
 public class Profile{
 	private boolean isParent;
 	private String name;
 	private String password;
 	private int numberOfTasksCompleted;
-	private ArrayList<Task> assignedTasks;
+	private List<String> assignedTasks;
 	private String dbId;
 
 	public Task createTask(String name, Date startDate, Boolean recur, int recurRate, Date endDate, Profile owner){
@@ -28,29 +29,16 @@ public class Profile{
 		this.name = name;
 		this.password = password;
 		this.numberOfTasksCompleted = 0;
-		this.assignedTasks = new ArrayList<Task>();
+		this.assignedTasks = new ArrayList<String>();
 	}
 
-	public void addTask(Task toAdd){
-		assignedTasks.add(toAdd);
+	public void addTask(String id){
+		assignedTasks.add(id);
 	}
 
-	//This might be outdated/useless now...
-	public void takeTask(Task toTake){
-		if(!toTake.getDone()){
-			Profile oldOwner = toTake.getOwner();
-			if(oldOwner != null)
-				oldOwner.removeTask(toTake);
-			
-			assignedTasks.add(toTake);
-			toTake.setOwner(this);
-		}
-
-	}
-
-	public void removeTask(Task toTake){
-		if(assignedTasks.contains(toTake)){
-			assignedTasks.remove(toTake);
+	public void removeTask(String id){
+		if(assignedTasks.contains(id)){
+			assignedTasks.remove(id);
 		}
 	}
 
@@ -90,6 +78,9 @@ public class Profile{
 		return dbId;
 	}
 
+	public List<String> getAssignedTasks(){
+		return assignedTasks;
+	}
 	public Boolean validatePassword(String passEnt){
 		return(password == passEnt);
 	}

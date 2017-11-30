@@ -2,6 +2,7 @@ package com.uottawa.choremanager;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Raymo on 2017-11-27.
@@ -14,22 +15,22 @@ public class Task {
     private String description;
 	private boolean done;
     private int endDate;
-    private Profile owner;
-    private ArrayList<SubTask> subTaskList;
+    private String ownerId;
+    private List<SubTask> subTaskList;
     private String id;
 
 
 
     public Task(String name, int startDate,
                 String description, int endDate,
-                Profile owner){
+                String ownerId){
 
         this.name = name;
         this.startDate = startDate;
         this.description = description;
         this.done = false;
         this.endDate = endDate;
-        this.owner = owner;
+        this.ownerId = ownerId;
         this.subTaskList = new ArrayList<SubTask>();
     }
 
@@ -116,9 +117,9 @@ public class Task {
         return true;
     }
 
-    public boolean setOwner(Profile aOwner)
+    public boolean setOwner(String aOwnerId)
     {
-        owner = aOwner;
+        ownerId = aOwnerId;
         return true;
     }
 
@@ -139,14 +140,22 @@ public class Task {
         return startDate;
     }
 
-    public Profile getOwner()
+    public String getOwnerId()
     {
-        return owner;
+        return ownerId;
     }
 
     public String getId(){
 	    return id;
 	}
+
+    public List<SubTask> getSubTasks(){
+        return subTaskList;
+    }
+
+    public void addSubTask(SubTask toAdd){
+        subTaskList.add(toAdd);
+    }
 
     public String toString()
     {
