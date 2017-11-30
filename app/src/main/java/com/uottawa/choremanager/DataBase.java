@@ -168,6 +168,23 @@ public class DataBase extends Application{
         return taskId;
     }
 
+    public ArrayList<Profile> getProfiles(){
+        ArrayList<Profile> tmp = new ArrayList<Profile>();
+        for (Map.Entry<String, Profile> entry : profiles.entrySet())
+        {
+            tmp.add(entry.getValue());
+        }
+        return tmp;
+    }
+
+    public ArrayList<Task> getTasks(){
+        ArrayList<Task> tmp = new ArrayList<Task>();
+        for (Map.Entry<String, Task> entry : tasks.entrySet())
+        {
+            tmp.add(entry.getValue());
+        }
+        return tmp;
+    }
 
 
 
