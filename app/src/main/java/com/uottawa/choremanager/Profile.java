@@ -65,6 +65,9 @@ public class Profile{
 		return assignedTasks.size();
 	}
 
+	public void setNumberOfTasksCompleted(int num){
+		this.numberOfTasksCompleted = num;
+	}
 
 	public int getNumberOfTasksCompleted(){
 		return numberOfTasksCompleted;
