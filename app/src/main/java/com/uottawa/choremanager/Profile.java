@@ -13,16 +13,6 @@ public class Profile{
 	private List<String> assignedTasks;
 	private String dbId;
 
-	public Task createTask(String name, Date startDate, Boolean recur, int recurRate, Date endDate, Profile owner){
-		
-
-		if(owner!=null){
-			//set task owner to owner
-			//add task to owners assignedTasks
-		}
-
-		return null;
-	}
 	public Profile(){
 
 	}
@@ -62,7 +52,7 @@ public class Profile{
 	}
 
 	public int getNumberOfCurrentTasks(){
-		return assignedTasks.size();
+		return (assignedTasks!=null)? assignedTasks.size():0;
 	}
 
 	public void setNumberOfTasksCompleted(int num){

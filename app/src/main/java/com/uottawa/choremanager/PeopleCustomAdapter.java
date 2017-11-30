@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by hayley on 2017-11-28.
  */
@@ -16,6 +18,7 @@ import android.widget.TextView;
 public class PeopleCustomAdapter extends ArrayAdapter {
     private final Context context;
     private final String[] people;
+    private DataBase dB;
 
     public PeopleCustomAdapter(Context context, String[] peopleList){
         super(context, R.layout.people_template, peopleList);
@@ -23,6 +26,9 @@ public class PeopleCustomAdapter extends ArrayAdapter {
         this.people = peopleList;
     }
     public View getView(int position, View convertView, ViewGroup parent) {
+        dB = MainActivity.getDB();
+        ArrayList<Profile> x = dB.getProfiles();
+        Profile person = x.get(position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.people_template, parent, false);
 
@@ -30,6 +36,12 @@ public class PeopleCustomAdapter extends ArrayAdapter {
         TextView numTasksTextField = (TextView) rowView.findViewById(R.id.txtNumTasks);
         TextView nextTaskTextField = (TextView) rowView.findViewById(R.id.txtNextTask);
         ImageView personImage = (ImageView) rowView.findViewById(R.id.imgPerson);
+
+        personNameTextField.setText(person.getName());
+        numTasksTextField.setText("Number of Tasks: " + person.getNumberOfCurrentTasks());
+        String currentTask = "N/A";
+        if(person.getNumberOfCurrentTasks()!=0)
+            currentTask = dB.getTask(person.getAssignedTasks().get(0)).getName();
 
         personImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,10 +52,7 @@ public class PeopleCustomAdapter extends ArrayAdapter {
         });
 
 
-        personNameTextField.setText(people[position]);
-        numTasksTextField.setText(people[position] + ":2");
-        nextTaskTextField.setText(people[position] + " : Wash car");
-
+        nextTaskTextField.setText("Current Tasks: " + currentTask);
         return rowView;
     }
 }

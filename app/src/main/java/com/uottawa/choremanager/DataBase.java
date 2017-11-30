@@ -77,8 +77,6 @@ public class DataBase extends Application{
                         //Log.e("Get Data", profile.getId());
                         profileId.add(profile.getId());
                     }
-
-
                 }
             }
 
@@ -124,7 +122,6 @@ public class DataBase extends Application{
             profiles.get(x.getOwnerId()).removeTask(taskId);
             dbProfiles.child(oldOwnerId).child("Task").child(taskId).removeValue();
         }
-
         profiles.get(profileId).addTask(taskId);
         tasks.get(taskId).setOwner(profileId);
 
