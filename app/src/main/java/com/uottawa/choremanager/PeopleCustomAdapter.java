@@ -1,6 +1,7 @@
 package com.uottawa.choremanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,14 @@ public class PeopleCustomAdapter extends ArrayAdapter {
         String currentTask = "N/A";
         if(person.getNumberOfCurrentTasks()!=0)
             currentTask = dB.getTask(person.getAssignedTasks().get(0)).getName();
+
+        personImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openProfile = new Intent(getContext(), viewProfileActivity.class);
+                context.startActivity(openProfile);
+            }
+        });
 
 
         nextTaskTextField.setText("Current Tasks: " + currentTask);

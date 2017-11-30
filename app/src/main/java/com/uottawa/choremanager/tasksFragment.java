@@ -58,7 +58,10 @@ public class tasksFragment extends Fragment {
         ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
         TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), x);
         tasksListView.setAdapter(tasksAdapter);
-        System.out.println("Successfully Created People view");
+
+        ListView subTasksListView = (ListView) view.findViewById(R.id.listViewMaterials);
+        MaterialsCustomAdapter subTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), x);
+        subTasksListView.setAdapter(subTasksAdapter);
 
 
         return view;
