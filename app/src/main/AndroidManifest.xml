@@ -24,7 +24,8 @@
         <activity android:name=".newTaskActivity" />
         <activity android:name=".newProfileActivity" />
         <activity android:name=".viewProfileActivity" />
-        <activity android:name=".viewTaskActivity"></activity>
+        <activity android:name=".viewTaskActivity" />
+        <activity android:name=".MaterialsCustomAdapter"></activity>
     </application>
 
 </manifest>
