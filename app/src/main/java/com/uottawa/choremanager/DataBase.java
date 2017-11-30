@@ -36,7 +36,7 @@ public class DataBase extends Application{
 
 
 
-    public DataBase(){
+    public DataBase() {
         dbProfiles = FirebaseDatabase.getInstance().getReference("Profile");
         dbTasks = FirebaseDatabase.getInstance().getReference("Task");
         profiles = new HashMap<String, Profile>();
@@ -46,15 +46,16 @@ public class DataBase extends Application{
 
         dbTasks.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try{
-                    System.out.println("Reading data from database...");
-                    tasks = (HashMap<String, Task>) dataSnapshot.getValue();
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.e("Count ", "" + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Task task = postSnapshot.getValue(Task.class);
+                    if (task != null) {
+                        tasks.put(task.getId(), task);
+                        //Log.e("Get Data", task.getId());
+                        //taskId.add(task.getId());
+                    }
 
-                    System.out.println(tasks);
-                    System.out.println("IT WORKED! IT ACTUALLY WORKED! FUCK YEAH!");
-                } catch (Exception e){
-                    System.err.println(e.getMessage());
                 }
             }
 
@@ -66,60 +67,23 @@ public class DataBase extends Application{
 
         dbProfiles.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try{
-                    System.out.println("Reading data from database...");
-                    profiles = (HashMap<String, Profile>) dataSnapshot.getValue();
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.e("Count ", "" + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Profile profile = postSnapshot.getValue(Profile.class);
+                    if (profile != null) {
+                        profiles.put(profile.getId(), profile);
+                        //Log.e("Get Data", profile.getId());
+                        //profileId.add(profile.getId());
+                    }
 
-                    System.out.println(profiles);
-                    System.out.println("IT WORKED! IT ACTUALLY WORKED! FUCK YEAH!");
-                } catch (Exception e){
-                    System.err.println(e.getMessage());
+
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-
-
-        dbProfiles.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                Log.e("Count " ,""+snapshot.getChildrenCount());
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-            Profile profile = postSnapshot.getValue(Profile.class);
-                    if (profile!=null) {
-                        Log.e("Get Data", profile.getId());
-                        profileId.add(profile.getId());
-                    }
-
-
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed" + databaseError.getCode());
-            }
-        });
-        dbTasks.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                Log.e("Count " ,""+snapshot.getChildrenCount());
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    Task task = postSnapshot.getValue(Task.class);
-                    if(task!=null) {
-                        Log.e("Get Data", task.getId());
-                        taskId.add(task.getId());
-                    }
-
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed" + databaseError.getCode());
             }
         });
     }
