@@ -103,10 +103,12 @@ public class DataBase extends Application{
         for(int i = 0; i < materials.size(); i++){
             toAdd.addSubTask(materials.get(i));
         }
-        dbTasks.child(id).setValue(toAdd);
+
         profiles.get(ownerId).addTask(id);
-        dbProfiles.child(ownerId).child("Task").push().setValue(toAdd);
         tasks.put(id, toAdd);
+
+        dbTasks.child(id).setValue(toAdd);
+        dbProfiles.child(ownerId).child("Task").push().setValue(toAdd);
         return toAdd;
     }
 
