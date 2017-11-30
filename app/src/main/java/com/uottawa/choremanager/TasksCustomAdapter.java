@@ -9,18 +9,20 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by hayley on 2017-11-28.
  */
 
 public class TasksCustomAdapter extends ArrayAdapter {
     private final Context context;
-    private final String[] tasks;
+    private final ArrayList<Task> tasksList;
 
-    public TasksCustomAdapter(Context context, String[] tasksList){
+    public TasksCustomAdapter(Context context, ArrayList<Task> tasksList){
         super(context, R.layout.tasks, tasksList);
         this.context = context;
-        this.tasks = tasksList;
+        this.tasksList = tasksList;
     }
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -30,7 +32,7 @@ public class TasksCustomAdapter extends ArrayAdapter {
         ImageView personImage = (ImageView) rowView.findViewById(R.id.imgPerson);
         CheckBox cbx = (CheckBox) rowView.findViewById(R.id.cbx);
 
-        taskNameTextField.setText(tasks[position]);
+        taskNameTextField.setText(tasksList.get(position).getName());
 
 
         return rowView;
