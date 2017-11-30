@@ -23,6 +23,9 @@ public class Profile{
 
 		return null;
 	}
+	public Profile(){
+
+	}
 
 	public Profile(String name, boolean isParent, String password/*Add image*/){
 		this.isParent = isParent;

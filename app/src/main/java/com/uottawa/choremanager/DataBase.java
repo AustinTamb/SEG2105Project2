@@ -2,6 +2,7 @@ package com.uottawa.choremanager;
 
 import android.app.Application;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,12 +29,20 @@ public class DataBase extends Application{
     DatabaseReference dbProfiles, dbTasks;
     Map<String, Profile> profiles;
     Map<String, Task> tasks;
+    ArrayList<String> profileId;
+    ArrayList<String> taskId;
+
+
+
+
 
     public DataBase(){
         dbProfiles = FirebaseDatabase.getInstance().getReference("Profile");
         dbTasks = FirebaseDatabase.getInstance().getReference("Task");
         profiles = new HashMap<String, Profile>();
         tasks = new HashMap<String, Task>();
+        profileId = new ArrayList<String>();
+        taskId = new ArrayList<String>();
 
         dbTasks.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -74,7 +83,47 @@ public class DataBase extends Application{
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+
+
+        dbProfiles.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.e("Count " ,""+snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+            Profile profile = postSnapshot.getValue(Profile.class);
+                    if (profile!=null) {
+                        Log.e("Get Data", profile.getId());
+                        profileId.add(profile.getId());
+                    }
+
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed" + databaseError.getCode());
+            }
+        });
+        dbTasks.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.e("Count " ,""+snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    Task task = postSnapshot.getValue(Task.class);
+                    if(task!=null) {
+                        Log.e("Get Data", task.getId());
+                        taskId.add(task.getId());
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed" + databaseError.getCode());
+            }
+        });
     }
+
 
     public Profile addProfile(String name, Boolean isParent, String password){
         Profile toAdd = new Profile(name, isParent, password);
@@ -147,6 +196,10 @@ public class DataBase extends Application{
     public Profile getProfile(String id){
         return profiles.get(id);
     }
+
+
+
+
 
 
 }
