@@ -49,16 +49,14 @@ public class tasksFragment extends Fragment {
         btnNewTask.setOnClickListener(new NewTaskOnClickListener());
         dB = MainActivity.getDB();
         ArrayList<Task> x = dB.getTasks();
-        String[] taskList = new String[x.size()];
         ArrayList<SubTask> mats = new ArrayList<SubTask>();
         for(int i = 0; i < x.size(); i++){
-            taskList[i] = x.get(i).getName();
             for(SubTask sT : x.get(i).getSubTasks()){
                 mats.add(sT);
             }
         }
         ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
-        TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), taskList);
+        TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), x);
         tasksListView.setAdapter(tasksAdapter);
         System.out.println("Successfully Created People view");
 
