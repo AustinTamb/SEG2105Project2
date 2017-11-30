@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.uottawa.choremanager.MainActivity.dB;
 
 public class newProfileActivity extends AppCompatActivity {
     DataBase dB;

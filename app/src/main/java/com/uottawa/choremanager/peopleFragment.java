@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Raymo on 2017-11-24.
  */
@@ -18,7 +20,7 @@ public class peopleFragment extends Fragment {
     //taken from https://www.youtube.com/watch?v=bNpWGI_hGGg
 
     private ImageButton btnNewProfile;
-
+    private DataBase dB;
     private static final String TAG = "peopleFragment";
 
     //This nested class is used to control what happens when btnNewTask is clicked
@@ -35,8 +37,14 @@ public class peopleFragment extends Fragment {
         View view = inflater.inflate(R.layout.people, container, false);
         btnNewProfile = (ImageButton) view.findViewById(R.id.imgNewPerson);
         btnNewProfile.setOnClickListener(new NewProfileOnClickListener());
+        dB = MainActivity.getDB();
+        ArrayList<Profile> x = dB.getProfiles();
+        String[] taskList = new String[x.size()];
+        for (int i = 0; i < x.size(); i++){
+            taskList[i] = x.get(i).getName();
 
-        String[] taskList = {"Hayley", "Raymond"};
+        }
+
         ListView peopleListView = (ListView) view.findViewById(R.id.listViewPeople);
         PeopleCustomAdapter peopleAdapter = new PeopleCustomAdapter(getActivity().getApplicationContext(), taskList);
         peopleListView.setAdapter(peopleAdapter);

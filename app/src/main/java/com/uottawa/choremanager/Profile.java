@@ -1,8 +1,6 @@
 package com.uottawa.choremanager;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Calendar;
 import java.util.List;
 
 public class Profile{
@@ -12,17 +10,8 @@ public class Profile{
 	private int numberOfTasksCompleted;
 	private List<String> assignedTasks;
 	private String dbId;
+	private int numberOfCurrentTasks;
 
-	public Task createTask(String name, Date startDate, Boolean recur, int recurRate, Date endDate, Profile owner){
-		
-
-		if(owner!=null){
-			//set task owner to owner
-			//add task to owners assignedTasks
-		}
-
-		return null;
-	}
 	public Profile(){
 
 	}
@@ -33,15 +22,19 @@ public class Profile{
 		this.password = password;
 		this.numberOfTasksCompleted = 0;
 		this.assignedTasks = new ArrayList<String>();
+		this.numberOfCurrentTasks = 0;
 	}
 
 	public void addTask(String id){
 		assignedTasks.add(id);
+		numberOfCurrentTasks++;
+		System.out.println(numberOfCurrentTasks);
 	}
 
 	public void removeTask(String id){
 		if(assignedTasks.contains(id)){
 			assignedTasks.remove(id);
+			numberOfCurrentTasks--;
 		}
 	}
 
@@ -59,10 +52,6 @@ public class Profile{
 
 	public Boolean isParent(){
 		return isParent;
-	}
-
-	public int getNumberOfCurrentTasks(){
-		return assignedTasks.size();
 	}
 
 	public void setNumberOfTasksCompleted(int num){
@@ -89,5 +78,29 @@ public class Profile{
 	}
 	public Boolean validatePassword(String passEnt){
 		return(password == passEnt);
+	}
+
+	public void setAssignedTasks(List<String> assignedTasks) {
+		this.assignedTasks = assignedTasks;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getDbId() {
+		return dbId;
+	}
+
+	public void setDbId(String dbId) {
+		this.dbId = dbId;
+	}
+
+	public int getNumberOfCurrentTasks(){
+		return numberOfCurrentTasks;
+	}
+
+	public void setNumberOfCurrentTasks(int nOCT){
+		numberOfCurrentTasks = nOCT;
 	}
 }
