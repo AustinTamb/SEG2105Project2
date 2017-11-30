@@ -27,15 +27,24 @@ public class newTaskActivity extends AppCompatActivity {
     private ArrayList<String> names;
     private newTaskMaterialsAdapter materialsTasksAdapter;
     private DataBase dB;
+    private ArrayList<String> profileIdList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_task);
+        dB = MainActivity.getDB();
+
+        profileIdList = dB.getProfileIds();
+
         names = new ArrayList<String>();
         subTasks = new ArrayList<SubTask>();
-        final Spinner profiles = findViewById(R.id.spnProfiles);
+        final Spinner profiles = (Spinner) findViewById(R.id.spnProfiles);
         //Get array of Profiles, loop through and getNames->spinnerOption
+        //Followed Tutorial https://developer.android.com/guide/topics/ui/controls/spinner.html#SelectListener
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //profiles.setAdapter(adapter);
+
 
         ListView test =(ListView) findViewById(R.id.listViewMaterials);
         String testStr = test.toString();
