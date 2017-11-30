@@ -2,7 +2,6 @@ package com.uottawa.choremanager;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 /**
  * Created by Raymo on 2017-11-30.
