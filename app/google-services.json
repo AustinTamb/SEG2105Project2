@@ -15,6 +15,38 @@
       },
       "oauth_client": [
         {
+          "client_id": "413048008252-5as10l3ejmvd548lg6kdovubjd9gjnhr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uottawa.choremanager",
+            "certificate_hash": "3d729811abeed0f128b59e4b3d1947d3f4c403bc"
+          }
+        },
+        {
+          "client_id": "413048008252-2gs630hh8n40gr7ft56kdru4o6ogkp4p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uottawa.choremanager",
+            "certificate_hash": "e412cf9de7acb8ade5d61d2fc34d71389ee8dbd9"
+          }
+        },
+        {
+          "client_id": "413048008252-018l3l5q2tukq14mq703m7s9n21n4p6u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uottawa.choremanager",
+            "certificate_hash": "a1b303268fe873c2ae43b61e45f4ca2e1075a76a"
+          }
+        },
+        {
+          "client_id": "413048008252-7peu4k7ri5nbiet7v6opjhikeluvrckv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uottawa.choremanager",
+            "certificate_hash": "6c29197534d5d236b31ea7f4e9c9363e46c746ab"
+          }
+        },
+        {
           "client_id": "413048008252-8rmftdrlq80jkilm08idu7djm4tqivsf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

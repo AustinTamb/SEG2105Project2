@@ -53,7 +53,7 @@ public class DataBase extends Application{
                     if (task != null) {
                         tasks.put(task.getId(), task);
                         //Log.e("Get Data", task.getId());
-                        //taskId.add(task.getId());
+                        taskId.add(task.getId());
                     }
 
                 }
@@ -74,7 +74,7 @@ public class DataBase extends Application{
                     if (profile != null) {
                         profiles.put(profile.getId(), profile);
                         //Log.e("Get Data", profile.getId());
-                        //profileId.add(profile.getId());
+                        profileId.add(profile.getId());
                     }
 
 
