@@ -39,6 +39,7 @@ public class newTaskActivity extends AppCompatActivity {
                 String endDate = ((TextView)findViewById(R.id.txtEndDate)).getText().toString();
                 String name = ((TextView)findViewById(R.id.txtTaskName)).getText().toString();
                 String description = ((TextView)findViewById(R.id.txtNotes)).getText().toString();
+
             }
         });
         final Button addButton = findViewById(R.id.btnAdd);

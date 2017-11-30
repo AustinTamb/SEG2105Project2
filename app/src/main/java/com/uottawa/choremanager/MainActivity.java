@@ -38,7 +38,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private SectionPageAdapter mSectionPageAdapter;
     private ViewPager mViewPager;
-    public DataBase dB;
+    static public DataBase dB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         Task y = dB.addTask("Wash Car", 10, "wash it..", 20, x.getId(), z);
 
-
+        dB.setCurrentUser(x);
        // dB.removeProfile(x);
         //profiles.remove(x);
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    public DataBase getDB(){
+    static public DataBase getDB(){
         return dB;
     }
 }

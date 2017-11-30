@@ -31,6 +31,7 @@ public class DataBase extends Application{
     private Map<String, Task> tasks;
     private ArrayList<String> profileId;
     private ArrayList<String> taskId;
+    private Profile currentUser;
 
 
 
@@ -91,7 +92,7 @@ public class DataBase extends Application{
 
     public Profile addProfile(String name, Boolean isParent, String password){
         Profile toAdd = new Profile(name, isParent, password);
-
+        System.out.println(password);
         String id = dbProfiles.push().getKey();
         toAdd.setId(id);
         dbProfiles.child(id).setValue(toAdd);
@@ -100,8 +101,8 @@ public class DataBase extends Application{
         return toAdd;
     }
 
-    public Task addTask(String name, int startDate, String description, int endDate, String ownerId, ArrayList<SubTask> materials){
-        Task toAdd = new Task(name, startDate, description, endDate, ownerId);
+    public Task addTask(String name, int startDate, String description, int endDate, String ownerId, ArrayList<SubTask> materials, String status){
+        Task toAdd = new Task(name, startDate, description, endDate, ownerId, status);
 
         String id = dbTasks.push().getKey();
         toAdd.setId(id);
@@ -186,7 +187,13 @@ public class DataBase extends Application{
         return tmp;
     }
 
+    public Profile getCurrentUser(){
+        return currentUser;
+    }
 
+    public void setCurrentUser(Profile user){
+        this.currentUser = user;
+    }
 
 
 
