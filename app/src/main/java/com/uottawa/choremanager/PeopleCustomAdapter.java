@@ -39,10 +39,12 @@ public class PeopleCustomAdapter extends ArrayAdapter {
 
         personNameTextField.setText(person.getName());
         numTasksTextField.setText("Number of Tasks: " + person.getNumberOfCurrentTasks());
-        String currentTask = "N/A";
-        if(person.getNumberOfCurrentTasks()!=0)
+        String currentTask;
+        try {
             currentTask = dB.getTask(person.getAssignedTasks().get(0)).getName();
-
+        } catch (Exception e){
+            currentTask = "N/A";
+        }
         personImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
