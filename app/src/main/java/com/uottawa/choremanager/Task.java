@@ -20,12 +20,13 @@ public class Task {
     private String ownerId;
     private List<SubTask> subTaskList;
     private String id;
+    private String status;
 
 
 
     public Task(String name, int startDate,
                 String description, int endDate,
-                String ownerId){
+                String ownerId, String status){
 
         this.name = name;
         this.startDate = startDate;
@@ -34,6 +35,7 @@ public class Task {
         this.endDate = endDate;
         this.ownerId = ownerId;
         this.subTaskList = new ArrayList<SubTask>();
+        this.status = status;
     }
 
 
@@ -161,6 +163,14 @@ public class Task {
 
     public void addSubTask(SubTask toAdd){
         subTaskList.add(toAdd);
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String toString()
