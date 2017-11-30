@@ -12,6 +12,7 @@ public class Profile{
 	private int numberOfTasksCompleted;
 	private List<String> assignedTasks;
 	private String dbId;
+	private int numberOfCurrentTasks;
 
 	public Profile(){
 
@@ -23,15 +24,19 @@ public class Profile{
 		this.password = password;
 		this.numberOfTasksCompleted = 0;
 		this.assignedTasks = new ArrayList<String>();
+		this.numberOfCurrentTasks = 0;
 	}
 
 	public void addTask(String id){
 		assignedTasks.add(id);
+		numberOfCurrentTasks++;
+		System.out.println(numberOfCurrentTasks);
 	}
 
 	public void removeTask(String id){
 		if(assignedTasks.contains(id)){
 			assignedTasks.remove(id);
+			numberOfCurrentTasks--;
 		}
 	}
 
@@ -49,10 +54,6 @@ public class Profile{
 
 	public Boolean isParent(){
 		return isParent;
-	}
-
-	public int getNumberOfCurrentTasks(){
-		return (assignedTasks!=null)? assignedTasks.size():0;
 	}
 
 	public void setNumberOfTasksCompleted(int num){
@@ -95,5 +96,13 @@ public class Profile{
 
 	public void setDbId(String dbId) {
 		this.dbId = dbId;
+	}
+
+	public int getNumberOfCurrentTasks(){
+		return numberOfCurrentTasks;
+	}
+
+	public void setNumberOfCurrentTasks(int nOCT){
+		numberOfCurrentTasks = nOCT;
 	}
 }

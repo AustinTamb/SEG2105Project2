@@ -125,12 +125,6 @@ public class Task {
         return true;
     }
 
-    public boolean setOwner(String aOwnerId)
-    {
-        ownerId = aOwnerId;
-        return true;
-    }
-
     public String getName()
     {
         return name;
@@ -161,10 +155,6 @@ public class Task {
         return subTaskList;
     }
 
-
-    public void setSubTask(ArrayList<SubTask> subTask){
-        this.subTaskList = subTask;
-    }
     public void addSubTask(SubTask toAdd){
         subTaskList.add(toAdd);
     }
@@ -193,17 +183,13 @@ public class Task {
 
     //Generated methods:
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public List<SubTask> getSubTaskList() {
-        return subTaskList;
-    }
 
     public void setSubTaskList(List<SubTask> subTaskList) {
         this.subTaskList = subTaskList;
     }
 
+    public void setOwner(String id){
+        this.ownerId = id;
+    }
     //End Citation
 }
