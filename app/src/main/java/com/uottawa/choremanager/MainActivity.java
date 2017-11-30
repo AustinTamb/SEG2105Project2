@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         z.add(new SubTask("Bucket", false));
         z.add(new SubTask("Water", false));
 
-        Task y = dB.addTask("Wash Car", 10, "wash it..", 20, x.getId(), z);
+        Task y = dB.addTask("Wash Car", 10, "wash it..", 20, x.getId(), z, "Active");
 
         dB.setCurrentUser(x);
        // dB.removeProfile(x);
