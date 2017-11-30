@@ -6,6 +6,8 @@
 
 package com.uottawa.choremanager;
 
+import android.app.Application;
+import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -36,7 +38,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private SectionPageAdapter mSectionPageAdapter;
     private ViewPager mViewPager;
-    DataBase dB;
+    public DataBase dB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new tasksFragment(), "Tasks");
         adapter.addFragment(new peopleFragment(), "People");
         viewPager.setAdapter(adapter);
+    }
+
+    public DataBase getDB(){
+        return dB;
     }
 }
 

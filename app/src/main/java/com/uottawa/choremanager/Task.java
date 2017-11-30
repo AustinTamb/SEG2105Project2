@@ -1,5 +1,7 @@
 package com.uottawa.choremanager;
 
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +36,10 @@ public class Task {
         this.subTaskList = new ArrayList<SubTask>();
     }
 
+
+    public Task(){
+        //do something
+    }
 
     public void addSubTask(String subTaskName){
         SubTask newSubTask = new SubTask(subTaskName, false);
@@ -168,7 +174,7 @@ public class Task {
                 "startDate" + ":" + getStartDate()+ "," +
                 "endDate" + ":" + getEndDate()+ "," +
                 System.getProperties().getProperty("line.separator") +
-                " " + "owner" + "=" + (getOwner() != null ? !getOwner().equals(this)  ? getOwner().toString().replaceAll("  ","    ") : "this" : "null"));
+                " " + "owner" + "=" + (getOwnerId() != null ? !getOwnerId().equals(this)  ? getOwnerId().toString().replaceAll("  ","    ") : "this" : "null"));
     }
 
     //End Citation
