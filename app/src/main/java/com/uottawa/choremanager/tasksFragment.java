@@ -15,8 +15,6 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import static java.sql.DriverManager.println;
-
 /**
  * Created by Raymo on 2017-11-24.
  */
@@ -25,7 +23,7 @@ public class tasksFragment extends Fragment {
     //taken from tutorial https://www.youtube.com/watch?v=bNpWGI_hGGg
 
     private ImageButton btnNewTask;
-
+    private DataBase dB;
     private static final String TAG = "tasksFragment";
 
 
@@ -49,16 +47,16 @@ public class tasksFragment extends Fragment {
         View view = inflater.inflate(R.layout.tasks, container, false);
         btnNewTask = (ImageButton) view.findViewById(R.id.imgNewTask);
         btnNewTask.setOnClickListener(new NewTaskOnClickListener());
-
-
-        ArrayList<Task> taskList = new ArrayList<Task>();
-        //SAMPLE DATA
-        Task aTask1 = new Task("Close door", 112233, "close the door", 9293, "1123");
-        taskList.add(aTask1);
-        Task aTask2 = new Task("open door", 112233, "open the door", 9293, "1123");
-        taskList.add(aTask2);
-
-
+        dB = MainActivity.getDB();
+        ArrayList<Task> x = dB.getTasks();
+        String[] taskList = new String[x.size()];
+        ArrayList<SubTask> mats = new ArrayList<SubTask>();
+        for(int i = 0; i < x.size(); i++){
+            taskList[i] = x.get(i).getName();
+            for(SubTask sT : x.get(i).getSubTasks()){
+                mats.add(sT);
+            }
+        }
         ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
         TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), taskList);
         tasksListView.setAdapter(tasksAdapter);
