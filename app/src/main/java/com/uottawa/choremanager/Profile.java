@@ -80,4 +80,20 @@ public class Profile{
 	public Boolean validatePassword(String passEnt){
 		return(password == passEnt);
 	}
+
+	public void setAssignedTasks(List<String> assignedTasks) {
+		this.assignedTasks = assignedTasks;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getDbId() {
+		return dbId;
+	}
+
+	public void setDbId(String dbId) {
+		this.dbId = dbId;
+	}
 }

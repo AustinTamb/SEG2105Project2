@@ -161,6 +161,10 @@ public class Task {
         return subTaskList;
     }
 
+
+    public void setSubTask(ArrayList<SubTask> subTask){
+        this.subTaskList = subTask;
+    }
     public void addSubTask(SubTask toAdd){
         subTaskList.add(toAdd);
     }
@@ -185,6 +189,20 @@ public class Task {
                 "endDate" + ":" + getEndDate()+ "," +
                 System.getProperties().getProperty("line.separator") +
                 " " + "owner" + "=" + (getOwnerId() != null ? !getOwnerId().equals(this)  ? getOwnerId().toString().replaceAll("  ","    ") : "this" : "null"));
+    }
+
+    //Generated methods:
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public List<SubTask> getSubTaskList() {
+        return subTaskList;
+    }
+
+    public void setSubTaskList(List<SubTask> subTaskList) {
+        this.subTaskList = subTaskList;
     }
 
     //End Citation
