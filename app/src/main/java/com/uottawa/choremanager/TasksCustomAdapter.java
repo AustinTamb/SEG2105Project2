@@ -1,11 +1,13 @@
 package com.uottawa.choremanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,6 +52,15 @@ public class TasksCustomAdapter extends ArrayAdapter {
             }
         });
 
+        ImageButton imgTaskButton = (ImageButton) rowView.findViewById(R.id.imgPerson);
+
+        imgTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openTask = new Intent(getContext(), viewTaskActivity.class);
+                context.startActivity(openTask);
+            }
+        });
 
         taskNameTextField.setText(tasksList.get(position).getName());
 
