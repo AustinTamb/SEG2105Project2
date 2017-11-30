@@ -23,6 +23,7 @@
         <activity
             android:name=".newTaskActivity"/>
         <activity android:name=".newProfileActivity"></activity>
+        <activity android:name=".viewProfileActivity"></activity>
     </application>
 
 </manifest>

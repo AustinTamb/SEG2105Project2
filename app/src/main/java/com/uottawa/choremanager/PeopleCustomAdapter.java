@@ -1,6 +1,7 @@
 package com.uottawa.choremanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,15 @@ public class PeopleCustomAdapter extends ArrayAdapter {
         TextView numTasksTextField = (TextView) rowView.findViewById(R.id.txtNumTasks);
         TextView nextTaskTextField = (TextView) rowView.findViewById(R.id.txtNextTask);
         ImageView personImage = (ImageView) rowView.findViewById(R.id.imgPerson);
+
+        personImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openProfile = new Intent(getContext(), viewProfileActivity.class);
+                context.startActivity(openProfile);
+            }
+        });
+
 
         personNameTextField.setText(people[position]);
         numTasksTextField.setText(people[position] + ":2");
