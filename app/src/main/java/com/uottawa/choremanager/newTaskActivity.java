@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,11 +46,11 @@ public class newTaskActivity extends AppCompatActivity {
 
 
         ListView test =(ListView) findViewById(R.id.listViewMaterials);
-        String testStr = test.toString();
+        //String testStr = test.toString();
 
 
         ListView materialsListView = (ListView) findViewById(R.id.listViewMaterials);
-        System.out.println("-------------------------------------------------> PRINTING ID" + testStr);
+        //System.out.println("-------------------------------------------------> PRINTING ID" + testStr);
 
 
         materialsTasksAdapter = new newTaskMaterialsAdapter(getApplicationContext(),subTasks);
