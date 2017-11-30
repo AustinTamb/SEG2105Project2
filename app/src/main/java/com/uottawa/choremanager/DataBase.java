@@ -23,6 +23,9 @@ import java.util.Map;
 
 
 public class DataBase extends Application{
+    //DataBase takes advantage of id creator of firebase in
+    //order to make it act as a database when searching for a specific
+    //Class instance
     private DatabaseReference dbProfiles, dbTasks;
     private Map<String, Profile> profiles;
     private Map<String, Task> tasks;
