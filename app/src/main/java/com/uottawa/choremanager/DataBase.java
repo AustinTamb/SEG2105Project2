@@ -33,10 +33,6 @@ public class DataBase extends Application{
     private ArrayList<String> taskId;
     private Profile currentUser;
 
-
-
-
-
     public DataBase() {
         dbProfiles = FirebaseDatabase.getInstance().getReference("Profile");
         dbTasks = FirebaseDatabase.getInstance().getReference("Task");
