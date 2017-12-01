@@ -29,8 +29,6 @@ public class DataBase extends Application{
     private DatabaseReference dbProfiles, dbTasks;
     private Map<String, Profile> profiles;
     private Map<String, Task> tasks;
-    private ArrayList<String> profileId;
-    private ArrayList<String> taskId;
     private Profile currentUser;
 
     public DataBase() {
@@ -38,8 +36,6 @@ public class DataBase extends Application{
         dbTasks = FirebaseDatabase.getInstance().getReference("Task");
         profiles = new HashMap<String, Profile>();
         tasks = new HashMap<String, Task>();
-        profileId = new ArrayList<String>();
-        taskId = new ArrayList<String>();
 
         //Loads Tasks from Firebase on initializations
         dbTasks.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -51,9 +47,7 @@ public class DataBase extends Application{
                     if (task != null) {
                         tasks.put(task.getId(), task);
                         //Log.e("Get Data", task.getId());
-                        taskId.add(task.getId());
                     }
-
                 }
             }
 
@@ -70,11 +64,11 @@ public class DataBase extends Application{
             public void onDataChange(DataSnapshot snapshot) {
                 Log.e("Count ", "" + snapshot.getChildrenCount());
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    System.out.println(postSnapshot);
                     Profile profile = postSnapshot.getValue(Profile.class);
                     if (profile != null) {
                         profiles.put(profile.getId(), profile);
                         //Log.e("Get Data", profile.getId());
-                        profileId.add(profile.getId());
                     }
                 }
             }
@@ -93,9 +87,9 @@ public class DataBase extends Application{
         Profile toAdd = new Profile(name, isParent, password);
         String id = dbProfiles.push().getKey();
         toAdd.setId(id);
-        dbProfiles.child(id).setValue(toAdd);
 
         profiles.put(id, toAdd);
+        dbProfiles.child(id).setValue(toAdd);
         return toAdd;
     }
 
@@ -109,12 +103,9 @@ public class DataBase extends Application{
             toAdd.addSubTask(materials.get(i));
         }
 
-        profiles.get(ownerId).addTask(id);
         tasks.put(id, toAdd);
 
         dbTasks.child(id).setValue(toAdd);
-        dbProfiles.child(ownerId).child("Task").push().setValue(toAdd);
-        assignTask(ownerId, id);
         return toAdd;
     }
 
@@ -122,16 +113,15 @@ public class DataBase extends Application{
     public void assignTask(String profileId, String taskId){
         Task x = tasks.get(taskId);
         String oldOwnerId = x.getOwnerId();
+        removeTaskFromProfile(oldOwnerId, taskId);
 
-        if(!oldOwnerId.equals("")) {
-            profiles.get(x.getOwnerId()).removeTask(taskId);
-            dbProfiles.child(oldOwnerId).child("Task").child(taskId).removeValue();
-        }
-        profiles.get(profileId).addTask(taskId);
+
+        Profile user = profiles.get(profileId);
+        user.addTask(taskId);
         tasks.get(taskId).setOwner(profileId);
 
-        dbProfiles.child(profileId).child("Task").push().setValue(taskId);
-        dbTasks.child(taskId).child("owner").setValue(profileId);
+        dbProfiles.child(profileId).child("assignedTasks").setValue(user.getAssignedTasks());
+        dbTasks.child(taskId).child("ownerId").setValue(profileId);
     }
 
     //Method to remove profile, to be implemented...
@@ -143,7 +133,7 @@ public class DataBase extends Application{
         for(int i = 0; i < y.size(); i++){
             String taskId = y.get(i);
             tasks.get(taskId).setOwner("");
-            dbTasks.child(taskId).child("owner").setValue("");
+            dbTasks.child(taskId).child("ownerId").setValue("");
         }
 
         dbProfiles.child(profileId).removeValue();
@@ -154,8 +144,18 @@ public class DataBase extends Application{
     public void removeTask(String taskId){
         String ownerId = tasks.get(taskId).getOwnerId();
         profiles.get(ownerId).removeTask(taskId);
+        dbProfiles.child(ownerId).child("assignedTasks").child(taskId).removeValue();
         dbTasks.child(taskId).removeValue();
         tasks.remove(taskId);
+    }
+
+    public void removeTaskFromProfile(String profileId, String taskId){
+        Profile x = getProfile(profileId);
+        x.removeTask(taskId);
+        Task y = getTask(taskId);
+        y.setOwner("");
+        dbProfiles.child(profileId).child("assignedTasks").child(taskId).removeValue();
+        dbTasks.child(taskId).child("ownerId").setValue("");
     }
 
     //Getter using id from firebase
@@ -166,13 +166,6 @@ public class DataBase extends Application{
     //Getter using id from firebase
     public Profile getProfile(String id){
         return profiles.get(id);
-    }
-
-    public ArrayList<String> getProfileIds(){
-        return profileId;
-    }
-    public ArrayList<String> getTaskIds(){
-        return taskId;
     }
 
     //Getter for Profiles held in an ArrayList, mostly used for ListViews..

@@ -41,12 +41,10 @@ public class TasksCustomAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 Task x = tasksList.get(position);
-                if(x.getStatus().equals("Active") && !x.getDone()) {
-                    tasksList.get(position).setDone(cbx.isChecked());
+                if(x.getStatus().equals("Active") && x.getStatus().equals("Active")) {
+                    tasksList.get(position).setStatus(cbx.isChecked()?"Done":"Error");
                     Profile owner = dB.getProfile(tasksList.get(position).getOwnerId());
                     owner.setNumberOfTasksCompleted(owner.getNumberOfTasksCompleted()+1);
-                    x.setStatus("Done");
-                    x.setDone(true);
                     cbx.setEnabled(false);
                 }
             }

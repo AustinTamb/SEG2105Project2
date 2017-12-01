@@ -24,21 +24,17 @@ public class SubTask {
 
     public boolean setDone(boolean aDone)
     {
-        boolean wasSet = false;
         done = aDone;
-        wasSet = true;
-        return wasSet;
+        return true;
     }
 
     public boolean setName(String aName)
     {
-        boolean wasSet = false;
         name = aName;
-        wasSet = true;
-        return wasSet;
+        return true;
     }
 
-    public boolean getDone()
+    public boolean isDone()
     {
         return done;
     }
@@ -52,7 +48,7 @@ public class SubTask {
     public String toString()
     {
         return super.toString() + "["+
-                "done" + ":" + getDone()+ "," +
+                "done" + ":" + isDone()+ "," +
                 "name" + ":" + getName()+ "]";
     }
 

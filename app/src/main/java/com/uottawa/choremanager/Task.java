@@ -13,10 +13,9 @@ public class Task {
     private String name;
     private int startDate;
     private String description;
-	private boolean done;
     private int endDate;
     private String ownerId;
-    private List<SubTask> subTaskList;
+    private List<SubTask> subTasks;
     private String id;
     private String status;
 
@@ -29,10 +28,9 @@ public class Task {
         this.name = name;
         this.startDate = startDate;
         this.description = description;
-        this.done = false;
         this.endDate = endDate;
         this.ownerId = ownerId;
-        this.subTaskList = new ArrayList<SubTask>();
+        this.subTasks = new ArrayList<SubTask>();
         this.status = status;
     }
 
@@ -43,12 +41,12 @@ public class Task {
 
     public void addSubTask(String subTaskName){
         SubTask newSubTask = new SubTask(subTaskName, false);
-        subTaskList.add(newSubTask);
+        subTasks.add(newSubTask);
     }
 
     //Returns the requested SubTask or null if the SubTask does not exist
     public SubTask getSubTask(String name){
-        for(SubTask s: subTaskList){
+        for(SubTask s: subTasks){
             if(name.equals(s)){ return(s); }
         }
         return(null);
@@ -59,15 +57,15 @@ public class Task {
     //Removes the specified SubTask
     public void removeSubTask(String subTaskName, boolean done){
         SubTask newSubTask = new SubTask(subTaskName, false);
-        subTaskList.remove(newSubTask);
+        subTasks.remove(newSubTask);
 
         SubTask toBeRemoved;
         //True if the SubTask is found
 
-        for(SubTask s: subTaskList){
+        for(SubTask s: subTasks){
             if(name.equals(s)){
                 toBeRemoved = s;
-                subTaskList.remove(s);
+                subTasks.remove(s);
                 break;
             }
         }
@@ -82,17 +80,7 @@ public class Task {
     //------------------------
     // INTERFACE
     //------------------------
-	
-	public boolean getDone()
-    {
-        return done;
-    }
-	
-	public boolean setDone(boolean aDone)
-    {
-        this.done = aDone;
-        return true;
-    }
+
 	
 	public boolean setId(String id){
         this.id = id;
@@ -150,11 +138,11 @@ public class Task {
 	}
 
     public List<SubTask> getSubTasks(){
-        return subTaskList;
+        return subTasks;
     }
 
     public void addSubTask(SubTask toAdd){
-        subTaskList.add(toAdd);
+        subTasks.add(toAdd);
     }
 
     public String getStatus() {
@@ -182,8 +170,8 @@ public class Task {
     //Generated methods:
 
 
-    public void setSubTaskList(List<SubTask> subTaskList) {
-        this.subTaskList = subTaskList;
+    public void setSubTasks(List<SubTask> subTaskList) {
+        this.subTasks = subTaskList;
     }
 
     public void setOwner(String id){
