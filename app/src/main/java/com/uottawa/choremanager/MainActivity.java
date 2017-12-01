@@ -21,10 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //Following is uses to populate database and test stuff...
         ArrayList<SubTask> z = new ArrayList<SubTask>();
         dB = new DataBase();

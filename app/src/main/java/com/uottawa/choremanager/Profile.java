@@ -9,7 +9,7 @@ public class Profile{
 	private String password;
 	private int numberOfTasksCompleted;
 	private List<String> assignedTasks;
-	private String dbId;
+	private String id;
 	private int numberOfCurrentTasks;
 
 	public Profile(){
@@ -32,10 +32,8 @@ public class Profile{
 	}
 
 	public void removeTask(String id){
-		if(assignedTasks.contains(id)){
-			assignedTasks.remove(id);
-			numberOfCurrentTasks--;
-		}
+		assignedTasks.remove(id);
+		numberOfCurrentTasks--;
 	}
 
 	public void setName(String newName){
@@ -66,11 +64,11 @@ public class Profile{
 	}
 
 	public void setId(String id){
-		this.dbId = id;
+		this.id = id;
 	}
 
 	public String getId(){
-		return dbId;
+		return id;
 	}
 
 	public List<String> getAssignedTasks(){
@@ -80,20 +78,12 @@ public class Profile{
 		return(password == passEnt);
 	}
 
-	public void setAssignedTasks(List<String> assignedTasks) {
+	public void setAssignedTasks(ArrayList<String> assignedTasks) {
 		this.assignedTasks = assignedTasks;
 	}
 
 	public String getPassword() {
 		return password;
-	}
-
-	public String getDbId() {
-		return dbId;
-	}
-
-	public void setDbId(String dbId) {
-		this.dbId = dbId;
 	}
 
 	public int getNumberOfCurrentTasks(){
