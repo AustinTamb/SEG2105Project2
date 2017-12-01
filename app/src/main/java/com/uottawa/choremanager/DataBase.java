@@ -93,9 +93,9 @@ public class DataBase extends Application{
         Profile toAdd = new Profile(name, isParent, password);
         String id = dbProfiles.push().getKey();
         toAdd.setId(id);
-        dbProfiles.child(id).setValue(toAdd);
 
         profiles.put(id, toAdd);
+        dbProfiles.child(id).setValue(toAdd);
         return toAdd;
     }
 
@@ -109,12 +109,12 @@ public class DataBase extends Application{
             toAdd.addSubTask(materials.get(i));
         }
 
-        profiles.get(ownerId).addTask(id);
+
         tasks.put(id, toAdd);
+        assignTask(ownerId, id);
 
         dbTasks.child(id).setValue(toAdd);
         dbProfiles.child(ownerId).child("Task").push().setValue(toAdd);
-        assignTask(ownerId, id);
         return toAdd;
     }
 
@@ -123,10 +123,9 @@ public class DataBase extends Application{
         Task x = tasks.get(taskId);
         String oldOwnerId = x.getOwnerId();
 
-        if(!oldOwnerId.equals("")) {
-            profiles.get(x.getOwnerId()).removeTask(taskId);
-            dbProfiles.child(oldOwnerId).child("Task").child(taskId).removeValue();
-        }
+        profiles.get(x.getOwnerId()).removeTask(taskId);
+        dbProfiles.child(oldOwnerId).child("Task").child(taskId).removeValue();
+
         profiles.get(profileId).addTask(taskId);
         tasks.get(taskId).setOwner(profileId);
 

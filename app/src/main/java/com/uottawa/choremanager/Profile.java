@@ -9,7 +9,7 @@ public class Profile{
 	private String password;
 	private int numberOfTasksCompleted;
 	private List<String> assignedTasks;
-	private String dbId;
+	private String id;
 	private int numberOfCurrentTasks;
 
 	public Profile(){
@@ -66,11 +66,11 @@ public class Profile{
 	}
 
 	public void setId(String id){
-		this.dbId = id;
+		this.id = id;
 	}
 
 	public String getId(){
-		return dbId;
+		return id;
 	}
 
 	public List<String> getAssignedTasks(){
@@ -86,14 +86,6 @@ public class Profile{
 
 	public String getPassword() {
 		return password;
-	}
-
-	public String getDbId() {
-		return dbId;
-	}
-
-	public void setDbId(String dbId) {
-		this.dbId = dbId;
 	}
 
 	public int getNumberOfCurrentTasks(){
