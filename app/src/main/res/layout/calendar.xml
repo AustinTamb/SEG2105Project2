@@ -11,7 +11,10 @@
         <CalendarView
             android:id="@+id/calendarView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:firstDayOfWeek="2"
+            android:maxDate="01/01/2019"
+            android:minDate="01/01/2017"/>
 
         <ListView
             android:id="@+id/listViewTasksOnDay"
