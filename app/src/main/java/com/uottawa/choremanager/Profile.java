@@ -32,10 +32,8 @@ public class Profile{
 	}
 
 	public void removeTask(String id){
-		if(assignedTasks.contains(id)){
-			assignedTasks.remove(id);
-			numberOfCurrentTasks--;
-		}
+		assignedTasks.remove(id);
+		numberOfCurrentTasks--;
 	}
 
 	public void setName(String newName){
@@ -80,7 +78,7 @@ public class Profile{
 		return(password == passEnt);
 	}
 
-	public void setAssignedTasks(List<String> assignedTasks) {
+	public void setAssignedTasks(ArrayList<String> assignedTasks) {
 		this.assignedTasks = assignedTasks;
 	}
 

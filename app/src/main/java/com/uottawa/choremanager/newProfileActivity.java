@@ -1,6 +1,7 @@
 package com.uottawa.choremanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +16,7 @@ public class newProfileActivity extends AppCompatActivity {
     DataBase dB;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_profile);
         dB = MainActivity.getDB();
@@ -54,9 +55,11 @@ public class newProfileActivity extends AppCompatActivity {
                 }
 
                 Boolean isParent = ((CheckBox)findViewById(R.id.cbxParentUser)).isChecked();
-                if(inputValid)
+                if(inputValid) {
                     dB.addProfile(name, isParent, password);//Add Image when done
-                else
+                    showError("Profile added!");
+                    setContentView(R.layout.people);
+                }else
                     showError(errorMessage);
             }
         });
