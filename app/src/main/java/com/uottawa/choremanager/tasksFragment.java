@@ -53,15 +53,11 @@ public class tasksFragment extends Fragment {
 
         ArrayList<Task> x = dB.getTasks();
         ArrayList<SubTask> mats = new ArrayList<SubTask>();
-
-
-
-
+        
         for(int i = 0; i < x.size(); i++){
-            for(SubTask sT : x.get(i).getSubTasks()){
-                mats.add(sT);
-            }
+            mats.addAll(x.get(i).getSubTasks());
         }
+
         //Fills the tasks List View
         ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
         TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), x);
