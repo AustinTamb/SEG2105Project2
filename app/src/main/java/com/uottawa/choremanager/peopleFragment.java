@@ -22,6 +22,7 @@ public class peopleFragment extends Fragment {
     private ImageButton btnNewProfile;
     private DataBase dB;
     private static final String TAG = "peopleFragment";
+    //Following two made private by random guy on Github rather than declared in body https://github.com/michaelsam94
     private PeopleCustomAdapter peopleAdapter;
     private ListView peopleListView;
 

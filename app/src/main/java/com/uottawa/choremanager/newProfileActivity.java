@@ -59,7 +59,7 @@ public class newProfileActivity extends AppCompatActivity {
                     dB.addProfile(name, isParent, password);//Add Image when done
                     showError("Profile added!");
                     //setContentView(R.layout.people);
-                    finish();
+                    finish();//Push by random person on github... https://github.com/michaelsam94
                 }else
                     showError(errorMessage);
             }
