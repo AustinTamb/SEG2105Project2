@@ -34,7 +34,7 @@ public class newTaskActivity extends AppCompatActivity {
         setContentView(R.layout.add_task);
         dB = MainActivity.getDB();
 
-        profileIdList = dB.getProfileIds();
+        //profileIdList = dB.getProfileIds();
 
         names = new ArrayList<String>();
         subTasks = new ArrayList<SubTask>();
