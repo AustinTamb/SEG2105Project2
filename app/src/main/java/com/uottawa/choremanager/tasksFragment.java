@@ -7,8 +7,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 
 import java.util.ArrayList;
@@ -45,9 +47,16 @@ public class tasksFragment extends Fragment {
         View view = inflater.inflate(R.layout.tasks, container, false);
         btnNewTask = (ImageButton) view.findViewById(R.id.imgNewTask);
         btnNewTask.setOnClickListener(new NewTaskOnClickListener());
+
         dB = MainActivity.getDB();
+
+
         ArrayList<Task> x = dB.getTasks();
         ArrayList<SubTask> mats = new ArrayList<SubTask>();
+
+
+
+
         for(int i = 0; i < x.size(); i++){
             for(SubTask sT : x.get(i).getSubTasks()){
                 mats.add(sT);
@@ -62,6 +71,18 @@ public class tasksFragment extends Fragment {
         ListView subTasksListView = (ListView) view.findViewById(R.id.listViewMaterials);
         MaterialsCustomAdapter subTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), x);
         subTasksListView.setAdapter(subTasksAdapter);
+
+        Spinner spnProfiles = view.findViewById(R.id.spnProfiles);
+
+        ArrayList<Profile> y = dB.getProfiles();
+        ArrayList<String> names = new ArrayList<String>();
+        for(int j = 0; j < y.size();j++){
+            names.add(y.get(j).getName());
+
+        }
+        ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, names);
+        mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnProfiles.setAdapter(mArrayAdapter);
 
 
         return view;
