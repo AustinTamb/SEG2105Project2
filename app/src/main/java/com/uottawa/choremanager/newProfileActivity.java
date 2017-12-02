@@ -58,7 +58,8 @@ public class newProfileActivity extends AppCompatActivity {
                 if(inputValid) {
                     dB.addProfile(name, isParent, password);//Add Image when done
                     showError("Profile added!");
-                    setContentView(R.layout.people);
+                    //setContentView(R.layout.people);
+                    finish();
                 }else
                     showError(errorMessage);
             }

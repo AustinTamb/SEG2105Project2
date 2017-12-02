@@ -22,9 +22,11 @@ public class peopleFragment extends Fragment {
     private ImageButton btnNewProfile;
     private DataBase dB;
     private static final String TAG = "peopleFragment";
+    private PeopleCustomAdapter peopleAdapter;
+    private ListView peopleListView;
 
     //This nested class is used to control what happens when btnNewTask is clicked
-    public class NewProfileOnClickListener implements View.OnClickListener{
+    public class NewProfileOnClickListener implements View.OnClickListener {
         public void onClick(View v) {
             Intent newProfileIntent = new Intent(getActivity().getApplicationContext(), newProfileActivity.class);
             startActivity(newProfileIntent);
@@ -33,23 +35,30 @@ public class peopleFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.people, container, false);
         btnNewProfile = (ImageButton) view.findViewById(R.id.imgNewPerson);
         btnNewProfile.setOnClickListener(new NewProfileOnClickListener());
         dB = MainActivity.getDB();
         ArrayList<Profile> x = dB.getProfiles();
         String[] taskList = new String[x.size()];
-        for (int i = 0; i < x.size(); i++){
+        for (int i = 0; i < x.size(); i++) {
             taskList[i] = x.get(i).getName();
 
         }
 
-        ListView peopleListView = (ListView) view.findViewById(R.id.listViewPeople);
-        PeopleCustomAdapter peopleAdapter = new PeopleCustomAdapter(getActivity().getApplicationContext(), taskList);
+        peopleListView = (ListView) view.findViewById(R.id.listViewPeople);
+        peopleAdapter = new PeopleCustomAdapter(getActivity().getApplicationContext(), taskList);
         peopleListView.setAdapter(peopleAdapter);
         System.out.println("Successfully Created People view");
         return view;
     }
     //End of citation
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        peopleAdapter.notifyDataSetChanged();
+    }
 }

@@ -38,7 +38,7 @@ public class PeopleCustomAdapter extends ArrayAdapter {
         ImageView personImage = (ImageView) rowView.findViewById(R.id.imgPerson);
 
         personNameTextField.setText(person.getName());
-        numTasksTextField.setText("Number of Tasks: " + person.getAssignedTasks().size());
+        if(person.getAssignedTasks() != null) numTasksTextField.setText("Number of Tasks: " + person.getAssignedTasks().size());
         String currentTask;
         try {
             currentTask = dB.getTask(person.getAssignedTasks().get(0)).getName();
