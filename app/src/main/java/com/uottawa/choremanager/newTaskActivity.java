@@ -34,9 +34,21 @@ public class newTaskActivity extends AppCompatActivity {
         setContentView(R.layout.add_task);
         dB = MainActivity.getDB();
 
-        //profileIdList = dB.getProfileIds();
+
+        Spinner spnProfiles = findViewById(R.id.spnProfiles);
+
+        ArrayList<Profile> y = dB.getProfiles();
+        ArrayList<String> profileNames = new ArrayList<String>();
+        for(Profile x : y){
+            profileNames.add(x.getName());
+        }
+
+        ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, names);
+        mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnProfiles.setAdapter(mArrayAdapter);
 
         names = new ArrayList<String>();
+
         subTasks = new ArrayList<SubTask>();
         final Spinner profiles = (Spinner) findViewById(R.id.spnProfiles);
         //Get array of Profiles, loop through and getNames->spinnerOption
