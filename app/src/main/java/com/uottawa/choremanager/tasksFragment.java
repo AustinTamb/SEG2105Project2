@@ -7,8 +7,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 
 import java.util.ArrayList;
@@ -45,14 +47,17 @@ public class tasksFragment extends Fragment {
         View view = inflater.inflate(R.layout.tasks, container, false);
         btnNewTask = (ImageButton) view.findViewById(R.id.imgNewTask);
         btnNewTask.setOnClickListener(new NewTaskOnClickListener());
+
         dB = MainActivity.getDB();
+
+
         ArrayList<Task> x = dB.getTasks();
         ArrayList<SubTask> mats = new ArrayList<SubTask>();
+
         for(int i = 0; i < x.size(); i++){
-            for(SubTask sT : x.get(i).getSubTasks()){
-                mats.add(sT);
-            }
+            mats.addAll(x.get(i).getSubTasks());
         }
+
         //Fills the tasks List View
         ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
         TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), x);
@@ -62,6 +67,8 @@ public class tasksFragment extends Fragment {
         ListView subTasksListView = (ListView) view.findViewById(R.id.listViewMaterials);
         MaterialsCustomAdapter subTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), x);
         subTasksListView.setAdapter(subTasksAdapter);
+
+
 
 
         return view;

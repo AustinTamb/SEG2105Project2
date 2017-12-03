@@ -27,6 +27,8 @@ public class newTaskActivity extends AppCompatActivity {
     private newTaskMaterialsAdapter materialsTasksAdapter;
     private DataBase dB;
     private ArrayList<String> profileIdList;
+    private ArrayList<Profile> y;
+    private ArrayAdapter<String> mArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,23 @@ public class newTaskActivity extends AppCompatActivity {
         setContentView(R.layout.add_task);
         dB = MainActivity.getDB();
 
-        //profileIdList = dB.getProfileIds();
+
+        //Spinner code based off: https://stackoverflow.com/questions/24825249/how-to-add-item-in-spinner-android
+        Spinner spnProfiles = findViewById(R.id.spnProfiles);
+
+        y = dB.getProfiles();
+        ArrayList<String> profileNames = new ArrayList<String>();
+        for(Profile x : y){
+            profileNames.add(x.getName());
+        }
+
+        mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, profileNames);
+        mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnProfiles.setAdapter(mArrayAdapter);
+        //End spinner code
 
         names = new ArrayList<String>();
+
         subTasks = new ArrayList<SubTask>();
         final Spinner profiles = (Spinner) findViewById(R.id.spnProfiles);
         //Get array of Profiles, loop through and getNames->spinnerOption
