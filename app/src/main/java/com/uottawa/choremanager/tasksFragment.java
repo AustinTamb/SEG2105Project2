@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 
 import java.util.ArrayList;
@@ -23,9 +25,11 @@ public class tasksFragment extends Fragment {
     //taken from tutorial https://www.youtube.com/watch?v=bNpWGI_hGGg
 
     private ImageButton btnNewTask;
+    private Switch swtOnlyShow;
     private DataBase dB;
     private static final String TAG = "tasksFragment";
-
+    private boolean onlyShowMyTasks = false;
+    private Profile currentUser;
 
     //This nested class is used to control what happens when btnNewTask is clicked
     public class NewTaskOnClickListener implements View.OnClickListener{
@@ -51,25 +55,55 @@ public class tasksFragment extends Fragment {
         dB = MainActivity.getDB();
 
 
-        ArrayList<Task> x = dB.getTasks();
+
+        final ArrayList<Task> listOfTasks = dB.getTasks();
         ArrayList<SubTask> mats = new ArrayList<SubTask>();
 
-        for(int i = 0; i < x.size(); i++){
-            mats.addAll(x.get(i).getSubTasks());
+        for(int i = 0; i < listOfTasks.size(); i++){
+            mats.addAll(listOfTasks.get(i).getSubTasks());
         }
 
         //Fills the tasks List View
-        ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
-        TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), x);
+        final ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
+        final TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), listOfTasks);
         tasksListView.setAdapter(tasksAdapter);
 
         //Fills the materials List View
         ListView subTasksListView = (ListView) view.findViewById(R.id.listViewMaterials);
-        MaterialsCustomAdapter subTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), x);
+        MaterialsCustomAdapter subTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), listOfTasks);
         subTasksListView.setAdapter(subTasksAdapter);
 
 
+        //Handles the switch
+        swtOnlyShow = (Switch) view.findViewById(R.id.swtShowMyTasks);
+        swtOnlyShow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b == true){
 
+                    //Updates the tasks listview
+                    onlyShowMyTasks = true;
+                    currentUser = dB.getCurrentUser();
+                    listOfTasks.clear();
+                    for(Task t: dB.getTasks()){
+                        if(t.getOwnerId().equals(currentUser.getId())){
+                            listOfTasks.add(t);
+                        }
+                    }
+                    tasksAdapter.notifyDataSetChanged();
+
+                }else{
+
+                    //Updates the tasks listview
+                    onlyShowMyTasks = false;
+                    listOfTasks.clear();
+                    for(Task t: dB.getTasks()){
+                        listOfTasks.add(t);
+                    }
+                    tasksAdapter.notifyDataSetChanged();
+                }
+            }
+        });
 
         return view;
     }

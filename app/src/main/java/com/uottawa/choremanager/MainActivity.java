@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<SubTask> z = new ArrayList<SubTask>();
         dB = new DataBase();
         Profile x = dB.addProfile("Austin", true,"Test123");
+        Profile kh = dB.addProfile("Kevin Hart", true,"Test123");
 
         z.add(new SubTask("Cloth", false));
         z.add(new SubTask("Bucket", false));
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         dB.assignTask(x.getId(), y.getId());
         dB.assignTask(x.getId(), b.getId());
         dB.setCurrentUser(x);
+
+        Task p = dB.addTask("Wash Stapler", 10, "washittt", 20, kh.getId(), z, "Active");
+        Task k = dB.addTask("Say hi to Raymond", 10, "hi raymond", 20, kh.getId(), z, "Active");
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager)findViewById(R.id.container);
