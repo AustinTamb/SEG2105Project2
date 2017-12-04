@@ -30,7 +30,7 @@ public class newTaskActivity extends AppCompatActivity {
     private ArrayList<String> profileIdList;
     private ArrayList<Profile> y;
     private ArrayAdapter<String> mArrayAdapter;
-    private Profile selectedProfile; //The variable you wanted austin
+    private int selectedProfile; //The variable you wanted austin
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class newTaskActivity extends AppCompatActivity {
         Spinner spnProfiles = findViewById(R.id.spnProfiles);
 
         y = dB.getProfiles();
-        ArrayList<String> profileNames = new ArrayList<String>();
+        final ArrayList<String> profileNames = new ArrayList<String>();
         for(Profile x : y){
             profileNames.add(x.getName());
         }
@@ -51,18 +51,14 @@ public class newTaskActivity extends AppCompatActivity {
         mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, profileNames);
         mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnProfiles.setAdapter(mArrayAdapter);
-        
+
+
 
         spnProfiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedProfileString = adapterView.getItemAtPosition(i).toString();
-                for(Profile p: y){
-                    if(p.getName().equals(selectedProfileString)){
-                        selectedProfile = p;
-                    }
-                }
-
+                selectedProfile = i;
+                System.out.println("The selected profile: " + profileNames.get(i));
             }
 
             @Override
