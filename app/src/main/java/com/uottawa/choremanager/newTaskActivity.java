@@ -1,5 +1,7 @@
 package com.uottawa.choremanager;
 
+import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ListActivity;
 import android.app.TimePickerDialog;
 import android.provider.ContactsContract;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -24,11 +27,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import static java.lang.Integer.parseInt;
 
 public class newTaskActivity extends AppCompatActivity {
     private ArrayList<SubTask> subTasks;
@@ -41,8 +48,10 @@ public class newTaskActivity extends AppCompatActivity {
     private ArrayAdapter<String> statusArrayAdapter;
     private Profile selectedProfile; //The variable you wanted austin
     private String selectedStatus;
-    private Button startButton;
-    private EditText endEditText;
+    private TextView startTextTime;
+    private TextView startTextDate;
+    private TextView endTextTime;
+    private TextView endTextDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,35 +139,141 @@ public class newTaskActivity extends AppCompatActivity {
         //https://developer.android.com/guide/topics/ui/controls/pickers.html
         //https://stackoverflow.com/questions/17901946/timepicker-dialog-from-clicking-edittext
 
-        Calendar currentDate = Calendar.getInstance();
-        final int hour = currentDate.get(Calendar.HOUR_OF_DAY);
-        final int minute = currentDate.get(Calendar.MINUTE);
+        /*
+        String monthStr = String.valueOf(currentDate.get(Calendar.MONTH));
+        String dayStr = String.valueOf(currentDate.get(Calendar.DAY_OF_MONTH));
+        String yearStr = String.valueOf(currentDate.get(Calendar.YEAR));
+        String hourStr = String.valueOf(currentDate.get(Calendar.HOUR_OF_DAY));
+        String minuteStr = String.valueOf(currentDate.get(Calendar.MINUTE));
+
+
+        String startString = String.format("%m" + "/" + "%d" + "/" + "%y" + " " + "%h" + "/"
+                + "%m", monthStr, dayStr, yearStr, hourStr, minuteStr);
+        */
 
         final Calendar startCalendar = Calendar.getInstance();
 
-
-        //Handle the startdate EditText
-        startButton = findViewById(R.id.txtStartDate);
+        //Handle the txtStartTime TextView
+        startTextTime = (TextView) findViewById(R.id.txtStartTime);
         //REMOVE ME
-        System.out.println("THE START BUTTON:" + startButton.toString());
-        startButton.setOnClickListener(new View.OnClickListener() {
+        System.out.println("THE START BUTTON:" + startTextTime.toString());
+        startTextTime.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //Creating variables needed for constructor of timePickerDialog
+                Calendar currentDate = Calendar.getInstance();
+                final int hour = currentDate.get(Calendar.HOUR_OF_DAY);
+                final int minute = currentDate.get(Calendar.MINUTE);
+
                 TimePickerDialog timePickerDialog = new TimePickerDialog(newTaskActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         startCalendar.set(Calendar.HOUR_OF_DAY, i);
+                        System.out.println(startCalendar.get(Calendar.HOUR_OF_DAY));
                         startCalendar.set(Calendar.MINUTE, i1);
+                        System.out.println(startCalendar.get(Calendar.MINUTE));
+                        startTextTime.setText(startCalendar.get(Calendar.HOUR_OF_DAY) + ":" + startCalendar.get(Calendar.MINUTE));
+                        startTextTime.invalidate();
                     }
                 },hour, minute, false);
                 //REMOVE ME
                 System.out.println("THE TIME PICKER DIALOG" + timePickerDialog.toString());
                 timePickerDialog.setTitle("Select a time");
                 timePickerDialog.show();
-
             }
         });
 
 
+        startTextDate = (TextView) findViewById(R.id.txtStartDate);
+        //REMOVE ME
+        startTextDate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Calendar currentDate = Calendar.getInstance();
+                final int year = currentDate.get(Calendar.YEAR);
+                final int month = currentDate.get(Calendar.MONTH);
+                final int day = currentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(newTaskActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        startCalendar.set(Calendar.YEAR, i);
+                        System.out.println(startCalendar.get(Calendar.YEAR));
+                        startCalendar.set(Calendar.MONTH, i1);
+                        System.out.println(startCalendar.get(Calendar.MONTH));
+                        startCalendar.set(Calendar.DAY_OF_MONTH, i2);
+                        System.out.println(startCalendar.get(Calendar.DAY_OF_MONTH));
+                        startTextDate.setText(String.valueOf(startCalendar.get(Calendar.MONTH)) + "/"
+                                + String.valueOf(startCalendar.get(Calendar.DAY_OF_MONTH)) + "/"
+                                + String.valueOf(startCalendar.get(Calendar.YEAR)));
+                        startTextDate.invalidate();
+                    }
+                },year, month, day);
+                //REMOVE ME
+                System.out.println("THE DATE PICKER DIALOG" + datePickerDialog.toString());
+                datePickerDialog.setTitle("Select a Date");
+                datePickerDialog.show();
+            }
+        });
+
+        final Calendar endCalendar = Calendar.getInstance();
+
+
+        endTextTime = (TextView) findViewById(R.id.txtEndTime);
+        endTextTime.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Creating variables needed for constructor of timePickerDialog
+                Calendar currentDate = Calendar.getInstance();
+                final int hour = currentDate.get(Calendar.HOUR_OF_DAY);
+                final int minute = currentDate.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(newTaskActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        endCalendar.set(Calendar.HOUR_OF_DAY, i);
+                        System.out.println(endCalendar.get(Calendar.HOUR_OF_DAY));
+                        endCalendar.set(Calendar.MINUTE, i1);
+                        System.out.println(endCalendar.get(Calendar.MINUTE));
+                        endTextTime.setText(endCalendar.get(Calendar.HOUR_OF_DAY)
+                                + ":" + endCalendar.get(Calendar.MINUTE));
+                        endTextTime.invalidate();
+                    }
+                },hour, minute, false);
+                timePickerDialog.setTitle("Select a time");
+                timePickerDialog.show();
+            }
+        });
+
+
+        endTextDate = (TextView) findViewById(R.id.txtEndDate);
+        //REMOVE ME
+        endTextDate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Calendar currentDate = Calendar.getInstance();
+                final int year = currentDate.get(Calendar.YEAR);
+                final int month = currentDate.get(Calendar.MONTH);
+                final int day = currentDate.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(newTaskActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        endCalendar.set(Calendar.YEAR, i);
+                        System.out.println(endCalendar.get(Calendar.YEAR));
+                        endCalendar.set(Calendar.MONTH, i1);
+                        System.out.println(endCalendar.get(Calendar.MONTH));
+                        endCalendar.set(Calendar.DAY_OF_MONTH, i2);
+                        System.out.println(endCalendar.get(Calendar.DAY_OF_MONTH));
+                        endTextDate.setText(String.valueOf(endCalendar.get(Calendar.MONTH)) + "/"
+                                + String.valueOf(endCalendar.get(Calendar.DAY_OF_MONTH)) + "/"
+                                + String.valueOf(endCalendar.get(Calendar.YEAR)));
+                        endTextDate.invalidate();
+                    }
+                },year, month, day);
+                //REMOVE ME
+                System.out.println("THE DATE PICKER DIALOG" + datePickerDialog.toString());
+                datePickerDialog.setTitle("Select a Date");
+                datePickerDialog.show();
+            }
+        });
 
         //Handles the button that adds a task
         final Button addTaskButton = findViewById(R.id.btnAddTask);
@@ -166,57 +281,67 @@ public class newTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Boolean done = false;
                 Boolean valid = true; //False if an input is invalid
-                String response = "";//Informs user on what error they made
-                String ownerID = "";
+                StringBuilder response = new StringBuilder();//Informs user on what error they made
+                StringBuilder startDateAndTime = new StringBuilder();
+                StringBuilder endDateAndTime = new StringBuilder();
+                String ownerID = selectedProfile.getId();
                 String id = "";
 
-                String startDate = ((TextView)findViewById(R.id.txtStartDate)).getText().toString();
-                String endDate = ((TextView)findViewById(R.id.txtEndDate)).getText().toString();
-
-                //Adapted from: https://stackoverflow.com/questions/5301226/convert-string-to-calendar-object-in-java
-                Calendar startDateCal = Calendar.getInstance();
-                Calendar endDateCal = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("MMM/dd/yyyy");
-
-                //Parse the startDate and check if it was inputted incorrectly
-                try{
-                    Date startDateObject = sdf.parse(startDate);
-                    startDateCal.setTime(startDateObject);
-                }catch(ParseException pe){
-                    valid = false;
-                    response = response + "Incorrect entry in start date\n";
-                }
-
-                //Parse the endDate and check if it was inputted incorrectly
-                try{
-                    Date endDateObject = sdf.parse(endDate);
-                    endDateCal.setTime(endDateObject);
-                }catch(ParseException pe){
-                    valid = false;
-                    response = response + "Incorrect entry in end date\n";
-                }
-
                 //Check if the dates make sense
-                if(startDateCal.after(endDateCal) || Calendar.getInstance().after(startDateCal)
-                        || Calendar.getInstance().after(endDateCal)){
+                if(startCalendar.after(endCalendar) || Calendar.getInstance().after(startCalendar)
+                        || Calendar.getInstance().after(endCalendar)){
 
                     valid = false;
+                    response.append("Date/Time entries are incorrect\n");
                 }
 
                 String name = ((TextView)findViewById(R.id.txtTaskName)).getText().toString();
 
-
                 String description = ((TextView)findViewById(R.id.txtNotes)).getText().toString();
 
-                String status = selectedStatus;
 
+                //Turns the startCalendar into one integer with layout mm/dd/yyyy/hh/mm
+                startDateAndTime.append(startCalendar.get(Calendar.MONTH));
+                startDateAndTime.append(startCalendar.get(Calendar.DAY_OF_MONTH));
+                startDateAndTime.append(startCalendar.get(Calendar.YEAR));
+                startDateAndTime.append(startCalendar.get(Calendar.HOUR_OF_DAY));
+                startDateAndTime.append(startCalendar.get(Calendar.MINUTE));
+
+                endDateAndTime.append(endCalendar.get(Calendar.MONTH));
+                endDateAndTime.append(endCalendar.get(Calendar.DAY_OF_MONTH));
+                endDateAndTime.append(endCalendar.get(Calendar.YEAR));
+                endDateAndTime.append(endCalendar.get(Calendar.HOUR_OF_DAY));
+                endDateAndTime.append(endCalendar.get(Calendar.MINUTE));
+                System.out.println("THE OFFENDING STRING :" + startDateAndTime.toString());
+                System.out.println("THE OFFENDING STRING :" + startDateAndTime.toString().length());
+
+                int startDateAndTimeInt = Integer.parseInt(startDateAndTime.toString());
+                int endDateAndTimeInt = Integer.parseInt(endDateAndTime.toString());
+
+                //Please if you can think of a better way to do this, make the changes
+                /*
+                String startDateAndTime = String.valueOf(startCalendar.get(Calendar.MONTH)) +
+                        String.valueOf(startCalendar.get(Calendar.DAY_OF_MONTH))
+                        + String.valueOf(startCalendar.get(Calendar.YEAR))
+                        +String.valueOf(startCalendar.get(Calendar.HOUR_OF_DAY))
+                        +String.valueOf(startCalendar.get(Calendar.MINUTE));
+                System.out.println("THE OFFENDING STRING :" + startDateAndTime);
+                int startDateAndTimeInt = Integer.parseInt(startDateAndTime);
+
+                String endDateAndTime = String.valueOf(endCalendar.get(Calendar.MONTH)) +
+                        String.valueOf(endCalendar.get(Calendar.DAY_OF_MONTH))
+                        + String.valueOf(endCalendar.get(Calendar.YEAR))
+                        +String.valueOf(endCalendar.get(Calendar.HOUR_OF_DAY))
+                        +String.valueOf(endCalendar.get(Calendar.MINUTE));
+                int endDateAndTimeInt = Integer.parseInt(endDateAndTime);
+                */
 
                 if(valid){
-                   // dB.addTask(name, startDate, description, endDate, ownerID, subTasks, status);
+                   dB.addTask(name, startDateAndTimeInt, description, endDateAndTimeInt, ownerID, subTasks, selectedStatus);
                 }else{
                     int duration = Toast.LENGTH_SHORT;
 
-                    Toast toast = Toast.makeText(getApplicationContext(), response, duration);
+                    Toast toast = Toast.makeText(newTaskActivity.this, response, duration);
                     toast.show();
                 }
 
