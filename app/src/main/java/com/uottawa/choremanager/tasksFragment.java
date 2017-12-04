@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -65,7 +66,7 @@ public class tasksFragment extends Fragment {
 
         //Fills the tasks List View
         final ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
-        final TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), listOfTasks);
+        final TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity(), listOfTasks);
         tasksListView.setAdapter(tasksAdapter);
 
         //Fills the materials List View
@@ -104,6 +105,10 @@ public class tasksFragment extends Fragment {
                 }
             }
         });
+
+
+
+
 
         return view;
     }

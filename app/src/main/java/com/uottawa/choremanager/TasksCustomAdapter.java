@@ -1,6 +1,9 @@
 package com.uottawa.choremanager;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
@@ -11,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,6 +27,7 @@ public class TasksCustomAdapter extends ArrayAdapter {
     private final Context context;
     private final ArrayList<Task> tasksList;
     private DataBase dB;
+    private LinearLayout aTask;
 
     public TasksCustomAdapter(Context context, ArrayList<Task> tasksList){
         super(context, R.layout.tasks, tasksList);
@@ -65,6 +70,33 @@ public class TasksCustomAdapter extends ArrayAdapter {
         taskNameTextField.setText(tasksList.get(position).getName());
 
 
+        //Enabling the ability to remove a task
+        //Adapted from
+        //https://stackoverflow.com/questions/15585013/receive-a-long-press-click-on-a-linear-layout-in-android
+        //https://stackoverflow.com/questions/4850493/open-a-dialog-when-i-click-a-button
+        //https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
+        aTask = (LinearLayout) rowView.findViewById(R.id.layout_button);
+        aTask.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                alertDialog.setTitle("Delete this task?");
+                alertDialog.setNeutralButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface di, int i) {
+                        Task removeThisTask = tasksList.get(position);
+                        //Crashes here at line 90
+                        System.out.println(removeThisTask.getId());
+                        dB.removeTask(removeThisTask.getId());
+                        notifyDataSetChanged();
+                    }
+
+                });
+                alertDialog.show();
+                return(true);
+            }
+        });
         return rowView;
     }
 }
