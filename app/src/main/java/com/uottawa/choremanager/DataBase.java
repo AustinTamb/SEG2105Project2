@@ -94,7 +94,6 @@ public class DataBase extends Application{
     }
 
     //Same purpose as above, except for tasks
-    //Changed int to long
     public Task addTask(String name, long startDate, String description, long endDate, String ownerId, ArrayList<SubTask> materials, String status){
         Task toAdd = new Task(name, startDate, description, endDate, ownerId, status);
 
