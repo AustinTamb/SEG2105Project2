@@ -82,8 +82,9 @@ public class tasksFragment extends Fragment {
 
 
         //Handles the switch
-        /*
 
+        //NEEDS TO BE FIXED
+        /*
         swtOnlyShow = (Switch) view.findViewById(R.id.swtShowMyTasks);
         swtOnlyShow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
