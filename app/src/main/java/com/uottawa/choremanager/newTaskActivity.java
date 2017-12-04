@@ -297,6 +297,11 @@ public class newTaskActivity extends AppCompatActivity {
 
                 String name = ((TextView)findViewById(R.id.txtTaskName)).getText().toString();
 
+                if(name.length() == 0){
+                    valid = false;
+                    response.append("Task name is invalid\n");
+                }
+
                 String description = ((TextView)findViewById(R.id.txtNotes)).getText().toString();
 
 
@@ -315,8 +320,9 @@ public class newTaskActivity extends AppCompatActivity {
                 System.out.println("THE OFFENDING STRING :" + startDateAndTime.toString());
                 System.out.println("THE OFFENDING STRING :" + startDateAndTime.toString().length());
 
-                int startDateAndTimeInt = Integer.parseInt(startDateAndTime.toString());
-                int endDateAndTimeInt = Integer.parseInt(endDateAndTime.toString());
+                //int startDateAndTimeInt = Integer.parseInt(startDateAndTime.toString());
+                int startDateAndTimeInt = Integer.parseInt("115");
+                //int endDateAndTimeInt = Integer.parseInt(endDateAndTime.toString());
 
                 //Please if you can think of a better way to do this, make the changes
                 /*
@@ -337,7 +343,7 @@ public class newTaskActivity extends AppCompatActivity {
                 */
 
                 if(valid){
-                   dB.addTask(name, startDateAndTimeInt, description, endDateAndTimeInt, ownerID, subTasks, selectedStatus);
+                   //dB.addTask(name, startDateAndTimeInt, description, endDateAndTimeInt, ownerID, subTasks, selectedStatus);
                 }else{
                     int duration = Toast.LENGTH_SHORT;
 
