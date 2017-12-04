@@ -30,7 +30,9 @@ public class newTaskActivity extends AppCompatActivity {
     private ArrayList<String> profileIdList;
     private ArrayList<Profile> y;
     private ArrayAdapter<String> mArrayAdapter;
+    private ArrayAdapter<String> statusArrayAdapter;
     private Profile selectedProfile; //The variable you wanted austin
+    private String selectedStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,31 +43,54 @@ public class newTaskActivity extends AppCompatActivity {
 
         //Spinner code based off: https://stackoverflow.com/questions/24825249/how-to-add-item-in-spinner-android
         Spinner spnProfiles = findViewById(R.id.spnProfiles);
+        Spinner statusSpinner = findViewById(R.id.spinnerStatus);
 
+        //Populates the list of profiles
         y = dB.getProfiles();
         final ArrayList<String> profileNames = new ArrayList<String>();
         for(Profile x : y){
             profileNames.add(x.getName());
         }
 
+        final ArrayList<String> statusArray = new ArrayList<String>();
+        statusArray.add("Active");
+        statusArray.add("Postponed");
+        statusArray.add("Done");
+
+        //Handles the status spinner
+        statusArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, statusArray);
+        statusArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        statusSpinner.setAdapter(statusArrayAdapter);
+
+        //Handles the profiles spinner
         mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, profileNames);
         mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnProfiles.setAdapter(mArrayAdapter);
 
 
+        //Handles what happens when you select a status in the status spinenr
+        statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedStatus = statusArray.get(i);
+                System.out.println("SELECTED STATUS: " + selectedStatus);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
 
+        //Handles what happens when you select a profile in the profile spinenr
         spnProfiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedProfile = y.get(i);
-                System.out.println("SELECTED PROFILE" + selectedProfile.getName());
+                System.out.println("SELECTED PROFILE: " + selectedProfile.getName());
             }
-
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
+
+
         //End spinner code
 
         names = new ArrayList<String>();
