@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -29,6 +30,7 @@ public class newTaskActivity extends AppCompatActivity {
     private ArrayList<String> profileIdList;
     private ArrayList<Profile> y;
     private ArrayAdapter<String> mArrayAdapter;
+    private Profile selectedProfile; //The variable you wanted austin
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,25 @@ public class newTaskActivity extends AppCompatActivity {
         mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, profileNames);
         mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnProfiles.setAdapter(mArrayAdapter);
+        
+
+        spnProfiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedProfileString = adapterView.getItemAtPosition(i).toString();
+                for(Profile p: y){
+                    if(p.getName().equals(selectedProfileString)){
+                        selectedProfile = p;
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         //End spinner code
 
         names = new ArrayList<String>();
@@ -58,6 +79,7 @@ public class newTaskActivity extends AppCompatActivity {
         //Followed Tutorial https://developer.android.com/guide/topics/ui/controls/spinner.html#SelectListener
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //profiles.setAdapter(adapter);
+        //https://stackoverflow.com/questions/2652414/how-do-you-get-the-selected-value-of-a-spinner
 
 
         ListView test =(ListView) findViewById(R.id.listViewMaterials);
