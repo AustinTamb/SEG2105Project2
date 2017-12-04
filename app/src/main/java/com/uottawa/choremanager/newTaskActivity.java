@@ -54,7 +54,6 @@ public class newTaskActivity extends AppCompatActivity {
         names = new ArrayList<String>();
 
         subTasks = new ArrayList<SubTask>();
-        final Spinner profiles = (Spinner) findViewById(R.id.spnProfiles);
         //Get array of Profiles, loop through and getNames->spinnerOption
         //Followed Tutorial https://developer.android.com/guide/topics/ui/controls/spinner.html#SelectListener
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -96,7 +95,7 @@ public class newTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String subTaskToAdd = ((TextView)findViewById(R.id.txtSTName)).getText().toString();
 
-
+                //TODO Doesnt add to database?
                 if(!subTaskToAdd.equals("")) {
                     subTasks.add(new SubTask(subTaskToAdd, false));
                     names.add(subTaskToAdd);
@@ -118,7 +117,6 @@ public class newTaskActivity extends AppCompatActivity {
 
                     if(str.getName().equals(subTaskToRemove)){
                         indexOfSubTaskToBeRemoved = subTasks.indexOf(str);
-                        System.out.println("-------------------------------> IDENTICAL TEXT HAS BEEN FOUND");
                         break;
                     }
                 }
@@ -126,14 +124,12 @@ public class newTaskActivity extends AppCompatActivity {
                 try {
                     subTasks.remove(indexOfSubTaskToBeRemoved);
                     materialsTasksAdapter.notifyDataSetChanged();
-                    System.out.println("-------------------------------> SUBTASK HAS BEEN REMOVED FROM LIST");
                 } catch (IndexOutOfBoundsException e) {
                     CharSequence response = "Requested Material does not exist";
                     int duration = Toast.LENGTH_SHORT;
 
                     Toast toast = Toast.makeText(getApplicationContext(), response, duration);
                     toast.show();
-                    System.out.println("-------------------------------> TOAST HAS BEEN SHOWN");
                 }
 
             }
