@@ -30,7 +30,7 @@ public class newTaskActivity extends AppCompatActivity {
     private ArrayList<String> profileIdList;
     private ArrayList<Profile> y;
     private ArrayAdapter<String> mArrayAdapter;
-    private int selectedProfile; //The variable you wanted austin
+    private Profile selectedProfile; //The variable you wanted austin
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +57,8 @@ public class newTaskActivity extends AppCompatActivity {
         spnProfiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedProfile = i;
-                System.out.println("The selected profile: " + profileNames.get(i));
+                selectedProfile = y.get(i);
+                System.out.println("SELECTED PROFILE" + selectedProfile.getName());
             }
 
             @Override
