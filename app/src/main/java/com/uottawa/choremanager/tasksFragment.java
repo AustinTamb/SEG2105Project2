@@ -56,7 +56,14 @@ public class tasksFragment extends Fragment {
 
 
 
-        final ArrayList<Task> listOfTasks = dB.getTasks();
+        ArrayList<Task> listOfTasks = dB.getTasks();
+        System.out.println("THE TASK LIST SIZE:" + listOfTasks.size());
+
+        String[] taskList = new String[listOfTasks.size()];
+        for (int i = 0; i < listOfTasks.size(); i++) {
+            taskList[i] = listOfTasks.get(i).getName();
+
+        }
         ArrayList<SubTask> mats = new ArrayList<SubTask>();
 
         for(int i = 0; i < listOfTasks.size(); i++){
@@ -65,7 +72,7 @@ public class tasksFragment extends Fragment {
 
         //Fills the tasks List View
         final ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
-        final TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), listOfTasks);
+        final TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), taskList);
         tasksListView.setAdapter(tasksAdapter);
 
         //Fills the materials List View
@@ -75,6 +82,8 @@ public class tasksFragment extends Fragment {
 
 
         //Handles the switch
+        /*
+
         swtOnlyShow = (Switch) view.findViewById(R.id.swtShowMyTasks);
         swtOnlyShow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -104,6 +113,7 @@ public class tasksFragment extends Fragment {
                 }
             }
         });
+        */
 
         return view;
     }
