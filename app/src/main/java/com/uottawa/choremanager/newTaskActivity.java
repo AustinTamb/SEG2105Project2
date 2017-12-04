@@ -282,8 +282,8 @@ public class newTaskActivity extends AppCompatActivity {
                 Boolean done = false;
                 Boolean valid = true; //False if an input is invalid
                 StringBuilder response = new StringBuilder();//Informs user on what error they made
-                StringBuilder startDateAndTime = new StringBuilder();
-                StringBuilder endDateAndTime = new StringBuilder();
+                StringBuilder startDateAndTimeString = new StringBuilder();
+                StringBuilder endDateAndTimeString = new StringBuilder();
                 String ownerID = selectedProfile.getId();
                 String id = "";
 
@@ -306,44 +306,30 @@ public class newTaskActivity extends AppCompatActivity {
 
 
                 //Turns the startCalendar into one integer with layout mm/dd/yyyy/hh/mm
-                startDateAndTime.append(startCalendar.get(Calendar.MONTH));
-                startDateAndTime.append(startCalendar.get(Calendar.DAY_OF_MONTH));
-                startDateAndTime.append(startCalendar.get(Calendar.YEAR));
-                startDateAndTime.append(startCalendar.get(Calendar.HOUR_OF_DAY));
-                startDateAndTime.append(startCalendar.get(Calendar.MINUTE));
+                startDateAndTimeString.append(startCalendar.get(Calendar.MONTH));
+                startDateAndTimeString.append(startCalendar.get(Calendar.DAY_OF_MONTH));
+                startDateAndTimeString.append(startCalendar.get(Calendar.YEAR));
+                startDateAndTimeString.append(startCalendar.get(Calendar.HOUR_OF_DAY));
+                startDateAndTimeString.append(startCalendar.get(Calendar.MINUTE));
 
-                endDateAndTime.append(endCalendar.get(Calendar.MONTH));
-                endDateAndTime.append(endCalendar.get(Calendar.DAY_OF_MONTH));
-                endDateAndTime.append(endCalendar.get(Calendar.YEAR));
-                endDateAndTime.append(endCalendar.get(Calendar.HOUR_OF_DAY));
-                endDateAndTime.append(endCalendar.get(Calendar.MINUTE));
-                System.out.println("THE OFFENDING STRING :" + startDateAndTime.toString());
-                System.out.println("THE OFFENDING STRING :" + startDateAndTime.toString().length());
+                endDateAndTimeString.append(endCalendar.get(Calendar.MONTH));
+                endDateAndTimeString.append(endCalendar.get(Calendar.DAY_OF_MONTH));
+                endDateAndTimeString.append(endCalendar.get(Calendar.YEAR));
+                endDateAndTimeString.append(endCalendar.get(Calendar.HOUR_OF_DAY));
+                endDateAndTimeString.append(endCalendar.get(Calendar.MINUTE));
+                System.out.println("THE OFFENDING STRING :" + startDateAndTimeString.toString());
+                System.out.println("THE OFFENDING STRING :" + startDateAndTimeString.toString().length());
 
-                //int startDateAndTimeInt = Integer.parseInt(startDateAndTime.toString());
-                int startDateAndTimeInt = Integer.parseInt("115");
-                //int endDateAndTimeInt = Integer.parseInt(endDateAndTime.toString());
+                long startDateAndTimeLong = Long.parseLong(startDateAndTimeString.toString());
+                System.out.println("startDateAndTimeLong: " + startDateAndTimeLong);
+                long endDateAndTimeLong = Long.parseLong(endDateAndTimeString.toString());
+                System.out.println("endDateAndTimeLong: " + endDateAndTimeLong);
 
-                //Please if you can think of a better way to do this, make the changes
-                /*
-                String startDateAndTime = String.valueOf(startCalendar.get(Calendar.MONTH)) +
-                        String.valueOf(startCalendar.get(Calendar.DAY_OF_MONTH))
-                        + String.valueOf(startCalendar.get(Calendar.YEAR))
-                        +String.valueOf(startCalendar.get(Calendar.HOUR_OF_DAY))
-                        +String.valueOf(startCalendar.get(Calendar.MINUTE));
-                System.out.println("THE OFFENDING STRING :" + startDateAndTime);
-                int startDateAndTimeInt = Integer.parseInt(startDateAndTime);
 
-                String endDateAndTime = String.valueOf(endCalendar.get(Calendar.MONTH)) +
-                        String.valueOf(endCalendar.get(Calendar.DAY_OF_MONTH))
-                        + String.valueOf(endCalendar.get(Calendar.YEAR))
-                        +String.valueOf(endCalendar.get(Calendar.HOUR_OF_DAY))
-                        +String.valueOf(endCalendar.get(Calendar.MINUTE));
-                int endDateAndTimeInt = Integer.parseInt(endDateAndTime);
-                */
 
                 if(valid){
-                   //dB.addTask(name, startDateAndTimeInt, description, endDateAndTimeInt, ownerID, subTasks, selectedStatus);
+                   dB.addTask(name, startDateAndTimeLong, description, endDateAndTimeLong, ownerID, subTasks, selectedStatus);
+                   finish();//Push by random person on github... https://github.com/michaelsam94
                 }else{
                     int duration = Toast.LENGTH_SHORT;
 

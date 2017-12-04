@@ -11,9 +11,9 @@ import java.util.List;
 
 public class Task {
     private String name;
-    private int startDate;
+    private long startDate; //Changed from int to long
     private String description;
-    private int endDate;
+    private long endDate; //Changed from int to long
     private String ownerId;
     private List<SubTask> subTasks;
     private String id;
@@ -21,9 +21,9 @@ public class Task {
 
 
 
-
-    public Task(String name, int startDate,
-                String description, int endDate,
+    //Changed int to long
+    public Task(String name, long startDate,
+                String description, long endDate,
                 String ownerId, String status){
 
         this.name = name;
@@ -117,17 +117,17 @@ public class Task {
         return name;
     }
 
-    public int getEndDate()
+    public long getEndDate()
     {
         return endDate;
-    }
+    } //Changed from int to long
 
     public String getDescription() { return description; }
 
-    public int getStartDate()
+    public long getStartDate()
     {
         return startDate;
-    }
+    } //Changed from int to long
 
     public String getOwnerId()
     {
