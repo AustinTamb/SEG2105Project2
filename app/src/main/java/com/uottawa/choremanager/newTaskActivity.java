@@ -1,7 +1,9 @@
 package com.uottawa.choremanager;
 
 import android.app.ListActivity;
+import android.app.TimePickerDialog;
 import android.provider.ContactsContract;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
@@ -15,12 +17,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class newTaskActivity extends AppCompatActivity {
     private ArrayList<SubTask> subTasks;
@@ -33,6 +41,8 @@ public class newTaskActivity extends AppCompatActivity {
     private ArrayAdapter<String> statusArrayAdapter;
     private Profile selectedProfile; //The variable you wanted austin
     private String selectedStatus;
+    private Button startButton;
+    private EditText endEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,30 +125,114 @@ public class newTaskActivity extends AppCompatActivity {
         materialsListView.setAdapter(materialsTasksAdapter);
 
 
+        //Handles start date EditText
+        //https://stackoverflow.com/questions/38604157/android-date-time-picker-in-one-dialog
+        //https://developer.android.com/guide/topics/ui/controls/pickers.html
+        //https://stackoverflow.com/questions/17901946/timepicker-dialog-from-clicking-edittext
 
+        Calendar currentDate = Calendar.getInstance();
+        final int hour = currentDate.get(Calendar.HOUR_OF_DAY);
+        final int minute = currentDate.get(Calendar.MINUTE);
+
+        final Calendar startCalendar = Calendar.getInstance();
+
+
+        //Handle the startdate EditText
+        startButton = findViewById(R.id.txtStartDate);
+        //REMOVE ME
+        System.out.println("THE START BUTTON:" + startButton.toString());
+        startButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(newTaskActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        startCalendar.set(Calendar.HOUR_OF_DAY, i);
+                        startCalendar.set(Calendar.MINUTE, i1);
+                    }
+                },hour, minute, false);
+                //REMOVE ME
+                System.out.println("THE TIME PICKER DIALOG" + timePickerDialog.toString());
+                timePickerDialog.setTitle("Select a time");
+                timePickerDialog.show();
+
+            }
+        });
+
+
+
+        //Handles the button that adds a task
         final Button addTaskButton = findViewById(R.id.btnAddTask);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Boolean done = false;
+                Boolean valid = true; //False if an input is invalid
+                String response = "";//Informs user on what error they made
                 String ownerID = "";
-                ArrayList<SubTask> subTaskList = subTasks;
                 String id = "";
-                int startDate = Integer.parseInt( ((TextView)findViewById(R.id.txtStartDate)).getText().toString());
-                int endDate = Integer.parseInt( ((TextView)findViewById(R.id.txtEndDate)).getText().toString() );
-                String name = ((TextView)findViewById(R.id.txtTaskName)).getText().toString();
-                String description = ((TextView)findViewById(R.id.txtNotes)).getText().toString();
-                String status = "";
 
-                dB.addTask(name, startDate, description, endDate, ownerID, subTaskList, status);
+                String startDate = ((TextView)findViewById(R.id.txtStartDate)).getText().toString();
+                String endDate = ((TextView)findViewById(R.id.txtEndDate)).getText().toString();
+
+                //Adapted from: https://stackoverflow.com/questions/5301226/convert-string-to-calendar-object-in-java
+                Calendar startDateCal = Calendar.getInstance();
+                Calendar endDateCal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("MMM/dd/yyyy");
+
+                //Parse the startDate and check if it was inputted incorrectly
+                try{
+                    Date startDateObject = sdf.parse(startDate);
+                    startDateCal.setTime(startDateObject);
+                }catch(ParseException pe){
+                    valid = false;
+                    response = response + "Incorrect entry in start date\n";
+                }
+
+                //Parse the endDate and check if it was inputted incorrectly
+                try{
+                    Date endDateObject = sdf.parse(endDate);
+                    endDateCal.setTime(endDateObject);
+                }catch(ParseException pe){
+                    valid = false;
+                    response = response + "Incorrect entry in end date\n";
+                }
+
+                //Check if the dates make sense
+                if(startDateCal.after(endDateCal) || Calendar.getInstance().after(startDateCal)
+                        || Calendar.getInstance().after(endDateCal)){
+
+                    valid = false;
+                }
+
+                String name = ((TextView)findViewById(R.id.txtTaskName)).getText().toString();
+
+
+                String description = ((TextView)findViewById(R.id.txtNotes)).getText().toString();
+
+                String status = selectedStatus;
+
+
+                if(valid){
+                   // dB.addTask(name, startDate, description, endDate, ownerID, subTasks, status);
+                }else{
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(getApplicationContext(), response, duration);
+                    toast.show();
+                }
+
 
             }
         });
+
+
+
+        //Handles the button that adds subtasks
         final Button addButton = findViewById(R.id.btnAdd);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String subTaskToAdd = ((TextView)findViewById(R.id.txtSTName)).getText().toString();
 
-                //TODO Doesnt add to database?
+
                 if(!subTaskToAdd.equals("")) {
                     subTasks.add(new SubTask(subTaskToAdd, false));
                     names.add(subTaskToAdd);
@@ -148,6 +242,7 @@ public class newTaskActivity extends AppCompatActivity {
             }
         });
 
+        //Handles the button that removes subtasks
         final Button removeButton = findViewById(R.id.btnRemove);
         removeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
