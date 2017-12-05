@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -43,11 +44,14 @@ public class TasksCustomAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 Task x = tasksList.get(position);
-                if(x.getStatus().equals("Active") && x.getStatus().equals("Active")) {
+                if(!x.getOwnerId().equals(dB.getCurrentUser().getId())){
+                    showError("This is not your task to complete!");
+                } else if(x.getStatus().equals("Active") && x.getStatus().equals("Active")) {
                     tasksList.get(position).setStatus(cbx.isChecked()?"Done":"Error");
                     Profile owner = dB.getProfile(tasksList.get(position).getOwnerId());
                     owner.setNumberOfTasksCompleted(owner.getNumberOfTasksCompleted()+1);
                     cbx.setEnabled(false);
+                    System.out.println("User now has: " + owner.getNumberOfTasksCompleted() + " tasks completed!");
                 }
             }
         });
@@ -66,5 +70,14 @@ public class TasksCustomAdapter extends ArrayAdapter {
 
 
         return rowView;
+    }
+
+    //Based off: https://developer.android.com/guide/topics/ui/notifiers/toasts.html
+    private void showError(String message){
+        CharSequence text = message;
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }
