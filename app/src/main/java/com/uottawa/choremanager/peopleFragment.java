@@ -57,7 +57,7 @@ public class peopleFragment extends Fragment {
         peopleListView.setAdapter(peopleAdapter);
         System.out.println("Successfully Created People view");
 
-        ((MainActivity)getActivity()).update();
+        //((MainActivity)getActivity()).update();
 
         return view;
     }
