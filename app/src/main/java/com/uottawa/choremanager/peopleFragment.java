@@ -40,18 +40,25 @@ public class peopleFragment extends Fragment {
         View view = inflater.inflate(R.layout.people, container, false);
         btnNewProfile = (ImageButton) view.findViewById(R.id.imgNewPerson);
         btnNewProfile.setOnClickListener(new NewProfileOnClickListener());
+
         dB = MainActivity.getDB();
         ArrayList<Profile> x = dB.getProfiles();
-        String[] taskList = new String[x.size()];
+        System.out.println("Amount of profiles from peopleFragment:"
+                + x.size());
+
+        String[] profileList = new String[x.size()];
         for (int i = 0; i < x.size(); i++) {
-            taskList[i] = x.get(i).getName();
+            profileList[i] = x.get(i).getName();
 
         }
 
         peopleListView = (ListView) view.findViewById(R.id.listViewPeople);
-        peopleAdapter = new PeopleCustomAdapter(getActivity().getApplicationContext(), taskList);
+        peopleAdapter = new PeopleCustomAdapter(getActivity().getApplicationContext(), profileList);
         peopleListView.setAdapter(peopleAdapter);
         System.out.println("Successfully Created People view");
+
+        ((MainActivity)getActivity()).update();
+
         return view;
     }
     //End of citation
@@ -60,6 +67,7 @@ public class peopleFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        //((MainActivity)getActivity()).updateFragments();
         peopleAdapter.notifyDataSetChanged();
     }
 }

@@ -7,6 +7,7 @@
 package com.uottawa.choremanager;
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -14,10 +15,11 @@ import java.util.ArrayList;
 
 
 //taken from tutorial https://www.youtube.com/watch?v=bNpWGI_hGGg
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
     private SectionPageAdapter mSectionPageAdapter;
     private ViewPager mViewPager;
     static public DataBase dB;
+    private SectionPageAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +29,12 @@ public class MainActivity extends AppCompatActivity {
         //Following is uses to populate database and test stuff...
         ArrayList<SubTask> z = new ArrayList<SubTask>();
         dB = new DataBase();
-        Profile x = dB.addProfile("Austin", true,"Test123");
-        Profile kh = dB.addProfile("Kevin Hart", true,"Test123");
+
+
+        Profile x = dB.addProfile("Austin", true, "Test123");
+
+        Profile kh = dB.addProfile("Kevin Hart", true, "Test123");
+
 
         z.add(new SubTask("Cloth", false));
         z.add(new SubTask("Bucket", false));
@@ -39,26 +45,46 @@ public class MainActivity extends AppCompatActivity {
 
         dB.assignTask(x.getId(), y.getId());
         dB.assignTask(x.getId(), b.getId());
+
+
         dB.setCurrentUser(x);
 
-        Task p = dB.addTask("Wash Stapler", 10, "washittt", 20, kh.getId(), z, "Active");
-        Task k = dB.addTask("Say hi to Raymond", 10, "hi raymond", 20, kh.getId(), z, "Active");
+        long startDateAndTimeLong = Long.parseLong("115");
+        System.out.println(startDateAndTimeLong);
+
+        //Task p = dB.addTask("Wash Stapler", 10, "washittt", 20, kh.getId(), z, "Active");
+        //Task k = dB.addTask("Say hi to Raymond", 10, "hi raymond", 20, kh.getId(), z, "Active");
+
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager)findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
 
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
     }
-    private void setupViewPager(ViewPager viewPager){
-        SectionPageAdapter adapter = new SectionPageAdapter(getSupportFragmentManager());
+
+    private void setupViewPager(ViewPager viewPager) {
+        adapter = new SectionPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new calendarFragment(), "Calendar");
         adapter.addFragment(new tasksFragment(), "Tasks");
         adapter.addFragment(new peopleFragment(), "People");
         viewPager.setAdapter(adapter);
     }
+
+
+    public void update(){
+        mViewPager.getAdapter().notifyDataSetChanged();
+        System.out.println("UPDATE METHOD CALLED");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSectionPageAdapter.notifyDataSetChanged();
+    }
+
 
     static public DataBase getDB(){
         return dB;
