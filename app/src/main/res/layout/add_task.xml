@@ -77,7 +77,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
 
                 <TextView
                     android:id="@+id/txtStartDate"
@@ -116,7 +118,9 @@
                 android:id="@+id/spinnerStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".1" />
+                android:layout_weight=".1"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp" />
 
             <TextView
                 android:id="@+id/lblSubTasks"
