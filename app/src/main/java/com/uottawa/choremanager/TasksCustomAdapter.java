@@ -49,6 +49,7 @@ public class TasksCustomAdapter extends ArrayAdapter {
                 Task x = tasksList.get(position);
                 if(!x.getOwnerId().equals(dB.getCurrentUser().getId())){
                     showError("This is not your task to complete!");
+                    cbx.setChecked(false);
                 } else if(x.getStatus().equals("Active") && x.getStatus().equals("Active")) {
                     tasksList.get(position).setStatus(cbx.isChecked()?"Done":"Error");
                     Profile owner = dB.getProfile(tasksList.get(position).getOwnerId());
