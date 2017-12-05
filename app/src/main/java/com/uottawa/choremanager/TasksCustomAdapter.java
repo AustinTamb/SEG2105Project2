@@ -22,19 +22,21 @@ import java.util.ArrayList;
 
 public class TasksCustomAdapter extends ArrayAdapter {
     private final Context context;
-    private final ArrayList<Task> tasksList;
+    private final String[] tasksStringList;
     private DataBase dB;
 
-    public TasksCustomAdapter(Context context, ArrayList<Task> tasksList){
-        super(context, R.layout.tasks, tasksList);
+    public TasksCustomAdapter(Context context, String[] tasksStringList){
+        super(context, R.layout.tasks, tasksStringList);
         this.context = context;
-        this.tasksList = tasksList;
+        this.tasksStringList = tasksStringList;
         this.dB = MainActivity.getDB();
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.task_template, parent, false);
+        ArrayList<Task> tasksList = dB.getTasks();
+        System.out.println(tasksList);
 
         TextView taskNameTextField = (TextView) rowView.findViewById(R.id.txtTaskName);
         ImageView personImage = (ImageView) rowView.findViewById(R.id.imgPerson);
@@ -43,6 +45,7 @@ public class TasksCustomAdapter extends ArrayAdapter {
 
             @Override
             public void onClick(View v) {
+                ArrayList<Task> tasksList = dB.getTasks();
                 Task x = tasksList.get(position);
                 if(!x.getOwnerId().equals(dB.getCurrentUser().getId())){
                     showError("This is not your task to complete!");

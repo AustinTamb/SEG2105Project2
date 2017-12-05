@@ -1,7 +1,11 @@
 package com.uottawa.choremanager;
 
+import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ListActivity;
+import android.app.TimePickerDialog;
 import android.provider.ContactsContract;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
@@ -12,14 +16,26 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+import static java.lang.Integer.parseInt;
 
 public class newTaskActivity extends AppCompatActivity {
     private ArrayList<SubTask> subTasks;
@@ -29,6 +45,13 @@ public class newTaskActivity extends AppCompatActivity {
     private ArrayList<String> profileIdList;
     private ArrayList<Profile> y;
     private ArrayAdapter<String> mArrayAdapter;
+    private ArrayAdapter<String> statusArrayAdapter;
+    private Profile selectedProfile; //The variable you wanted austin
+    private String selectedStatus;
+    private TextView startTextTime;
+    private TextView startTextDate;
+    private TextView endTextTime;
+    private TextView endTextDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,26 +62,64 @@ public class newTaskActivity extends AppCompatActivity {
 
         //Spinner code based off: https://stackoverflow.com/questions/24825249/how-to-add-item-in-spinner-android
         Spinner spnProfiles = findViewById(R.id.spnProfiles);
+        Spinner statusSpinner = findViewById(R.id.spinnerStatus);
 
+        //Populates the list of profiles
         y = dB.getProfiles();
-        ArrayList<String> profileNames = new ArrayList<String>();
+        final ArrayList<String> profileNames = new ArrayList<String>();
         for(Profile x : y){
             profileNames.add(x.getName());
         }
 
+        final ArrayList<String> statusArray = new ArrayList<String>();
+        statusArray.add("Active");
+        statusArray.add("Postponed");
+        statusArray.add("Done");
+
+        //Handles the status spinner
+        statusArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, statusArray);
+        statusArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        statusSpinner.setAdapter(statusArrayAdapter);
+
+        //Handles the profiles spinner
         mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, profileNames);
         mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnProfiles.setAdapter(mArrayAdapter);
+
+
+        //Handles what happens when you select a status in the status spinenr
+        statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedStatus = statusArray.get(i);
+                System.out.println("SELECTED STATUS: " + selectedStatus);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
+        //Handles what happens when you select a profile in the profile spinenr
+        spnProfiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedProfile = y.get(i);
+                System.out.println("SELECTED PROFILE: " + selectedProfile.getName());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
+
         //End spinner code
 
         names = new ArrayList<String>();
 
         subTasks = new ArrayList<SubTask>();
-        final Spinner profiles = (Spinner) findViewById(R.id.spnProfiles);
         //Get array of Profiles, loop through and getNames->spinnerOption
         //Followed Tutorial https://developer.android.com/guide/topics/ui/controls/spinner.html#SelectListener
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //profiles.setAdapter(adapter);
+        //https://stackoverflow.com/questions/2652414/how-do-you-get-the-selected-value-of-a-spinner
 
 
         ListView test =(ListView) findViewById(R.id.listViewMaterials);
@@ -73,24 +134,216 @@ public class newTaskActivity extends AppCompatActivity {
         materialsListView.setAdapter(materialsTasksAdapter);
 
 
+        //Handles start date EditText
+        //https://stackoverflow.com/questions/38604157/android-date-time-picker-in-one-dialog
+        //https://developer.android.com/guide/topics/ui/controls/pickers.html
+        //https://stackoverflow.com/questions/17901946/timepicker-dialog-from-clicking-edittext
 
+        /*
+        String monthStr = String.valueOf(currentDate.get(Calendar.MONTH));
+        String dayStr = String.valueOf(currentDate.get(Calendar.DAY_OF_MONTH));
+        String yearStr = String.valueOf(currentDate.get(Calendar.YEAR));
+        String hourStr = String.valueOf(currentDate.get(Calendar.HOUR_OF_DAY));
+        String minuteStr = String.valueOf(currentDate.get(Calendar.MINUTE));
+
+
+        String startString = String.format("%m" + "/" + "%d" + "/" + "%y" + " " + "%h" + "/"
+                + "%m", monthStr, dayStr, yearStr, hourStr, minuteStr);
+        */
+
+        final Calendar startCalendar = Calendar.getInstance();
+
+        //Handle the txtStartTime TextView
+        startTextTime = (TextView) findViewById(R.id.txtStartTime);
+        //REMOVE ME
+        System.out.println("THE START BUTTON:" + startTextTime.toString());
+        startTextTime.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Creating variables needed for constructor of timePickerDialog
+                Calendar currentDate = Calendar.getInstance();
+                final int hour = currentDate.get(Calendar.HOUR_OF_DAY);
+                final int minute = currentDate.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(newTaskActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        startCalendar.set(Calendar.HOUR_OF_DAY, i);
+                        System.out.println(startCalendar.get(Calendar.HOUR_OF_DAY));
+                        startCalendar.set(Calendar.MINUTE, i1);
+                        System.out.println(startCalendar.get(Calendar.MINUTE));
+                        startTextTime.setText(startCalendar.get(Calendar.HOUR_OF_DAY) + ":" + startCalendar.get(Calendar.MINUTE));
+                        startTextTime.invalidate();
+                    }
+                },hour, minute, false);
+                //REMOVE ME
+                System.out.println("THE TIME PICKER DIALOG" + timePickerDialog.toString());
+                timePickerDialog.setTitle("Select a time");
+                timePickerDialog.show();
+            }
+        });
+
+
+        startTextDate = (TextView) findViewById(R.id.txtStartDate);
+        //REMOVE ME
+        startTextDate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Calendar currentDate = Calendar.getInstance();
+                final int year = currentDate.get(Calendar.YEAR);
+                final int month = currentDate.get(Calendar.MONTH);
+                final int day = currentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(newTaskActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        startCalendar.set(Calendar.YEAR, i);
+                        System.out.println(startCalendar.get(Calendar.YEAR));
+                        startCalendar.set(Calendar.MONTH, i1);
+                        System.out.println(startCalendar.get(Calendar.MONTH));
+                        startCalendar.set(Calendar.DAY_OF_MONTH, i2);
+                        System.out.println(startCalendar.get(Calendar.DAY_OF_MONTH));
+                        startTextDate.setText(String.valueOf(startCalendar.get(Calendar.MONTH)) + "/"
+                                + String.valueOf(startCalendar.get(Calendar.DAY_OF_MONTH)) + "/"
+                                + String.valueOf(startCalendar.get(Calendar.YEAR)));
+                        startTextDate.invalidate();
+                    }
+                },year, month, day);
+                //REMOVE ME
+                System.out.println("THE DATE PICKER DIALOG" + datePickerDialog.toString());
+                datePickerDialog.setTitle("Select a Date");
+                datePickerDialog.show();
+            }
+        });
+
+        final Calendar endCalendar = Calendar.getInstance();
+
+
+        endTextTime = (TextView) findViewById(R.id.txtEndTime);
+        endTextTime.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Creating variables needed for constructor of timePickerDialog
+                Calendar currentDate = Calendar.getInstance();
+                final int hour = currentDate.get(Calendar.HOUR_OF_DAY);
+                final int minute = currentDate.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(newTaskActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        endCalendar.set(Calendar.HOUR_OF_DAY, i);
+                        System.out.println(endCalendar.get(Calendar.HOUR_OF_DAY));
+                        endCalendar.set(Calendar.MINUTE, i1);
+                        System.out.println(endCalendar.get(Calendar.MINUTE));
+                        endTextTime.setText(endCalendar.get(Calendar.HOUR_OF_DAY)
+                                + ":" + endCalendar.get(Calendar.MINUTE));
+                        endTextTime.invalidate();
+                    }
+                },hour, minute, false);
+                timePickerDialog.setTitle("Select a time");
+                timePickerDialog.show();
+            }
+        });
+
+
+        endTextDate = (TextView) findViewById(R.id.txtEndDate);
+        //REMOVE ME
+        endTextDate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Calendar currentDate = Calendar.getInstance();
+                final int year = currentDate.get(Calendar.YEAR);
+                final int month = currentDate.get(Calendar.MONTH);
+                final int day = currentDate.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(newTaskActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        endCalendar.set(Calendar.YEAR, i);
+                        System.out.println(endCalendar.get(Calendar.YEAR));
+                        endCalendar.set(Calendar.MONTH, i1);
+                        System.out.println(endCalendar.get(Calendar.MONTH));
+                        endCalendar.set(Calendar.DAY_OF_MONTH, i2);
+                        System.out.println(endCalendar.get(Calendar.DAY_OF_MONTH));
+                        endTextDate.setText(String.valueOf(endCalendar.get(Calendar.MONTH)) + "/"
+                                + String.valueOf(endCalendar.get(Calendar.DAY_OF_MONTH)) + "/"
+                                + String.valueOf(endCalendar.get(Calendar.YEAR)));
+                        endTextDate.invalidate();
+                    }
+                },year, month, day);
+                //REMOVE ME
+                System.out.println("THE DATE PICKER DIALOG" + datePickerDialog.toString());
+                datePickerDialog.setTitle("Select a Date");
+                datePickerDialog.show();
+            }
+        });
+
+        //Handles the button that adds a task
         final Button addTaskButton = findViewById(R.id.btnAddTask);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Boolean done = false;
-                String ownerID = "";
-                ArrayList<SubTask> subTaskList = subTasks;
+                Boolean valid = true; //False if an input is invalid
+                StringBuilder response = new StringBuilder();//Informs user on what error they made
+                StringBuilder startDateAndTimeString = new StringBuilder();
+                StringBuilder endDateAndTimeString = new StringBuilder();
+                String ownerID = selectedProfile.getId();
                 String id = "";
-                int startDate = Integer.parseInt( ((TextView)findViewById(R.id.txtStartDate)).getText().toString());
-                int endDate = Integer.parseInt( ((TextView)findViewById(R.id.txtEndDate)).getText().toString() );
-                String name = ((TextView)findViewById(R.id.txtTaskName)).getText().toString();
-                String description = ((TextView)findViewById(R.id.txtNotes)).getText().toString();
-                String status = "";
 
-                dB.addTask(name, startDate, description, endDate, ownerID, subTaskList, status);
+                //Check if the dates make sense
+                if(startCalendar.after(endCalendar) || Calendar.getInstance().after(startCalendar)
+                        || Calendar.getInstance().after(endCalendar)){
+
+                    valid = false;
+                    response.append("Date/Time entries are incorrect\n");
+                }
+
+                String name = ((TextView)findViewById(R.id.txtTaskName)).getText().toString();
+
+                if(name.length() == 0){
+                    valid = false;
+                    response.append("Task name is invalid\n");
+                }
+
+                String description = ((TextView)findViewById(R.id.txtNotes)).getText().toString();
+
+
+                //Turns the startCalendar into one integer with layout mm/dd/yyyy/hh/mm
+                startDateAndTimeString.append(startCalendar.get(Calendar.MONTH));
+                startDateAndTimeString.append(startCalendar.get(Calendar.DAY_OF_MONTH));
+                startDateAndTimeString.append(startCalendar.get(Calendar.YEAR));
+                startDateAndTimeString.append(startCalendar.get(Calendar.HOUR_OF_DAY));
+                startDateAndTimeString.append(startCalendar.get(Calendar.MINUTE));
+
+                endDateAndTimeString.append(endCalendar.get(Calendar.MONTH));
+                endDateAndTimeString.append(endCalendar.get(Calendar.DAY_OF_MONTH));
+                endDateAndTimeString.append(endCalendar.get(Calendar.YEAR));
+                endDateAndTimeString.append(endCalendar.get(Calendar.HOUR_OF_DAY));
+                endDateAndTimeString.append(endCalendar.get(Calendar.MINUTE));
+                System.out.println("THE OFFENDING STRING :" + startDateAndTimeString.toString());
+                System.out.println("THE OFFENDING STRING :" + startDateAndTimeString.toString().length());
+
+                long startDateAndTimeLong = Long.parseLong(startDateAndTimeString.toString());
+                System.out.println("startDateAndTimeLong: " + startDateAndTimeLong);
+                long endDateAndTimeLong = Long.parseLong(endDateAndTimeString.toString());
+                System.out.println("endDateAndTimeLong: " + endDateAndTimeLong);
+
+
+
+                if(valid){
+                   dB.addTask(name, startDateAndTimeLong, description, endDateAndTimeLong, ownerID, subTasks, selectedStatus);
+                   finish();//Push by random person on github... https://github.com/michaelsam94
+                }else{
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(newTaskActivity.this, response, duration);
+                    toast.show();
+                }
+
 
             }
         });
+
+
+
+        //Handles the button that adds subtasks
         final Button addButton = findViewById(R.id.btnAdd);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -106,6 +359,7 @@ public class newTaskActivity extends AppCompatActivity {
             }
         });
 
+        //Handles the button that removes subtasks
         final Button removeButton = findViewById(R.id.btnRemove);
         removeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -118,7 +372,6 @@ public class newTaskActivity extends AppCompatActivity {
 
                     if(str.getName().equals(subTaskToRemove)){
                         indexOfSubTaskToBeRemoved = subTasks.indexOf(str);
-                        System.out.println("-------------------------------> IDENTICAL TEXT HAS BEEN FOUND");
                         break;
                     }
                 }
@@ -126,14 +379,12 @@ public class newTaskActivity extends AppCompatActivity {
                 try {
                     subTasks.remove(indexOfSubTaskToBeRemoved);
                     materialsTasksAdapter.notifyDataSetChanged();
-                    System.out.println("-------------------------------> SUBTASK HAS BEEN REMOVED FROM LIST");
                 } catch (IndexOutOfBoundsException e) {
                     CharSequence response = "Requested Material does not exist";
                     int duration = Toast.LENGTH_SHORT;
 
                     Toast toast = Toast.makeText(getApplicationContext(), response, duration);
                     toast.show();
-                    System.out.println("-------------------------------> TOAST HAS BEEN SHOWN");
                 }
 
             }

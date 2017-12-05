@@ -15,7 +15,9 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Raymo on 2017-11-24.
@@ -30,6 +32,9 @@ public class tasksFragment extends Fragment {
     private static final String TAG = "tasksFragment";
     private boolean onlyShowMyTasks = false;
     private Profile currentUser;
+    private TasksCustomAdapter tasksAdapter;
+    private MaterialsCustomAdapter subTasksAdapter;
+
 
     //This nested class is used to control what happens when btnNewTask is clicked
     public class NewTaskOnClickListener implements View.OnClickListener{
@@ -53,10 +58,37 @@ public class tasksFragment extends Fragment {
         btnNewTask.setOnClickListener(new NewTaskOnClickListener());
 
         dB = MainActivity.getDB();
+        ArrayList<Profile> listOfProfiles = dB.getProfiles();
+        System.out.println("Amount of profiles from taskFragment"
+                + listOfProfiles.size());
 
 
+        ArrayList<Task> listOfTasks = new ArrayList<Task>();
 
-        final ArrayList<Task> listOfTasks = dB.getTasks();
+        //REMOVE ME
+        int amountOfTasks = 0;
+
+        for(Profile p: listOfProfiles){
+            List aProfilesListOfTasks = p.getAssignedTasks();
+            if(aProfilesListOfTasks != null) {
+                amountOfTasks = amountOfTasks + aProfilesListOfTasks.size();
+                for (int j = 0; j < aProfilesListOfTasks.size(); j++) {
+                    String aTaskId = (String) aProfilesListOfTasks.get(j);
+                    listOfTasks.add(dB.getTask(aTaskId));
+                }
+            }
+        }
+
+        System.out.println("THE TASK LIST SIZE:" + listOfTasks.size());
+        System.out.println("FIRST ELEMENT IN LIST OF TASKS:" + listOfTasks.get(0));
+
+
+        String[] taskList = new String[listOfTasks.size()];
+        for (int i = 0; i < listOfTasks.size(); i++) {
+            taskList[i] = listOfTasks.get(i).getName();
+            System.out.println("ELEMENT IN LIST OF TASKS at position: " + i + " " + listOfTasks.get(0) );
+
+        }
         ArrayList<SubTask> mats = new ArrayList<SubTask>();
 
         for(int i = 0; i < listOfTasks.size(); i++){
@@ -64,17 +96,20 @@ public class tasksFragment extends Fragment {
         }
 
         //Fills the tasks List View
-        final ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
-        final TasksCustomAdapter tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), listOfTasks);
+        ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
+        tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), taskList);
         tasksListView.setAdapter(tasksAdapter);
 
         //Fills the materials List View
         ListView subTasksListView = (ListView) view.findViewById(R.id.listViewMaterials);
-        MaterialsCustomAdapter subTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), listOfTasks);
+        subTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), listOfTasks);
         subTasksListView.setAdapter(subTasksAdapter);
 
 
         //Handles the switch
+
+        //NEEDS TO BE FIXED
+        /*
         swtOnlyShow = (Switch) view.findViewById(R.id.swtShowMyTasks);
         swtOnlyShow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -104,11 +139,21 @@ public class tasksFragment extends Fragment {
                 }
             }
         });
-
+        */
+        //((MainActivity)getActivity()).update();
         return view;
     }
 
 
 
     //End of citation
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //((MainActivity)getActivity()).updateFragments();
+        tasksAdapter.notifyDataSetChanged();
+        subTasksAdapter.notifyDataSetChanged();
+
+    }
 }
