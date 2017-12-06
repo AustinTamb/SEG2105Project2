@@ -64,7 +64,6 @@ public class DataBase extends Application{
             public void onDataChange(DataSnapshot snapshot) {
                 Log.e("Count ", "" + snapshot.getChildrenCount());
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    System.out.println(postSnapshot);
                     Profile profile = postSnapshot.getValue(Profile.class);
                     if (profile != null) {
                         profiles.put(profile.getId(), profile);
@@ -106,6 +105,7 @@ public class DataBase extends Application{
         tasks.put(id, toAdd);
 
         dbTasks.child(id).setValue(toAdd);
+        assignTask(ownerId, id);
         return toAdd;
     }
 

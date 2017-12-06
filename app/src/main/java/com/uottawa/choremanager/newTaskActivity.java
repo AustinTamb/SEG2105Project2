@@ -306,9 +306,12 @@ public class newTaskActivity extends AppCompatActivity{
 
 
                 if(valid){
-                   dB.addTask(name, startDateAndTimeString.toString(), description, endDateAndTimeString.toString(), ownerID, subTasks, selectedStatus);
-                    Intent update = new Intent(newTaskActivity.this, MainActivity.class);
-                    startActivity(update);
+                   Task xyz = dB.addTask(name, startDateAndTimeString.toString(), description, endDateAndTimeString.toString(), ownerID, subTasks, selectedStatus);
+                   //Intent update = new Intent(newTaskActivity.this, MainActivity.class);
+                    //startActivity(update);
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(newTaskActivity.this, "New task added!", duration);
                     finish();
 
                     //https://stackoverflow.com/questions/12202432/how-to-call-method-in-main-activity-from-other-activity
