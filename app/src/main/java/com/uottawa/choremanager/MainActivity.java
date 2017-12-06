@@ -40,7 +40,7 @@ public class MainActivity extends FragmentActivity {
         /*
 
         Profile kh = dB.addProfile("Kevin Hart", true, "Test123");
-
+        */
 
         z.add(new SubTask("Cloth", false));
         z.add(new SubTask("Bucket", false));
@@ -59,10 +59,8 @@ public class MainActivity extends FragmentActivity {
         //Task p = dB.addTask("Wash Stapler", 10, "washittt", 20, kh.getId(), z, "Active");
         //Task k = dB.addTask("Say hi to Raymond", 10, "hi raymond", 20, kh.getId(), z, "Active");
 
-        */
 
-        //Profile x = dB.getProfiles().get(0);
-        dB.setCurrentUser(x);
+
 
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
