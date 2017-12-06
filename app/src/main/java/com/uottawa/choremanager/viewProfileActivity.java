@@ -1,11 +1,13 @@
 package com.uottawa.choremanager;
 
 import android.app.Dialog;
+import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 /**
  * Created by Raymo on 2017-11-30.
@@ -99,6 +103,27 @@ public class viewProfileActivity extends AppCompatActivity{
             }
         });
 
+        ListView lv = (ListView) findViewById(R.id.listViewTasks);
+        try {
+            //https://stackoverflow.com/questions/5070830/populating-a-listview-using-an-arraylist
+            ArrayList<Task> l = dB.getTasks();
+            ArrayList<Task> profilesTasks = new ArrayList<Task>();
+            for (Task t : l) {
+                if (t.getOwnerId().equals(x.getId())) {
+                    profilesTasks.add(t);
+                }
+            }
+            String[] taskArray = new String[profilesTasks.size()];
+            if (profilesTasks.size() != 0) {
+                for (int i = 0; i < profilesTasks.size(); i++) {
+                    taskArray[i] = profilesTasks.get(i).getName();
+                }
+            }
+            System.out.println("taskarray at0" + taskArray[0]);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                    android.R.layout.simple_list_item_1, taskArray);
+            lv.setAdapter(adapter);
+        }catch (NullPointerException e){}
     }
 
     public Dialog openDialog() {
