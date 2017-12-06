@@ -1,8 +1,12 @@
 package com.uottawa.choremanager;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,6 +48,7 @@ public class viewTaskActivity extends AppCompatActivity {
 
         startDateText.setText(processDate(theTask.getStartDate(), false));
         endDateText.setText(processDate(theTask.getEndDate(), false));
+
         startTimeText.setText(processDate(theTask.getStartDate(), true));
         endTimeText.setText(processDate(theTask.getEndDate(), true));
 
@@ -64,6 +69,17 @@ public class viewTaskActivity extends AppCompatActivity {
                 R.layout.subtask_template, subTaskListString);
         }
 
+        final Button editButton = (Button) findViewById(R.id.btnEditTask);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
+                Intent i = new Intent(viewTaskActivity.this, newTaskActivity.class);
+                i.putExtra("editTask", theTask.getId());
+                startActivityForResult(i, 1);
+            }
+        });
+
     }
 
 
@@ -73,9 +89,10 @@ public class viewTaskActivity extends AppCompatActivity {
         if (oldString == null) {
             return ("null");
         }
-        if(oldString.length() == 16) {
+        else if (oldString.length() == 16){
             if (!getTime) {
                 s.append(oldString.substring(0, 11));
+                System.out.println("getTime isnt working");
                 return (s.toString());
 
             } else {
@@ -84,9 +101,22 @@ public class viewTaskActivity extends AppCompatActivity {
                 s.append(oldString.substring(14));
                 return (s.toString());
             }
+        }else{
+            return(oldString);
         }
-
-        return(oldString);
-
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    //https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                System.out.println("Edit Request Recieved");
+                String result=data.getStringExtra("editTask");
+                db.removeTask(result);
+                finish();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {}
+        }
+    }//onActivityResult
 }
