@@ -89,7 +89,6 @@ public class newTaskActivity extends AppCompatActivity{
         mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnProfiles.setAdapter(mArrayAdapter);
 
-
         //Handles what happens when you select a status in the status spinenr
         statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -294,24 +293,49 @@ public class newTaskActivity extends AppCompatActivity{
                 startDateAndTimeString.append(processString(startCalendar.get(Calendar.MINUTE)));
 
                 endDateAndTimeString.append(processString(endCalendar.get(Calendar.MONTH)));
-                startDateAndTimeString.append("/");
+                endDateAndTimeString.append("/");
                 endDateAndTimeString.append(processString(endCalendar.get(Calendar.DAY_OF_MONTH)));
-                startDateAndTimeString.append("/");
+                endDateAndTimeString.append("/");
                 endDateAndTimeString.append(processString(endCalendar.get(Calendar.YEAR)));
-                startDateAndTimeString.append("/");
+                endDateAndTimeString.append("/");
                 endDateAndTimeString.append(processString(endCalendar.get(Calendar.HOUR_OF_DAY)));
-                startDateAndTimeString.append("/");
+                endDateAndTimeString.append("/");
                 endDateAndTimeString.append(processString(endCalendar.get(Calendar.MINUTE)));
 
 
 
+
                 if(valid){
+                    //https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
                    Task xyz = dB.addTask(name, startDateAndTimeString.toString(), description, endDateAndTimeString.toString(), ownerID, subTasks, selectedStatus);
                    //Intent update = new Intent(newTaskActivity.this, MainActivity.class);
                     //startActivity(update);
-                    int duration = Toast.LENGTH_SHORT;
+                    boolean editTask = true;
+                    String editTaskID = "";
+                    try {
+                        String editTaskString = getIntent().getStringExtra("editTask");
+                        if (editTaskString != null) {
+                            editTaskID = editTaskString;
+                            System.out.println(id);
+                        }
 
-                    Toast toast = Toast.makeText(newTaskActivity.this, "New task added!", duration);
+                    }catch (NullPointerException e){
+                        editTask = false;
+                    }
+
+
+                    int duration = Toast.LENGTH_SHORT;
+                    if(!editTask) {
+
+                        Toast toast = Toast.makeText(newTaskActivity.this, "New task added!", duration);
+                    }else{
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra("result",editTaskID);
+                        setResult(Activity.RESULT_OK,returnIntent);
+
+                        Toast toast = Toast.makeText(newTaskActivity.this, "Task Edited!", duration);
+                    }
+
                     finish();
 
                     //https://stackoverflow.com/questions/12202432/how-to-call-method-in-main-activity-from-other-activity
