@@ -23,12 +23,12 @@ public class MaterialsCustomAdapter extends ArrayAdapter {
     private DataBase dB;
     private ImageButton imgTaskButton;
 
-    public MaterialsCustomAdapter(Context context, ArrayList<Task> tasksList){
-        super(context, R.layout.tasks, tasksList);
+    public MaterialsCustomAdapter(Context context, ArrayList<Task> tasksList, ArrayList<SubTask> subTaskList){
+        super(context, R.layout.tasks, subTaskList);
         this.context = context;
         this.tasksList = tasksList;
         this.dB = MainActivity.getDB();
-        subTaskList = new ArrayList<SubTask>();
+        this.subTaskList = subTaskList;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -64,15 +64,14 @@ public class MaterialsCustomAdapter extends ArrayAdapter {
 
         //Put in Constructor?
         //Fills subTaskList
-        for(Task t: tasksList){
-            List<SubTask> l = t.getSubTasks();
-            for(SubTask st: l){
-                subTaskList.add(st);
+        try {
+
+            if (subTaskList.size() != 0) {
+                subTaskNameTextField.setText(subTaskList.get(position).getName());
             }
+        }catch(NullPointerException e){
+
         }
-
-        subTaskNameTextField.setText(subTaskList.get(position).getName());
-
 
         return rowView;
     }

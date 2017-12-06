@@ -16,6 +16,7 @@ public class viewProfileActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
+
         String profileId = getIntent().getStringExtra("profileId");
         dB = MainActivity.getDB();
         Profile x = dB.getProfile(profileId);

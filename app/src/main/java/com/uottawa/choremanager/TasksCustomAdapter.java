@@ -35,7 +35,7 @@ public class TasksCustomAdapter extends ArrayAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.task_template, parent, false);
-        ArrayList<Task> tasksList = dB.getTasks();
+        final ArrayList<Task> tasksList = dB.getTasks();
         System.out.println(tasksList);
 
         TextView taskNameTextField = (TextView) rowView.findViewById(R.id.txtTaskName);
@@ -60,21 +60,26 @@ public class TasksCustomAdapter extends ArrayAdapter {
             }
         });
 
+
+
         ImageButton imgTaskButton = (ImageButton) rowView.findViewById(R.id.imgPerson);
 
         imgTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent openTask = new Intent(getContext(), viewTaskActivity.class);
+                openTask.putExtra("id", tasksList.get(position).getId().toString());
                 context.startActivity(openTask);
             }
         });
+
 
         taskNameTextField.setText(tasksList.get(position).getName());
 
 
         return rowView;
     }
+
 
     //Based off: https://developer.android.com/guide/topics/ui/notifiers/toasts.html
     private void showError(String message){

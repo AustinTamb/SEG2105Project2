@@ -309,29 +309,31 @@ public class newTaskActivity extends AppCompatActivity{
                 String description = ((TextView)findViewById(R.id.txtNotes)).getText().toString();
 
 
-                //Turns the startCalendar into one integer with layout mm/dd/yyyy/hh/mm
-                startDateAndTimeString.append(startCalendar.get(Calendar.MONTH));
-                startDateAndTimeString.append(startCalendar.get(Calendar.DAY_OF_MONTH));
-                startDateAndTimeString.append(startCalendar.get(Calendar.YEAR));
-                startDateAndTimeString.append(startCalendar.get(Calendar.HOUR_OF_DAY));
-                startDateAndTimeString.append(startCalendar.get(Calendar.MINUTE));
+                //Turns the startCalendar into one long with layout mm/dd/yyyy/hh/mm
+                startDateAndTimeString.append(processString(startCalendar.get(Calendar.MONTH)));
+                startDateAndTimeString.append("/");
+                startDateAndTimeString.append(processString(startCalendar.get(Calendar.DAY_OF_MONTH)));
+                startDateAndTimeString.append("/");
+                startDateAndTimeString.append(processString(startCalendar.get(Calendar.YEAR)));
+                startDateAndTimeString.append("/");
+                startDateAndTimeString.append(processString(startCalendar.get(Calendar.HOUR_OF_DAY)));
+                startDateAndTimeString.append("/");
+                startDateAndTimeString.append(processString(startCalendar.get(Calendar.MINUTE)));
 
-                endDateAndTimeString.append(endCalendar.get(Calendar.MONTH));
-                endDateAndTimeString.append(endCalendar.get(Calendar.DAY_OF_MONTH));
-                endDateAndTimeString.append(endCalendar.get(Calendar.YEAR));
-                endDateAndTimeString.append(endCalendar.get(Calendar.HOUR_OF_DAY));
-                endDateAndTimeString.append(endCalendar.get(Calendar.MINUTE));
-                System.out.println("THE OFFENDING STRING :" + startDateAndTimeString.toString());
-                System.out.println("THE OFFENDING STRING :" + startDateAndTimeString.toString().length());
+                endDateAndTimeString.append(processString(endCalendar.get(Calendar.MONTH)));
+                startDateAndTimeString.append("/");
+                endDateAndTimeString.append(processString(endCalendar.get(Calendar.DAY_OF_MONTH)));
+                startDateAndTimeString.append("/");
+                endDateAndTimeString.append(processString(endCalendar.get(Calendar.YEAR)));
+                startDateAndTimeString.append("/");
+                endDateAndTimeString.append(processString(endCalendar.get(Calendar.HOUR_OF_DAY)));
+                startDateAndTimeString.append("/");
+                endDateAndTimeString.append(processString(endCalendar.get(Calendar.MINUTE)));
 
-                long startDateAndTimeLong = Long.parseLong(startDateAndTimeString.toString());
-                System.out.println("startDateAndTimeLong: " + startDateAndTimeLong);
-                long endDateAndTimeLong = Long.parseLong(endDateAndTimeString.toString());
-                System.out.println("endDateAndTimeLong: " + endDateAndTimeLong);
 
 
                 if(valid){
-                   dB.addTask(name, startDateAndTimeLong, description, endDateAndTimeLong, ownerID, subTasks, selectedStatus);
+                   dB.addTask(name, startDateAndTimeString.toString(), description, endDateAndTimeString.toString(), ownerID, subTasks, selectedStatus);
                     Intent update = new Intent(newTaskActivity.this, MainActivity.class);
                     startActivity(update);
                     finish();
@@ -411,6 +413,15 @@ public class newTaskActivity extends AppCompatActivity{
         });
 
 
+    }
+
+    private String processString(int d){
+        String newS = Integer.toString(d);
+
+        if(newS.length() == 1){
+            newS = "0" + newS;
+        }
+        return(newS);
     }
 
 }

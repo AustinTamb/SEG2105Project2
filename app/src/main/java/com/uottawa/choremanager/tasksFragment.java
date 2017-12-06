@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -63,34 +64,22 @@ public class tasksFragment extends Fragment {
         ArrayList<Profile> listOfProfiles = dB.getProfiles();
 
 
-        ArrayList<Task> listOfTasks = new ArrayList<Task>();
+        final ArrayList<Task> listOfTasks = dB.getTasks();
 
         //REMOVE ME
         int amountOfTasks = 0;
 
-        for(Profile p: listOfProfiles){
-            List aProfilesListOfTasks = p.getAssignedTasks();
-            if(aProfilesListOfTasks != null) {
-                amountOfTasks = amountOfTasks + aProfilesListOfTasks.size();
-                for (int j = 0; j < aProfilesListOfTasks.size(); j++) {
-                    String aTaskId = (String) aProfilesListOfTasks.get(j);
-                    listOfTasks.add(dB.getTask(aTaskId));
-                }
-            }
-        }
-
-
-
-        String[] taskList = new String[listOfTasks.size()];
+        String[] taskList;
+        ArrayList<SubTask> mats = new ArrayList<SubTask>();
+        taskList = new String[listOfTasks.size()];
         for (int i = 0; i < listOfTasks.size(); i++) {
             taskList[i] = listOfTasks.get(i).getName();
-            System.out.println("ELEMENT IN LIST OF TASKS at position: " + i + " " + listOfTasks.get(0) );
 
         }
-        ArrayList<SubTask> mats = new ArrayList<SubTask>();
-
-        for(int i = 0; i < listOfTasks.size(); i++){
-            mats.addAll(listOfTasks.get(i).getSubTasks());
+        for (int i = 0; i < listOfTasks.size(); i++) {
+            if(listOfTasks.get(i).getSubTasks() != null) {
+                mats.addAll(listOfTasks.get(i).getSubTasks());
+            }
         }
 
         //Fills the tasks List View
@@ -98,9 +87,11 @@ public class tasksFragment extends Fragment {
         tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), taskList);
         tasksListView.setAdapter(tasksAdapter);
 
+
+
         //Fills the materials List View
         ListView subTasksListView = (ListView) view.findViewById(R.id.listViewMaterials);
-        subTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), listOfTasks);
+        subTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), listOfTasks, mats);
         subTasksListView.setAdapter(subTasksAdapter);
 
 
