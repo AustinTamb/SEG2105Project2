@@ -41,6 +41,7 @@ public class tasksFragment extends Fragment {
         public void onClick(View v) {
             Intent newTaskIntent = new Intent(getActivity().getApplicationContext(), newTaskActivity.class);
             startActivity(newTaskIntent);
+            getActivity().finish();
         }
     }
     public class AddSubTaskOnClickListener implements View.OnClickListener{
@@ -60,8 +61,6 @@ public class tasksFragment extends Fragment {
 
         dB = MainActivity.getDB();
         ArrayList<Profile> listOfProfiles = dB.getProfiles();
-        System.out.println("Amount of profiles from taskFragment"
-                + listOfProfiles.size());
 
 
         ArrayList<Task> listOfTasks = new ArrayList<Task>();
@@ -80,8 +79,6 @@ public class tasksFragment extends Fragment {
             }
         }
 
-        System.out.println("THE TASK LIST SIZE:" + listOfTasks.size());
-        System.out.println("FIRST ELEMENT IN LIST OF TASKS:" + listOfTasks.get(0));
 
 
         String[] taskList = new String[listOfTasks.size()];

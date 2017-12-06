@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ListActivity;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static android.content.Intent.ACTION_MAIN;
 import static java.lang.Integer.parseInt;
 
 public class newTaskActivity extends AppCompatActivity{
@@ -52,6 +54,7 @@ public class newTaskActivity extends AppCompatActivity{
     private TextView startTextDate;
     private TextView endTextTime;
     private TextView endTextDate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,8 +246,8 @@ public class newTaskActivity extends AppCompatActivity{
         });
 
 
+        //Handles the endDate text view
         endTextDate = (TextView) findViewById(R.id.txtEndDate);
-        //REMOVE ME
         endTextDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Calendar currentDate = Calendar.getInstance();
@@ -274,6 +277,7 @@ public class newTaskActivity extends AppCompatActivity{
                 datePickerDialog.show();
             }
         });
+
 
         //Handles the button that adds a task
         final Button addTaskButton = findViewById(R.id.btnAddTask);
@@ -328,7 +332,9 @@ public class newTaskActivity extends AppCompatActivity{
 
                 if(valid){
                    dB.addTask(name, startDateAndTimeLong, description, endDateAndTimeLong, ownerID, subTasks, selectedStatus);
-                   finish();//Push by random person on github... https://github.com/michaelsam94
+                    Intent update = new Intent(newTaskActivity.this, MainActivity.class);
+                    startActivity(update);
+                    finish();
 
                     //https://stackoverflow.com/questions/12202432/how-to-call-method-in-main-activity-from-other-activity
 
@@ -361,6 +367,17 @@ public class newTaskActivity extends AppCompatActivity{
                 }
             }
         });
+
+        final Button cancelButton = findViewById(R.id.btnCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cancel = new Intent(newTaskActivity.this, MainActivity.class);
+                startActivity(cancel);
+            }
+        });
+
+
 
         //Handles the button that removes subtasks
         final Button removeButton = findViewById(R.id.btnRemove);
