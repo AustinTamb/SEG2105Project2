@@ -42,7 +42,6 @@ public class tasksFragment extends Fragment {
         public void onClick(View v) {
             Intent newTaskIntent = new Intent(getActivity().getApplicationContext(), newTaskActivity.class);
             startActivity(newTaskIntent);
-            getActivity().finish();
         }
     }
     public class AddSubTaskOnClickListener implements View.OnClickListener{
