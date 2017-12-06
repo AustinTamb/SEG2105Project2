@@ -39,24 +39,7 @@ public class TasksCustomAdapter extends ArrayAdapter {
 
         TextView taskNameTextField = (TextView) rowView.findViewById(R.id.txtTaskName);
         ImageView personImage = (ImageView) rowView.findViewById(R.id.imgPerson);
-        final CheckBox cbx = (CheckBox) rowView.findViewById(R.id.cbx);
-        cbx.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                ArrayList<Task> tasksList = dB.getTasks();
-                Task x = tasksList.get(position);
-                if(!x.getOwnerId().equals(dB.getCurrentUser().getId())){
-                    showError("This is not your task to complete!");
-                    cbx.setChecked(false);
-                } else if(x.getStatus().equals("Active") && x.getStatus().equals("Active")) {
-                    tasksList.get(position).setStatus(cbx.isChecked()?"Done":"Error");
-                    Profile owner = dB.getProfile(tasksList.get(position).getOwnerId());
-                    owner.setNumberOfTasksCompleted(owner.getNumberOfTasksCompleted()+1);
-                    cbx.setEnabled(false);
-                }
-            }
-        });
 
 
 
@@ -74,6 +57,26 @@ public class TasksCustomAdapter extends ArrayAdapter {
 
         taskNameTextField.setText(tasksList.get(position).getName());
 
+        final CheckBox cbx = (CheckBox) rowView.findViewById(R.id.cbx);
+        cbx.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ArrayList<Task> tasksList = dB.getTasks();
+                Task x = tasksList.get(position);
+                if(!x.getOwnerId().equals(dB.getCurrentUser().getId())){
+                    showError("This is not your task to complete!");
+                    cbx.setChecked(false);
+                } else if(x.getStatus().equals("Active") && x.getStatus().equals("Active")) {
+                    tasksList.get(position).setStatus(cbx.isChecked()?"Done":"Error");
+                    Profile owner = dB.getProfile(tasksList.get(position).getOwnerId());
+                    owner.setNumberOfTasksCompleted(owner.getNumberOfTasksCompleted()+1);
+                    cbx.setEnabled(false);
+                    //Need code to remove task... causes crash otherwise...
+                    //dB.removeTask(x.getId());
+                }
+            }
+        });
 
         return rowView;
     }
