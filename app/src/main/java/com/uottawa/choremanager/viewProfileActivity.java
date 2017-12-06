@@ -78,11 +78,20 @@ public class viewProfileActivity extends AppCompatActivity{
         final Button deleteButton = findViewById(R.id.btnDelete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //Reassigns tasks to current user
                 for(String st : x.getAssignedTasks()){
                     dB.assignTask(currentUser.getId(), st);
                 }
                 //dB.removeProfile(x.getId());
                 showError("Profile deleted!");
+                finish();
+            }
+        });
+
+        final Button editButton = findViewById(R.id.btnEdit);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Add intent to Edit profile page
                 finish();
             }
         });
