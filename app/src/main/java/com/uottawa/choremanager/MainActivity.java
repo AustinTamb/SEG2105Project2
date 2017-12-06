@@ -45,14 +45,14 @@ public class MainActivity extends FragmentActivity {
         z.add(new SubTask("Cloth", false));
         z.add(new SubTask("Bucket", false));
         z.add(new SubTask("Water", false));
-        */
+
         Task y = dB.addTask("Wash Car", "1", "wash it..", "2", x.getId(), z, "Active");
         dB.assignTask(x.getId(), y.getId());
 
-        /*
-        Task b = dB.addTask("Pet Car", 10, "pet it..", 20, x.getId(), z, "Active");
 
-        dB.assignTask(x.getId(), b.getId());
+        //Task b = dB.addTask("Pet Car", 10, "pet it..", 20, x.getId(), z, "Active");
+
+        //dB.assignTask(x.getId(), b.getId());
 
 
         dB.setCurrentUser(x);
@@ -111,7 +111,6 @@ public class MainActivity extends FragmentActivity {
         //updateTaskFragment();
         mSectionPageAdapter.notifyDataSetChanged();
     }
-
 
 
 

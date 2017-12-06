@@ -36,7 +36,6 @@ public class TasksCustomAdapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.task_template, parent, false);
         final ArrayList<Task> tasksList = dB.getTasks();
-        System.out.println(tasksList);
 
         TextView taskNameTextField = (TextView) rowView.findViewById(R.id.txtTaskName);
         ImageView personImage = (ImageView) rowView.findViewById(R.id.imgPerson);
@@ -55,7 +54,6 @@ public class TasksCustomAdapter extends ArrayAdapter {
                     Profile owner = dB.getProfile(tasksList.get(position).getOwnerId());
                     owner.setNumberOfTasksCompleted(owner.getNumberOfTasksCompleted()+1);
                     cbx.setEnabled(false);
-                    System.out.println("User now has: " + owner.getNumberOfTasksCompleted() + " tasks completed!");
                 }
             }
         });
