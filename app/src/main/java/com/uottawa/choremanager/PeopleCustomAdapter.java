@@ -25,10 +25,10 @@ public class PeopleCustomAdapter extends ArrayAdapter {
         this.context = context;
         this.people = peopleList;
     }
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         dB = MainActivity.getDB();
         ArrayList<Profile> x = dB.getProfiles();
-        Profile person = x.get(position);
+        final Profile person = x.get(position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.people_template, parent, false);
 
@@ -49,6 +49,7 @@ public class PeopleCustomAdapter extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 Intent openProfile = new Intent(getContext(), viewProfileActivity.class);
+                openProfile.putExtra("profileId", person.getId());
                 context.startActivity(openProfile);
             }
         });
