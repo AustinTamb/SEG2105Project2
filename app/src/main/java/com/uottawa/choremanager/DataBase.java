@@ -193,4 +193,19 @@ public class DataBase extends Application{
         this.currentUser = user;
     }
 
+    public void updateProfile(Profile x){
+        dbProfiles.child(x.getId()).setValue(x);
+    }
+
+    public void updateProfile(String x){
+        updateProfile(profiles.get(x));
+    }
+
+    public void updateTask(Task x){
+        dbTasks.child(x.getId()).setValue(x);
+    }
+
+    public void updateTask(String x){
+        updateTask(tasks.get(x));
+    }
 }

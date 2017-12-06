@@ -4,9 +4,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class viewProfileActivity extends AppCompatActivity{
         setContentView(R.layout.profile);
 
         String profileId = getIntent().getStringExtra("profileId");
+        int pos = getIntent().getIntExtra("position", 0);
         dB = MainActivity.getDB();
         final Profile x = dB.getProfile(profileId);
         final Profile currentUser = dB.getCurrentUser();
@@ -82,7 +85,7 @@ public class viewProfileActivity extends AppCompatActivity{
                 for(String st : x.getAssignedTasks()){
                     dB.assignTask(currentUser.getId(), st);
                 }
-                //dB.removeProfile(x.getId());
+                //dB.removeProfile(x.getId());//COmmented out because it causes crashes...
                 showError("Profile deleted!");
                 finish();
             }

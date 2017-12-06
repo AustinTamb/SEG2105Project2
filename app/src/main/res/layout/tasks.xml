@@ -31,7 +31,7 @@
                     android:id="@+id/imgNewTask"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.1"
                     android:adjustViewBounds="false"
                     android:backgroundTint="@android:color/transparent"
                     android:src="@android:drawable/ic_menu_add"
@@ -48,9 +48,9 @@
 
             <Switch
                 android:id="@+id/swtShowMyTasks"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_weight="1.3"
+                android:layout_weight="0.01"
                 android:text="Only show my tasks" />
 
         </LinearLayout>
