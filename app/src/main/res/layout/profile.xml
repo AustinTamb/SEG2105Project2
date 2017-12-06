@@ -69,6 +69,7 @@
         </LinearLayout>
 
         <ListView
+            android:id="@+id/listViewTasks"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="top"
