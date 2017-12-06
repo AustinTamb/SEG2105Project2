@@ -94,7 +94,7 @@ public class DataBase extends Application{
     }
 
     //Same purpose as above, except for tasks
-    public Task addTask(String name, long startDate, String description, long endDate, String ownerId, ArrayList<SubTask> materials, String status){
+    public Task addTask(String name, String startDate, String description, String endDate, String ownerId, ArrayList<SubTask> materials, String status){
         Task toAdd = new Task(name, startDate, description, endDate, ownerId, status);
 
         String id = dbTasks.push().getKey();

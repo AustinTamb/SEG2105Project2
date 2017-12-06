@@ -11,9 +11,9 @@ import java.util.List;
 
 public class Task {
     private String name;
-    private long startDate; //Changed from int to long
+    private String startDate; //Changed from int to long
     private String description;
-    private long endDate; //Changed from int to long
+    private String endDate; //Changed from int to long
     private String ownerId;
     private List<SubTask> subTasks;
     private String id;
@@ -22,8 +22,8 @@ public class Task {
 
 
     //Changed int to long
-    public Task(String name, long startDate,
-                String description, long endDate,
+    public Task(String name, String startDate,
+                String description, String endDate,
                 String ownerId, String status){
 
         this.name = name;
@@ -94,7 +94,7 @@ public class Task {
         return true;
     }
 
-    public boolean setStartDate(int startDate)
+    public boolean setStartDate(String startDate)
     {
         this.startDate = startDate;
         return true;
@@ -106,7 +106,7 @@ public class Task {
         return true;
     }
 
-    public boolean setEndDate(int endDate)
+    public boolean setEndDate(String endDate)
     {
         this.endDate = endDate;
         return true;
@@ -117,14 +117,14 @@ public class Task {
         return name;
     }
 
-    public long getEndDate()
+    public String getEndDate()
     {
         return endDate;
     } //Changed from int to long
 
     public String getDescription() { return description; }
 
-    public long getStartDate()
+    public String getStartDate()
     {
         return startDate;
     } //Changed from int to long
