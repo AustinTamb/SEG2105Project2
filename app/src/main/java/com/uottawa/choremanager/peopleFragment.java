@@ -57,7 +57,7 @@ public class peopleFragment extends Fragment {
         peopleListView.setAdapter(peopleAdapter);
         System.out.println("Successfully Created People view");
 
-        //((MainActivity)getActivity()).update();
+        ((MainActivity)getActivity()).updateTaskFragment();
 
         return view;
     }
@@ -67,7 +67,6 @@ public class peopleFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //((MainActivity)getActivity()).updateFragments();
         peopleAdapter.notifyDataSetChanged();
     }
 }

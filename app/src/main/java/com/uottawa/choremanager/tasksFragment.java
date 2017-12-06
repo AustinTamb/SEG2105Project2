@@ -53,6 +53,7 @@ public class tasksFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        System.out.println("tasksFragment OnCreateView has been called");
         View view = inflater.inflate(R.layout.tasks, container, false);
         btnNewTask = (ImageButton) view.findViewById(R.id.imgNewTask);
         btnNewTask.setOnClickListener(new NewTaskOnClickListener());
@@ -141,6 +142,9 @@ public class tasksFragment extends Fragment {
         });
         */
         //((MainActivity)getActivity()).update();
+
+
+
         return view;
     }
 
@@ -151,9 +155,9 @@ public class tasksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //((MainActivity)getActivity()).updateFragments();
         tasksAdapter.notifyDataSetChanged();
         subTasksAdapter.notifyDataSetChanged();
 
     }
+
 }

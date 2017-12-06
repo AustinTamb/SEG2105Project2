@@ -37,7 +37,7 @@ import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 
-public class newTaskActivity extends AppCompatActivity {
+public class newTaskActivity extends AppCompatActivity{
     private ArrayList<SubTask> subTasks;
     private ArrayList<String> names;
     private newTaskMaterialsAdapter materialsTasksAdapter;
@@ -326,10 +326,13 @@ public class newTaskActivity extends AppCompatActivity {
                 System.out.println("endDateAndTimeLong: " + endDateAndTimeLong);
 
 
-
                 if(valid){
                    dB.addTask(name, startDateAndTimeLong, description, endDateAndTimeLong, ownerID, subTasks, selectedStatus);
                    finish();//Push by random person on github... https://github.com/michaelsam94
+
+                    //https://stackoverflow.com/questions/12202432/how-to-call-method-in-main-activity-from-other-activity
+
+
                 }else{
                     int duration = Toast.LENGTH_SHORT;
 

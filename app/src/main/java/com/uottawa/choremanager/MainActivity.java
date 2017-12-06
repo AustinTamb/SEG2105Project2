@@ -8,6 +8,7 @@ package com.uottawa.choremanager;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -20,6 +21,10 @@ public class MainActivity extends FragmentActivity {
     private ViewPager mViewPager;
     static public DataBase dB;
     private SectionPageAdapter adapter;
+    private calendarFragment newCalendarFragment;
+    private static tasksFragment newTasksFragment;
+    private peopleFragment newPeopleFragment;
+    private static FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,25 +63,48 @@ public class MainActivity extends FragmentActivity {
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
+
+        //Remove me?
+        newCalendarFragment = new calendarFragment();
+        newPeopleFragment = new peopleFragment();
+        newTasksFragment = new tasksFragment();
+
+
         setupViewPager(mViewPager);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+
+
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        adapter = new SectionPageAdapter(getSupportFragmentManager());
+        fragmentManager = getSupportFragmentManager();
+        adapter = new SectionPageAdapter(fragmentManager);
+
+        adapter.addFragment(newCalendarFragment, "Calendar");
+        adapter.addFragment(newTasksFragment, "Tasks");
+        adapter.addFragment(newPeopleFragment, "People");
+
+        //Remove me?
+        /*
         adapter.addFragment(new calendarFragment(), "Calendar");
-        adapter.addFragment(new tasksFragment(), "Tasks");
-        adapter.addFragment(new peopleFragment(), "People");
+        adapter.addFragment(new peopleFragment(), "Tasks");
+        adapter.addFragment(new tasksFragment(), "People");
+        */
         viewPager.setAdapter(adapter);
     }
 
 
-    public void update(){
-        mViewPager.getAdapter().notifyDataSetChanged();
-        System.out.println("UPDATE METHOD CALLED");
+    //https://stackoverflow.com/questions/41691216/how-to-refresh-second-tab-fragment
+    //https://stackoverflow.com/questions/9156406/whats-the-difference-between-detaching-a-fragment-and-removing-it
+    public static void updateTaskFragment(){
+
+        fragmentManager.beginTransaction().detach(newTasksFragment).commit();
+        fragmentManager.beginTransaction().attach(newTasksFragment).commit();
+        System.out.println("UPDATE METHOD IN MAIN ACTIVITY CALLED");
     }
 
     @Override
