@@ -140,17 +140,6 @@ public class newTaskActivity extends AppCompatActivity{
         //https://developer.android.com/guide/topics/ui/controls/pickers.html
         //https://stackoverflow.com/questions/17901946/timepicker-dialog-from-clicking-edittext
 
-        /*
-        String monthStr = String.valueOf(currentDate.get(Calendar.MONTH));
-        String dayStr = String.valueOf(currentDate.get(Calendar.DAY_OF_MONTH));
-        String yearStr = String.valueOf(currentDate.get(Calendar.YEAR));
-        String hourStr = String.valueOf(currentDate.get(Calendar.HOUR_OF_DAY));
-        String minuteStr = String.valueOf(currentDate.get(Calendar.MINUTE));
-
-
-        String startString = String.format("%m" + "/" + "%d" + "/" + "%y" + " " + "%h" + "/"
-                + "%m", monthStr, dayStr, yearStr, hourStr, minuteStr);
-        */
 
         final Calendar startCalendar = Calendar.getInstance();
 

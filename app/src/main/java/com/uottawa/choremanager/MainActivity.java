@@ -35,29 +35,17 @@ public class MainActivity extends FragmentActivity {
         ArrayList<SubTask> z = new ArrayList<SubTask>();
         dB = new DataBase();
 
-
-        //FOLLOWING IS TESTING CODE DO NOT FUCKING TOUCH IT!
+        //FUCKING DON'T TOUCH MY FUCKING CODE TO FUCKING TEST SHIT!!!!
         Profile x = dB.addProfile("Austin", true, "Test123");
 
         z.add(new SubTask("Cloth", false));
         z.add(new SubTask("Bucket", false));
         z.add(new SubTask("Water", false));
 
-        Task y = dB.addTask("Wash Car", "01/22/2019/12/33", "wash it..", "01/22/2020/12/33", x.getId(), z, "Active");
+        Task y = dB.addTask("Wash Car", "1", "wash it..", "2", x.getId(), z, "Active");
         dB.assignTask(x.getId(), y.getId());
-
-
-        Task b = dB.addTask("Pet Car", "02/22/2019/12/33", "pet it..", "03/22/2019/12/33", x.getId(), z, "Active");
-
-        dB.assignTask(x.getId(), b.getId());
-
-
         dB.setCurrentUser(x);
-
-        //END OF TESTING CODE...
-
-
-
+        //YOU CAN START FUCKING SHIT UP AGAIN!
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
