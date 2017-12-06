@@ -95,7 +95,6 @@ public class newTaskActivity extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedStatus = statusArray.get(i);
-                System.out.println("SELECTED STATUS: " + selectedStatus);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
@@ -106,7 +105,6 @@ public class newTaskActivity extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedProfile = y.get(i);
-                System.out.println("SELECTED PROFILE: " + selectedProfile.getName());
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
@@ -148,7 +146,6 @@ public class newTaskActivity extends AppCompatActivity{
         //Handle the txtStartTime TextView
         startTextTime = (TextView) findViewById(R.id.txtStartTime);
         //REMOVE ME
-        System.out.println("THE START BUTTON:" + startTextTime.toString());
         startTextTime.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Creating variables needed for constructor of timePickerDialog
@@ -160,15 +157,12 @@ public class newTaskActivity extends AppCompatActivity{
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         startCalendar.set(Calendar.HOUR_OF_DAY, i);
-                        System.out.println(startCalendar.get(Calendar.HOUR_OF_DAY));
                         startCalendar.set(Calendar.MINUTE, i1);
-                        System.out.println(startCalendar.get(Calendar.MINUTE));
                         startTextTime.setText(startCalendar.get(Calendar.HOUR_OF_DAY) + ":" + startCalendar.get(Calendar.MINUTE));
                         startTextTime.invalidate();
                     }
                 },hour, minute, false);
                 //REMOVE ME
-                System.out.println("THE TIME PICKER DIALOG" + timePickerDialog.toString());
                 timePickerDialog.setTitle("Select a time");
                 timePickerDialog.show();
             }
@@ -188,11 +182,8 @@ public class newTaskActivity extends AppCompatActivity{
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         startCalendar.set(Calendar.YEAR, i);
-                        System.out.println(startCalendar.get(Calendar.YEAR));
                         startCalendar.set(Calendar.MONTH, i1);
-                        System.out.println(startCalendar.get(Calendar.MONTH));
                         startCalendar.set(Calendar.DAY_OF_MONTH, i2);
-                        System.out.println(startCalendar.get(Calendar.DAY_OF_MONTH));
                         startTextDate.setText(String.valueOf(startCalendar.get(Calendar.MONTH)) + "/"
                                 + String.valueOf(startCalendar.get(Calendar.DAY_OF_MONTH)) + "/"
                                 + String.valueOf(startCalendar.get(Calendar.YEAR)));
@@ -200,7 +191,6 @@ public class newTaskActivity extends AppCompatActivity{
                     }
                 },year, month, day);
                 //REMOVE ME
-                System.out.println("THE DATE PICKER DIALOG" + datePickerDialog.toString());
                 datePickerDialog.setTitle("Select a Date");
                 datePickerDialog.show();
             }
@@ -221,9 +211,7 @@ public class newTaskActivity extends AppCompatActivity{
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         endCalendar.set(Calendar.HOUR_OF_DAY, i);
-                        System.out.println(endCalendar.get(Calendar.HOUR_OF_DAY));
                         endCalendar.set(Calendar.MINUTE, i1);
-                        System.out.println(endCalendar.get(Calendar.MINUTE));
                         endTextTime.setText(endCalendar.get(Calendar.HOUR_OF_DAY)
                                 + ":" + endCalendar.get(Calendar.MINUTE));
                         endTextTime.invalidate();
@@ -249,11 +237,8 @@ public class newTaskActivity extends AppCompatActivity{
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         endCalendar.set(Calendar.YEAR, i);
-                        System.out.println(endCalendar.get(Calendar.YEAR));
                         endCalendar.set(Calendar.MONTH, i1);
-                        System.out.println(endCalendar.get(Calendar.MONTH));
                         endCalendar.set(Calendar.DAY_OF_MONTH, i2);
-                        System.out.println(endCalendar.get(Calendar.DAY_OF_MONTH));
                         endTextDate.setText(String.valueOf(endCalendar.get(Calendar.MONTH)) + "/"
                                 + String.valueOf(endCalendar.get(Calendar.DAY_OF_MONTH)) + "/"
                                 + String.valueOf(endCalendar.get(Calendar.YEAR)));
@@ -261,7 +246,6 @@ public class newTaskActivity extends AppCompatActivity{
                     }
                 },year, month, day);
                 //REMOVE ME
-                System.out.println("THE DATE PICKER DIALOG" + datePickerDialog.toString());
                 datePickerDialog.setTitle("Select a Date");
                 datePickerDialog.show();
             }

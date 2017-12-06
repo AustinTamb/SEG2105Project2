@@ -26,7 +26,6 @@ public class newTaskMaterialsAdapter extends ArrayAdapter {
         this.subTaskList = subTaskList;
         //this.dB = MainActivity.getDB();
 
-        System.out.println("-----------------------------------REACHED CONSTRUCTOR");
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -38,7 +37,6 @@ public class newTaskMaterialsAdapter extends ArrayAdapter {
 
         subTaskNameTextField.setText(subTaskList.get(position).getName());
 
-        System.out.println("-----------------------------------GET VIEW HAS BEEN CALLED");
 
         return(rowView);
 

@@ -28,7 +28,6 @@ public class Profile{
 	public void addTask(String id){
 		assignedTasks.add(id);
 		numberOfCurrentTasks++;
-		System.out.println(numberOfCurrentTasks);
 	}
 
 	public void removeTask(String id){

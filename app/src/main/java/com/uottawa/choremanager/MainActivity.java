@@ -37,6 +37,7 @@ public class MainActivity extends FragmentActivity {
 
         //FUCKING DON'T TOUCH MY FUCKING CODE TO FUCKING TEST SHIT!!!!
         Profile x = dB.addProfile("Austin", true, "Test123");
+
         z.add(new SubTask("Cloth", false));
         z.add(new SubTask("Bucket", false));
         z.add(new SubTask("Water", false));
@@ -59,9 +60,6 @@ public class MainActivity extends FragmentActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-
-
 
     }
 
@@ -92,7 +90,6 @@ public class MainActivity extends FragmentActivity {
         //updateTaskFragment();
         mSectionPageAdapter.notifyDataSetChanged();
     }
-
 
 
 
