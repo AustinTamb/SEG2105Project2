@@ -350,8 +350,7 @@ public class newTaskActivity extends AppCompatActivity{
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cancel = new Intent(newTaskActivity.this, MainActivity.class);
-                startActivity(cancel);
+                finish();
             }
         });
 
