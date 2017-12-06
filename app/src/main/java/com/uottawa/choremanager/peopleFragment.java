@@ -43,8 +43,6 @@ public class peopleFragment extends Fragment {
 
         dB = MainActivity.getDB();
         ArrayList<Profile> x = dB.getProfiles();
-        System.out.println("Amount of profiles from peopleFragment:"
-                + x.size());
 
         String[] profileList = new String[x.size()];
         for (int i = 0; i < x.size(); i++) {
@@ -55,7 +53,6 @@ public class peopleFragment extends Fragment {
         peopleListView = (ListView) view.findViewById(R.id.listViewPeople);
         peopleAdapter = new PeopleCustomAdapter(getActivity().getApplicationContext(), profileList);
         peopleListView.setAdapter(peopleAdapter);
-        System.out.println("Successfully Created People view");
 
         ((MainActivity)getActivity()).updateTaskFragment();
 
