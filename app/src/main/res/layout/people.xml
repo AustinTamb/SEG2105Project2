@@ -32,7 +32,7 @@
                     android:layout_weight="1"
                     android:adjustViewBounds="false"
                     android:backgroundTint="@android:color/transparent"
-                    app:srcCompat="@android:drawable/ic_menu_add" />
+                    android:src="@android:drawable/ic_menu_add" />
 
                 <TextView
                     android:id="@+id/txtNewPerson"
