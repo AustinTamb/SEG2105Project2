@@ -2,10 +2,14 @@ package com.uottawa.choremanager;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class viewTaskActivity extends AppCompatActivity {
     private DataBase db = MainActivity.getDB();
@@ -23,8 +27,11 @@ public class viewTaskActivity extends AppCompatActivity {
 
         TextView titleText = (TextView) findViewById(R.id.txtTaskName);
         TextView nameText = (TextView) findViewById(R.id.txtPersonName);
-        TextView startText = (TextView) findViewById(R.id.txtStartDate);
-        TextView endText = (TextView) findViewById(R.id.txtEndDate);
+        TextView startDateText = (TextView) findViewById(R.id.textStartDate);
+        TextView endDateText = (TextView) findViewById(R.id.textEndDate);
+        TextView startTimeText = (TextView) findViewById(R.id.textStartTime);
+        TextView endTimeText = (TextView) findViewById(R.id.textEndTime);
+
         TextView descriptionText = (TextView) findViewById(R.id.txtNotes);
         ListView lv = (ListView) findViewById(R.id.listViewMaterials);
 
@@ -35,33 +42,51 @@ public class viewTaskActivity extends AppCompatActivity {
         nameText.setText(nameOfOwnerOfTask);
 
 
+        startDateText.setText(processDate(theTask.getStartDate(), false));
+        endDateText.setText(processDate(theTask.getEndDate(), false));
+        startTimeText.setText(processDate(theTask.getStartDate(), true));
+        endTimeText.setText(processDate(theTask.getEndDate(), true));
+
+
+        descriptionText.setText(theTask.getDescription());
+
+
+        List<SubTask> subTaskList = theTask.getSubTasks();
+        String[] subTaskListString;
+        if (subTaskList != null){
+
+            subTaskListString = new String[subTaskList.size()];
+            for (int i = 0; i < subTaskList.size(); i++) {
+                subTaskListString[i] = subTaskList.get(i).getName();
+            }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.subtask_template, subTaskListString);
+        }
 
     }
 
-    private String processDate(long date){
-        StringBuilder stringVersion = new StringBuilder();
-        String s = String.valueOf(date);
-        // mm/dd/yyyy
-        stringVersion.append(s.charAt(0));
-        stringVersion.append(s.charAt(1));
-        stringVersion.append("/");
-        stringVersion.append(s.charAt(2));
-        stringVersion.append(s.charAt(3));
-        stringVersion.append("/");
-        stringVersion.append(s.charAt(4));
-        stringVersion.append(s.charAt(5));
-        stringVersion.append(s.charAt(6));
-        stringVersion.append(s.charAt(7));
 
-        //  hh//mm
-        stringVersion.append("  ");
-        stringVersion.append(s.charAt(8));
-        stringVersion.append(s.charAt(9));
-        stringVersion.append(":");
-        stringVersion.append(s.charAt(10));
-        stringVersion.append(s.charAt(11));
+    private String processDate(String oldString, boolean getTime) {
+        StringBuilder s = new StringBuilder();
+        // mm/dd/yyyy/hh/mm
+        if (oldString == null) {
+            return ("null");
+        }
+        if(oldString.length() == 16) {
+            if (!getTime) {
+                s.append(oldString.substring(0, 11));
+                return (s.toString());
 
-        return(stringVersion.toString());
+            } else {
+                s.append(oldString.substring(11, 13));
+                s.append(":");
+                s.append(oldString.substring(14));
+                return (s.toString());
+            }
+        }
+
+        return(oldString);
 
     }
 }
