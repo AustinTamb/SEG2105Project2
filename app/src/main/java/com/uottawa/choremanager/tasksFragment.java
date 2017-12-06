@@ -65,14 +65,12 @@ public class tasksFragment extends Fragment {
 
 
         final ArrayList<Task> listOfTasks = dB.getTasks();
-        System.out.println("SIZE OF LIST OF TASKS" + listOfTasks.size());
 
         //REMOVE ME
         int amountOfTasks = 0;
 
         String[] taskList;
         ArrayList<SubTask> mats = new ArrayList<SubTask>();
-        System.out.println("IS TASK LIST NULL" + listOfTasks == null);
         taskList = new String[listOfTasks.size()];
         for (int i = 0; i < listOfTasks.size(); i++) {
             taskList[i] = listOfTasks.get(i).getName();

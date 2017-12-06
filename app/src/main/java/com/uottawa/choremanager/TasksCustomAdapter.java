@@ -29,7 +29,6 @@ public class TasksCustomAdapter extends ArrayAdapter {
         super(context, R.layout.tasks, tasksStringList);
         this.context = context;
         this.tasksStringList = tasksStringList;
-        System.out.println("tasksStringList size: " + tasksStringList.length);
         this.dB = MainActivity.getDB();
     }
 
