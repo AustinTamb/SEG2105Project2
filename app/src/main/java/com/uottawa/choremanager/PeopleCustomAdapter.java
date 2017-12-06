@@ -25,6 +25,7 @@ public class PeopleCustomAdapter extends ArrayAdapter {
         this.context = context;
         this.people = peopleList;
     }
+
     public View getView(final int position, View convertView, ViewGroup parent) {
         dB = MainActivity.getDB();
         ArrayList<Profile> x = dB.getProfiles();
@@ -50,6 +51,7 @@ public class PeopleCustomAdapter extends ArrayAdapter {
             public void onClick(View view) {
                 Intent openProfile = new Intent(getContext(), viewProfileActivity.class);
                 openProfile.putExtra("profileId", person.getId());
+                openProfile.putExtra("position", position);
                 context.startActivity(openProfile);
             }
         });
@@ -58,4 +60,6 @@ public class PeopleCustomAdapter extends ArrayAdapter {
         nextTaskTextField.setText("Current Tasks: " + currentTask);
         return rowView;
     }
+
+
 }

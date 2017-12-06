@@ -45,9 +45,9 @@ public class peopleFragment extends Fragment {
         ArrayList<Profile> x = dB.getProfiles();
 
         String[] profileList = new String[x.size()];
-        for (int i = 0; i < x.size(); i++) {
-            profileList[i] = x.get(i).getName();
-
+        int i = 0;
+        for(Profile tmpP:x){
+            profileList[i++] = tmpP.getName();
         }
 
         peopleListView = (ListView) view.findViewById(R.id.listViewPeople);
