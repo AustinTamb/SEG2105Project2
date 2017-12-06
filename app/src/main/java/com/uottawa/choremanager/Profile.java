@@ -74,7 +74,7 @@ public class Profile{
 		return assignedTasks;
 	}
 	public Boolean validatePassword(String passEnt){
-		return(password == passEnt);
+		return(password.equals(passEnt));
 	}
 
 	public void setAssignedTasks(ArrayList<String> assignedTasks) {

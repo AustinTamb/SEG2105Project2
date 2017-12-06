@@ -129,12 +129,6 @@ public class DataBase extends Application{
         Profile x = profiles.get(profileId);
         List<String> y = x.getAssignedTasks();//Gets all tasks assigned to said user
 
-        //Following sets tasks owner to blank
-        for(int i = 0; i < y.size(); i++){
-            String taskId = y.get(i);
-            tasks.get(taskId).setOwner("");
-            dbTasks.child(taskId).child("ownerId").setValue("");
-        }
 
         dbProfiles.child(profileId).removeValue();
         profiles.remove(profileId);
