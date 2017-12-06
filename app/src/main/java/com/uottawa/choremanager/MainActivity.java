@@ -45,11 +45,13 @@ public class MainActivity extends FragmentActivity {
         z.add(new SubTask("Cloth", false));
         z.add(new SubTask("Bucket", false));
         z.add(new SubTask("Water", false));
-
+        */
         Task y = dB.addTask("Wash Car", 10, "wash it..", 20, x.getId(), z, "Active");
+        dB.assignTask(x.getId(), y.getId());
+
+        /*
         Task b = dB.addTask("Pet Car", 10, "pet it..", 20, x.getId(), z, "Active");
 
-        dB.assignTask(x.getId(), y.getId());
         dB.assignTask(x.getId(), b.getId());
 
 
