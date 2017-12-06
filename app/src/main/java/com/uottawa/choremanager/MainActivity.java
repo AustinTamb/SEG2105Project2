@@ -37,6 +37,7 @@ public class MainActivity extends FragmentActivity {
 
 
         Profile x = dB.addProfile("Austin", true, "Test123");
+        /*
 
         Profile kh = dB.addProfile("Kevin Hart", true, "Test123");
 
@@ -54,11 +55,14 @@ public class MainActivity extends FragmentActivity {
 
         dB.setCurrentUser(x);
 
-        long startDateAndTimeLong = Long.parseLong("115");
-        System.out.println(startDateAndTimeLong);
 
         //Task p = dB.addTask("Wash Stapler", 10, "washittt", 20, kh.getId(), z, "Active");
         //Task k = dB.addTask("Say hi to Raymond", 10, "hi raymond", 20, kh.getId(), z, "Active");
+
+        */
+
+        //Profile x = dB.getProfiles().get(0);
+        dB.setCurrentUser(x);
 
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
@@ -88,12 +92,6 @@ public class MainActivity extends FragmentActivity {
         adapter.addFragment(newTasksFragment, "Tasks");
         adapter.addFragment(newPeopleFragment, "People");
 
-        //Remove me?
-        /*
-        adapter.addFragment(new calendarFragment(), "Calendar");
-        adapter.addFragment(new peopleFragment(), "Tasks");
-        adapter.addFragment(new tasksFragment(), "People");
-        */
         viewPager.setAdapter(adapter);
     }
 
@@ -110,8 +108,11 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onResume() {
         super.onResume();
+        //updateTaskFragment();
         mSectionPageAdapter.notifyDataSetChanged();
     }
+
+
 
 
     static public DataBase getDB(){
