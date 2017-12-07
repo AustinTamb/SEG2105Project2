@@ -65,8 +65,10 @@ public class viewTaskActivity extends AppCompatActivity {
                 subTaskListString[i] = subTaskList.get(i).getName();
             }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.subtask_template, subTaskListString);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, subTaskListString);
+
+            lv.setAdapter(adapter);
         }
 
         final Button editButton = (Button) findViewById(R.id.btnEditTask);

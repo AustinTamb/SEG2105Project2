@@ -52,16 +52,6 @@ public class MaterialsCustomAdapter extends ArrayAdapter {
             }
         });
 
-        //Allows for viewing of a task
-        imgTaskButton = (ImageButton) rowView.findViewById(R.id.imgPerson);
-        imgTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent openTask = new Intent(getContext(), viewTaskActivity.class);
-                context.startActivity(openTask);
-            }
-        });
-
         //Put in Constructor?
         //Fills subTaskList
         try {
