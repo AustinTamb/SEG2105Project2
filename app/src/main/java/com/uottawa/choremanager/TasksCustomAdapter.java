@@ -75,6 +75,8 @@ public class TasksCustomAdapter extends ArrayAdapter {
                     Profile owner = dB.getProfile(tasksList.get(position).getOwnerId());
                     owner.setNumberOfTasksCompleted(owner.getNumberOfTasksCompleted()+1);
                     cbx.setEnabled(false);
+                    dB.updateTask(x);
+                    dB.updateProfile(owner);
                     //Need code to remove task... causes crash otherwise...
                     //dB.removeTask(x.getId());
                 }

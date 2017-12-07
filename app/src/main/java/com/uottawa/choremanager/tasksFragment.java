@@ -35,6 +35,13 @@ public class tasksFragment extends Fragment {
     private Profile currentUser;
     private TasksCustomAdapter tasksAdapter;
     private MaterialsCustomAdapter subTasksAdapter;
+    private TasksCustomAdapter myTasksAdapter;
+    private MaterialsCustomAdapter mySubTasksAdapter;
+    private String[] taskList;
+    private String[] myTaskList;
+    private ArrayList<SubTask> myMats;
+    private ArrayList<SubTask> mats;
+    private ArrayList<Task> listOfTasks;
 
 
     //This nested class is used to control what happens when btnNewTask is clicked
@@ -44,93 +51,58 @@ public class tasksFragment extends Fragment {
             startActivity(newTaskIntent);
         }
     }
-    public class AddSubTaskOnClickListener implements View.OnClickListener{
-        public void onClick(View v){
-            Intent newAddSubTaskIntent = new Intent(getActivity().getApplicationContext(), newTaskActivity.class);
-            startActivity(newAddSubTaskIntent);
-        }
-    }
+
 
     @Nullable
     @Override
-    public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        System.out.println("tasksFragment OnCreateView has been called");
+    public View onCreateView (final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tasks, container, false);
         btnNewTask = (ImageButton) view.findViewById(R.id.imgNewTask);
         btnNewTask.setOnClickListener(new NewTaskOnClickListener());
 
         dB = MainActivity.getDB();
-        ArrayList<Profile> listOfProfiles = dB.getProfiles();
 
-
-        final ArrayList<Task> listOfTasks = dB.getTasks();
-
-        //REMOVE ME
-        int amountOfTasks = 0;
-
-        String[] taskList;
-        ArrayList<SubTask> mats = new ArrayList<SubTask>();
-        taskList = new String[listOfTasks.size()];
-        for (int i = 0; i < listOfTasks.size(); i++) {
-            taskList[i] = listOfTasks.get(i).getName();
-
-        }
-        for (int i = 0; i < listOfTasks.size(); i++) {
-            if(listOfTasks.get(i).getSubTasks() != null) {
-                mats.addAll(listOfTasks.get(i).getSubTasks());
-            }
-        }
+        listOfTasks = dB.getTasks();
+        mats = new ArrayList<SubTask>();
+        myMats = new ArrayList<SubTask>();
+        updateAdapters();
+        final Switch abc = (Switch) view.findViewById(R.id.swtShowMyTasks);
+        boolean showMyTasks = abc.isChecked();
 
         //Fills the tasks List View
-        ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
+        final ListView tasksListView = (ListView) view.findViewById(R.id.listViewTasks);
         tasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), taskList);
-        tasksListView.setAdapter(tasksAdapter);
 
 
+        myTasksAdapter = new TasksCustomAdapter(getActivity().getApplicationContext(), myTaskList);
+        mySubTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), listOfTasks, myMats);
 
         //Fills the materials List View
-        ListView subTasksListView = (ListView) view.findViewById(R.id.listViewMaterials);
+        final ListView subTasksListView = (ListView) view.findViewById(R.id.listViewMaterials);
         subTasksAdapter = new MaterialsCustomAdapter(getActivity().getApplicationContext(), listOfTasks, mats);
-        subTasksListView.setAdapter(subTasksAdapter);
 
+        if(showMyTasks) {
+            tasksListView.setAdapter(myTasksAdapter);
+            subTasksListView.setAdapter(mySubTasksAdapter);
+        }else{
+            tasksListView.setAdapter(tasksAdapter);
+            subTasksListView.setAdapter(subTasksAdapter);
+        }
 
-        //Handles the switch
-
-        //NEEDS TO BE FIXED
-        /*
-        swtOnlyShow = (Switch) view.findViewById(R.id.swtShowMyTasks);
-        swtOnlyShow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //((MainActivity)getActivity()).update();
+        abc.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b == true){
-
-                    //Updates the tasks listview
-                    onlyShowMyTasks = true;
-                    currentUser = dB.getCurrentUser();
-                    listOfTasks.clear();
-                    for(Task t: dB.getTasks()){
-                        if(t.getOwnerId().equals(currentUser.getId())){
-                            listOfTasks.add(t);
-                        }
-                    }
-                    tasksAdapter.notifyDataSetChanged();
-
+            public void onClick(View v) {
+                boolean showMyTasks = abc.isChecked();
+                if(showMyTasks) {
+                    tasksListView.setAdapter(myTasksAdapter);
+                    subTasksListView.setAdapter(mySubTasksAdapter);
                 }else{
-
-                    //Updates the tasks listview
-                    onlyShowMyTasks = false;
-                    listOfTasks.clear();
-                    for(Task t: dB.getTasks()){
-                        listOfTasks.add(t);
-                    }
-                    tasksAdapter.notifyDataSetChanged();
+                    tasksListView.setAdapter(tasksAdapter);
+                    subTasksListView.setAdapter(subTasksAdapter);
                 }
             }
         });
-        */
-        //((MainActivity)getActivity()).update();
-
-
 
         return view;
     }
@@ -147,4 +119,24 @@ public class tasksFragment extends Fragment {
 
     }
 
+    public void updateAdapters(){
+
+        List<String> tasks = dB.getCurrentUser().getAssignedTasks();
+        myTaskList = new String[tasks.size()];
+        int i = 0;
+        for(String id: tasks){
+            myTaskList[i++] = dB.getTask(id).getName();
+            if(dB.getTask(id).getSubTasks()!= null)
+                myMats.addAll(dB.getTask(id).getSubTasks());
+        }
+
+
+        taskList = new String[listOfTasks.size()];
+        for (i = 0; i < listOfTasks.size(); i++) {
+            taskList[i] = listOfTasks.get(i).getName();
+            if(listOfTasks.get(i).getSubTasks()!= null)
+                mats.addAll(listOfTasks.get(i).getSubTasks());
+
+        }
+    }
 }

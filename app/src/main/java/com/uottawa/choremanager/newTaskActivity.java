@@ -61,6 +61,7 @@ public class newTaskActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_task);
         dB = MainActivity.getDB();
+        String toEdit = getIntent().getStringExtra("editTask");
 
 
         //Spinner code based off: https://stackoverflow.com/questions/24825249/how-to-add-item-in-spinner-android
@@ -121,7 +122,6 @@ public class newTaskActivity extends AppCompatActivity{
         //profiles.setAdapter(adapter);
         //https://stackoverflow.com/questions/2652414/how-do-you-get-the-selected-value-of-a-spinner
 
-
         ListView test =(ListView) findViewById(R.id.listViewMaterials);
         //String testStr = test.toString();
 
@@ -133,12 +133,10 @@ public class newTaskActivity extends AppCompatActivity{
         materialsTasksAdapter = new newTaskMaterialsAdapter(getApplicationContext(),subTasks);
         materialsListView.setAdapter(materialsTasksAdapter);
 
-
         //Handles start date EditText
         //https://stackoverflow.com/questions/38604157/android-date-time-picker-in-one-dialog
         //https://developer.android.com/guide/topics/ui/controls/pickers.html
         //https://stackoverflow.com/questions/17901946/timepicker-dialog-from-clicking-edittext
-
 
         final Calendar startCalendar = Calendar.getInstance();
 
@@ -280,7 +278,6 @@ public class newTaskActivity extends AppCompatActivity{
 
                 String description = ((TextView)findViewById(R.id.txtNotes)).getText().toString();
 
-
                 //Turns the startCalendar into one long with layout mm/dd/yyyy/hh/mm
                 startDateAndTimeString.append(processString(startCalendar.get(Calendar.MONTH)));
                 startDateAndTimeString.append("/");
@@ -303,8 +300,6 @@ public class newTaskActivity extends AppCompatActivity{
                 endDateAndTimeString.append(processString(endCalendar.get(Calendar.MINUTE)));
 
 
-
-
                 if(valid){
                     //https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
                    Task xyz = dB.addTask(name, startDateAndTimeString.toString(), description, endDateAndTimeString.toString(), ownerID, subTasks, selectedStatus);
@@ -323,7 +318,6 @@ public class newTaskActivity extends AppCompatActivity{
                         editTask = false;
                     }
 
-
                     int duration = Toast.LENGTH_SHORT;
                     if(!editTask) {
 
@@ -335,12 +329,8 @@ public class newTaskActivity extends AppCompatActivity{
 
                         Toast toast = Toast.makeText(newTaskActivity.this, "Task Edited!", duration);
                     }
-
                     finish();
-
                     //https://stackoverflow.com/questions/12202432/how-to-call-method-in-main-activity-from-other-activity
-
-
                 }else{
                     int duration = Toast.LENGTH_SHORT;
 
@@ -410,6 +400,8 @@ public class newTaskActivity extends AppCompatActivity{
 
             }
         });
+
+
 
 
     }
