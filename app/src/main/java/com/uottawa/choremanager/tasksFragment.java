@@ -1,5 +1,6 @@
 package com.uottawa.choremanager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -7,16 +8,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Switch;
-
-
-import java.lang.reflect.Array;
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,8 +42,11 @@ public class tasksFragment extends Fragment implements Runnable{
     //This nested class is used to control what happens when btnNewTask is clicked
     public class NewTaskOnClickListener implements View.OnClickListener{
         public void onClick(View v) {
-            Intent newTaskIntent = new Intent(getActivity().getApplicationContext(), newTaskActivity.class);
-            startActivity(newTaskIntent);
+            if(dB.getCurrentUser().isParent()) {
+                Intent newTaskIntent = new Intent(getActivity().getApplicationContext(), newTaskActivity.class);
+                startActivity(newTaskIntent);
+            }else
+                showError("You do not have the permission to add tasks!");
         }
     }
 
@@ -94,8 +92,7 @@ public class tasksFragment extends Fragment implements Runnable{
             @Override
             public void onClick(View v) {
                 updateAdapters();
-                boolean showMyTasks = abc.isChecked();
-                if(showMyTasks) {
+                if(abc.isChecked()) {
                     tasksListView.setAdapter(myTasksAdapter);
                     subTasksListView.setAdapter(mySubTasksAdapter);
                 }else{
@@ -115,9 +112,9 @@ public class tasksFragment extends Fragment implements Runnable{
     @Override
     public void onResume() {
         super.onResume();
+        updateAdapters();
         tasksAdapter.notifyDataSetChanged();
         subTasksAdapter.notifyDataSetChanged();
-
     }
 
     //updates adapters
@@ -133,21 +130,31 @@ public class tasksFragment extends Fragment implements Runnable{
 
     public void updateAdapters(){
             List<String> tasks = dB.getCurrentUser().getAssignedTasks();
-            myTaskList = new String[tasks.size()];
-            int i = 0;
-            for (String id : tasks) {
-                myTaskList[i++] = dB.getTask(id).getName();
-                if (dB.getTask(id).getSubTasks() != null)
-                    myMats.addAll(dB.getTask(id).getSubTasks());
+            if(tasks!=null) {
+                myTaskList = new String[tasks.size()];
+                int i = 0;
+                for (String id : tasks) {
+                    myTaskList[i++] = dB.getTask(id).getName();
+                    if (dB.getTask(id).getSubTasks() != null)
+                        myMats.addAll(dB.getTask(id).getSubTasks());
+                }
             }
 
-            taskList = new String[listOfTasks.size()];
-            for (i = 0; i < listOfTasks.size(); i++) {
-                taskList[i] = listOfTasks.get(i).getName();
-                if (listOfTasks.get(i).getSubTasks() != null)
-                    mats.addAll(listOfTasks.get(i).getSubTasks());
-
-            }
-
+        taskList = new String[listOfTasks.size()];
+        for (int i = 0; i < listOfTasks.size(); i++) {
+            taskList[i] = listOfTasks.get(i).getName();
+            if (listOfTasks.get(i).getSubTasks() != null)
+                mats.addAll(listOfTasks.get(i).getSubTasks());
+        }
     }
+
+    private void showError(String message){
+        Context context = getContext();
+        CharSequence text = message;
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
 }

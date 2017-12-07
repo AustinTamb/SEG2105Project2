@@ -31,21 +31,21 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Following is uses to populate database and test stuff...
-        ArrayList<SubTask> z = new ArrayList<SubTask>();
         dB = new DataBase();
 
-        //FUCKING DON'T TOUCH MY FUCKING CODE TO FUCKING TEST SHIT!!!!
-        Profile x = dB.addProfile("Austin", true, "Test123");
 
-        z.add(new SubTask("Cloth", false));
-        z.add(new SubTask("Bucket", false));
-        z.add(new SubTask("Water", false));
+        //For some magical fucking reason the following doesn't work... I give up, this team is shit...
+        Profile x = null;
+        for(Profile prof: dB.getProfiles()){
+            if(prof.getName().equals("Default")){
+                x = prof;
+            }
+        }
 
-        Task y = dB.addTask("Wash Car", "1", "wash it..", "2", x.getId(), z, "Active");
-        dB.assignTask(x.getId(), y.getId());
+        if(x == null){
+            x = dB.addProfile("Default", true, "password1");
+        }
         dB.setCurrentUser(x);
-        //YOU CAN START FUCKING SHIT UP AGAIN!
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
