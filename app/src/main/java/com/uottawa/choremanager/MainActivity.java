@@ -33,7 +33,18 @@ public class MainActivity extends FragmentActivity {
 
         dB = new DataBase();
 
-        Profile x = dB.addProfile("Default", true, "password1");
+
+        //For some magical fucking reason the following doesn't work... I give up, this team is shit...
+        Profile x = null;
+        for(Profile prof: dB.getProfiles()){
+            if(prof.getName().equals("Default")){
+                x = prof;
+            }
+        }
+
+        if(x == null){
+            x = dB.addProfile("Default", true, "password1");
+        }
         dB.setCurrentUser(x);
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
