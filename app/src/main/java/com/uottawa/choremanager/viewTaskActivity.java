@@ -94,7 +94,6 @@ public class viewTaskActivity extends AppCompatActivity {
         else if (oldString.length() == 16){
             if (!getTime) {
                 s.append(oldString.substring(0, 11));
-                System.out.println("getTime isnt working");
                 return (s.toString());
 
             } else {
@@ -113,7 +112,6 @@ public class viewTaskActivity extends AppCompatActivity {
     //https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                System.out.println("Edit Request Recieved");
                 String result=data.getStringExtra("editTask");
                 db.removeTask(result);
                 finish();

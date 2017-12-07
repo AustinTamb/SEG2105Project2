@@ -119,7 +119,6 @@ public class viewProfileActivity extends AppCompatActivity{
                     taskArray[i] = profilesTasks.get(i).getName();
                 }
             }
-            System.out.println("taskarray at0" + taskArray[0]);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
                     android.R.layout.simple_list_item_1, taskArray);
             lv.setAdapter(adapter);
