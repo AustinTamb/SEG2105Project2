@@ -61,6 +61,11 @@ public class TasksCustomAdapter extends ArrayAdapter {
         taskNameTextField.setText(tasksList.get(position).getName());
 
         final CheckBox cbx = (CheckBox) rowView.findViewById(R.id.cbx);
+        if(tasksList.get(position).getStatus().equals("Done")) {
+            cbx.setChecked(true);
+            cbx.setEnabled(false);
+        }
+
         cbx.setOnClickListener(new View.OnClickListener() {
 
             @Override
