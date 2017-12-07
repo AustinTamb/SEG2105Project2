@@ -81,7 +81,6 @@ public class MainActivity extends FragmentActivity {
 
         fragmentManager.beginTransaction().detach(newTasksFragment).commit();
         fragmentManager.beginTransaction().attach(newTasksFragment).commit();
-        System.out.println("UPDATE METHOD IN MAIN ACTIVITY CALLED");
     }
 
     @Override

@@ -127,7 +127,6 @@ public class newTaskActivity extends AppCompatActivity{
 
 
         ListView materialsListView = (ListView) findViewById(R.id.listViewMaterials);
-        //System.out.println("-------------------------------------------------> PRINTING ID" + testStr);
 
 
         materialsTasksAdapter = new newTaskMaterialsAdapter(getApplicationContext(),subTasks);
@@ -312,7 +311,6 @@ public class newTaskActivity extends AppCompatActivity{
                         String editTaskString = getIntent().getStringExtra("editTask");
                         if (editTaskString != null) {
                             editTaskID = editTaskString;
-                            System.out.println(id);
                         }
 
                     }catch (NullPointerException e){
