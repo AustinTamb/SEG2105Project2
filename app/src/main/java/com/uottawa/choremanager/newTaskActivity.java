@@ -155,7 +155,8 @@ public class newTaskActivity extends AppCompatActivity{
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         startCalendar.set(Calendar.HOUR_OF_DAY, i);
                         startCalendar.set(Calendar.MINUTE, i1);
-                        startTextTime.setText(startCalendar.get(Calendar.HOUR_OF_DAY) + ":" + startCalendar.get(Calendar.MINUTE));
+                        startTextTime.setText(processString(startCalendar.get(Calendar.HOUR_OF_DAY))
+                                + ":" + processString(startCalendar.get(Calendar.MINUTE)));
                         startTextTime.invalidate();
                     }
                 },hour, minute, false);
@@ -209,8 +210,8 @@ public class newTaskActivity extends AppCompatActivity{
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         endCalendar.set(Calendar.HOUR_OF_DAY, i);
                         endCalendar.set(Calendar.MINUTE, i1);
-                        endTextTime.setText(endCalendar.get(Calendar.HOUR_OF_DAY)
-                                + ":" + endCalendar.get(Calendar.MINUTE));
+                        endTextTime.setText(processString(endCalendar.get(Calendar.HOUR_OF_DAY))
+                                + ":" + processString(endCalendar.get(Calendar.MINUTE)));
                         endTextTime.invalidate();
                     }
                 },hour, minute, false);
