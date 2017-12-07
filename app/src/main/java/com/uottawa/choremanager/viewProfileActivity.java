@@ -52,13 +52,14 @@ public class viewProfileActivity extends AppCompatActivity{
         }
 
         //Add on click listener for edit profile button
+        /*
         if(currentUser.isParent()){//Checks if parent
             findViewById(R.id.btnEdit).setEnabled(true);
             findViewById(R.id.btnDelete).setEnabled(true);
         } else {
             findViewById(R.id.btnEdit).setEnabled(false);
             findViewById(R.id.btnDelete).setEnabled(false);
-        }
+        }*/
 
         final Button loginButton = findViewById(R.id.btnLogin);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +83,7 @@ public class viewProfileActivity extends AppCompatActivity{
             }
         });
 
+        /*
         final Button deleteButton = findViewById(R.id.btnDelete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -102,7 +104,7 @@ public class viewProfileActivity extends AppCompatActivity{
                 finish();
             }
         });
-
+        */
         ListView lv = (ListView) findViewById(R.id.listViewTasks);
         try {
             //https://stackoverflow.com/questions/5070830/populating-a-listview-using-an-arraylist

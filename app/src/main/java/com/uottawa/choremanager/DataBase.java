@@ -38,7 +38,8 @@ public class DataBase extends Application{
         tasks = new HashMap<String, Task>();
 
         //Loads Tasks from Firebase on initializations
-        dbTasks.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        dbTasks.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 Log.e("Count ", "" + snapshot.getChildrenCount());
@@ -59,7 +60,7 @@ public class DataBase extends Application{
         });
 
         //Pulls data for Profiles from firebase
-        dbProfiles.addListenerForSingleValueEvent(new ValueEventListener() {
+        dbProfiles.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 Log.e("Count ", "" + snapshot.getChildrenCount());
@@ -105,7 +106,10 @@ public class DataBase extends Application{
         tasks.put(id, toAdd);
 
         dbTasks.child(id).setValue(toAdd);
-        assignTask(ownerId, id);
+        Profile user = profiles.get(ownerId);
+        System.out.println(id);
+        user.addTask(id);
+        dbProfiles.child(ownerId).child("assignedTasks").setValue(user.getAssignedTasks());
         return toAdd;
     }
 

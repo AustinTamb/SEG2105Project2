@@ -1,5 +1,6 @@
 package com.uottawa.choremanager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -9,11 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 /**
- * Created by Raymo on 2017-11-24.
+ * Created by Austin Tambakopoulos on 2017-11-24.
  */
 
 public class peopleFragment extends Fragment {
@@ -29,8 +31,11 @@ public class peopleFragment extends Fragment {
     //This nested class is used to control what happens when btnNewTask is clicked
     public class NewProfileOnClickListener implements View.OnClickListener {
         public void onClick(View v) {
-            Intent newProfileIntent = new Intent(getActivity().getApplicationContext(), newProfileActivity.class);
-            startActivity(newProfileIntent);
+            if(dB.getCurrentUser().isParent()) {
+                Intent newProfileIntent = new Intent(getActivity().getApplicationContext(), newProfileActivity.class);
+                startActivity(newProfileIntent);
+            }else
+                showError("You do not have permission to add a profile!");
         }
     }
 
@@ -44,15 +49,9 @@ public class peopleFragment extends Fragment {
         dB = MainActivity.getDB();
         ArrayList<Profile> x = dB.getProfiles();
 
-        String[] profileList = new String[x.size()];
-        int i = 0;
-        for(Profile tmpP:x){
-            profileList[i++] = tmpP.getName();
-        }
-
         peopleListView = (ListView) view.findViewById(R.id.listViewPeople);
-        peopleAdapter = new PeopleCustomAdapter(getActivity().getApplicationContext(), profileList);
-        peopleListView.setAdapter(peopleAdapter);
+
+        updateAdapters();
 
         ((MainActivity)getActivity()).updateTaskFragment();
 
@@ -64,6 +63,28 @@ public class peopleFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        updateAdapters();
         peopleAdapter.notifyDataSetChanged();
+    }
+
+    private void showError(String message){
+        Context context = getContext();
+        CharSequence text = message;
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    private void updateAdapters(){
+        ArrayList<Profile> x = dB.getProfiles();
+
+        String[] profileList = new String[x.size()];
+        int i = 0;
+        for(Profile tmpP:x){
+            profileList[i++] = tmpP.getName();
+        }
+        peopleAdapter = new PeopleCustomAdapter(getActivity().getApplicationContext(), profileList);
+        peopleListView.setAdapter(peopleAdapter);
     }
 }

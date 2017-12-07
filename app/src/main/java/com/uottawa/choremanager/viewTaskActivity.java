@@ -70,7 +70,7 @@ public class viewTaskActivity extends AppCompatActivity {
 
             lv.setAdapter(adapter);
         }
-
+        /*
         final Button editButton = (Button) findViewById(R.id.btnEditTask);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +80,7 @@ public class viewTaskActivity extends AppCompatActivity {
                 i.putExtra("editTask", theTask.getId());
                 startActivity(i);
             }
-        });
+        });*/
 
     }
 

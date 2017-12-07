@@ -26,13 +26,18 @@ public class Profile{
 	}
 
 	public void addTask(String id){
+		if(assignedTasks== null){
+			this.assignedTasks = new ArrayList<String>();
+		}
 		assignedTasks.add(id);
 		numberOfCurrentTasks++;
 	}
 
 	public void removeTask(String id){
-		assignedTasks.remove(id);
-		numberOfCurrentTasks--;
+		if(assignedTasks != null) {
+			assignedTasks.remove(id);
+			numberOfCurrentTasks--;
+		}
 	}
 
 	public void setName(String newName){

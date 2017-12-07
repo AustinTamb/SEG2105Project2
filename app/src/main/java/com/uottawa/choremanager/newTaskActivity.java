@@ -44,7 +44,6 @@ public class newTaskActivity extends AppCompatActivity{
     private ArrayList<String> names;
     private newTaskMaterialsAdapter materialsTasksAdapter;
     private DataBase dB;
-    private ArrayList<String> profileIdList;
     private ArrayList<Profile> y;
     private ArrayAdapter<String> mArrayAdapter;
     private ArrayAdapter<String> statusArrayAdapter;
