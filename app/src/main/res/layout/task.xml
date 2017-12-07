@@ -24,13 +24,6 @@
                 android:text="Task Name"
                 android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
-            <Button
-                android:id="@+id/btnEditTask"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Edit Task" />
-
         </LinearLayout>
 
         <LinearLayout

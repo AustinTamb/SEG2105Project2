@@ -20,19 +20,19 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
+
 /**
  * Created by Raymo on 2017-11-24.
  */
 
-public class tasksFragment extends Fragment {
+public class tasksFragment extends Fragment implements Runnable{
     //taken from tutorial https://www.youtube.com/watch?v=bNpWGI_hGGg
 
     private ImageButton btnNewTask;
-    private Switch swtOnlyShow;
     private DataBase dB;
     private static final String TAG = "tasksFragment";
-    private boolean onlyShowMyTasks = false;
-    private Profile currentUser;
     private TasksCustomAdapter tasksAdapter;
     private MaterialsCustomAdapter subTasksAdapter;
     private TasksCustomAdapter myTasksAdapter;
@@ -93,6 +93,7 @@ public class tasksFragment extends Fragment {
         abc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updateAdapters();
                 boolean showMyTasks = abc.isChecked();
                 if(showMyTasks) {
                     tasksListView.setAdapter(myTasksAdapter);
@@ -119,24 +120,34 @@ public class tasksFragment extends Fragment {
 
     }
 
+    //updates adapters
+    @Override
+    public void run(){
+        try {
+            updateAdapters();
+            sleep(1000);
+        }catch(Exception e){
+            System.err.println("Clock error...");
+        }
+    }
+
     public void updateAdapters(){
+            List<String> tasks = dB.getCurrentUser().getAssignedTasks();
+            myTaskList = new String[tasks.size()];
+            int i = 0;
+            for (String id : tasks) {
+                myTaskList[i++] = dB.getTask(id).getName();
+                if (dB.getTask(id).getSubTasks() != null)
+                    myMats.addAll(dB.getTask(id).getSubTasks());
+            }
 
-        List<String> tasks = dB.getCurrentUser().getAssignedTasks();
-        myTaskList = new String[tasks.size()];
-        int i = 0;
-        for(String id: tasks){
-            myTaskList[i++] = dB.getTask(id).getName();
-            if(dB.getTask(id).getSubTasks()!= null)
-                myMats.addAll(dB.getTask(id).getSubTasks());
-        }
+            taskList = new String[listOfTasks.size()];
+            for (i = 0; i < listOfTasks.size(); i++) {
+                taskList[i] = listOfTasks.get(i).getName();
+                if (listOfTasks.get(i).getSubTasks() != null)
+                    mats.addAll(listOfTasks.get(i).getSubTasks());
 
+            }
 
-        taskList = new String[listOfTasks.size()];
-        for (i = 0; i < listOfTasks.size(); i++) {
-            taskList[i] = listOfTasks.get(i).getName();
-            if(listOfTasks.get(i).getSubTasks()!= null)
-                mats.addAll(listOfTasks.get(i).getSubTasks());
-
-        }
     }
 }
