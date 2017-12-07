@@ -76,7 +76,7 @@ public class viewTaskActivity extends AppCompatActivity {
                 //https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
                 Intent i = new Intent(viewTaskActivity.this, newTaskActivity.class);
                 i.putExtra("editTask", theTask.getId());
-                startActivityForResult(i, 1);
+                startActivity(i);
             }
         });
 
