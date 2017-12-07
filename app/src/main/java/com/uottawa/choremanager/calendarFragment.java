@@ -38,10 +38,7 @@ public class calendarFragment extends Fragment{
             }
         });
 
-        String[] tasksDateList = {"Walk Dog", "Do the Dishes", "Clean Room", "Make Bed", "Take Trash Out"};
-        ListView tasksDayListView = (ListView) view.findViewById(R.id.listViewTasksOnDay);
-        calendarCustomAdapter calendarAdapter = new calendarCustomAdapter(getActivity().getApplicationContext(), tasksDateList);
-        tasksDayListView.setAdapter(calendarAdapter);
+
 
         return view;
     }
